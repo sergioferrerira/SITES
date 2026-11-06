@@ -1,0 +1,2046 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Casa do Café · Aveiro</title>
+<meta name="description" content="Casa do Café, Vera Cruz, Aveiro — desde 1971. Café arábica puro moído na hora, chás, especiarias, vinhos e acessórios.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cafe: #3b2418;
+    --cafe-2: #5a3a26;
+    --toldo: #f1e4bd;
+    --creme: #f1e7d4;
+    --creme-2: #e3d4b9;
+    --leite: #f8f0e1;
+    --moinho: #b3262b;
+    --parede: #8fae9a;
+    --ouro: #b9862f;
+    --texto: #2a1c14;
+    --suave: #6f5b4d;
+    --raio: 14px;
+    --max: 1140px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: Inter, system-ui, sans-serif; color: var(--texto); background: var(--leite); line-height: 1.6; }
+  h1, h2, h3 { font-family: Fraunces, Georgia, serif; line-height: 1.15; }
+  a { color: inherit; }
+  img { display: block; max-width: 100%; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+  section { padding: 88px 0; position: relative; overflow-x: clip; }
+  .eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: .78rem; font-weight: 600; color: var(--moinho); margin-bottom: 12px; }
+  .titulo { font-size: clamp(1.9rem, 4vw, 2.7rem); color: var(--cafe); margin-bottom: 16px; }
+  .lead { color: var(--suave); max-width: 62ch; font-size: 1.05rem; }
+  .btn { display: inline-block; padding: 14px 26px; border-radius: 999px; font-weight: 600; text-decoration: none; transition: transform .15s, background .2s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primario { background: var(--moinho); color: #fff; }
+  .btn-primario:hover { background: #962025; }
+  .btn-linha { border: 1.5px solid rgba(255,255,255,.75); color: #fff; }
+  .btn-linha:hover { background: rgba(255,255,255,.12); }
+
+  /* Navegação */
+  header { position: fixed; inset: 0 0 auto 0; z-index: 50; transition: background .3s, box-shadow .3s, transform .4s; }
+  header.escondido { transform: translateY(-100%); }
+  header.solido { background: rgba(59,36,24,.97); box-shadow: 0 2px 20px rgba(0,0,0,.15); }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .logo { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; }
+  .logo span { font-family: Fraunces, serif; font-size: 1.3rem; font-weight: 700; }
+  .logo small { display: block; font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; opacity: .75; font-family: Inter, sans-serif; font-weight: 500; }
+  .menu-links { display: flex; gap: 28px; list-style: none; }
+  .menu-links a { color: #fff; text-decoration: none; font-weight: 500; font-size: .95rem; opacity: .9; }
+  .menu-links a:hover { opacity: 1; color: var(--toldo); }
+  .burger { display: none; background: none; border: 0; color: #fff; cursor: pointer; padding: 8px; }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center; color: #fff; position: relative; overflow: hidden; padding: 120px 0 100px;
+    background: #1e110a; isolation: isolate;
+  }
+  .hero {
+    position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 560px; z-index: 0;
+    background: radial-gradient(ellipse 40% 60% at 62% 0%, rgba(255,214,160,.15), transparent 70%), radial-gradient(ellipse at 64% 42%, #5a3622 0%, #2a170d 38%, #0e0603 82%);
+  }
+  .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1; background: linear-gradient(90deg, rgba(14,6,3,.75) 0%, rgba(14,6,3,.35) 45%, transparent 70%); }
+  .hero > .wrap { pointer-events: none; position: relative; z-index: 2; width: 100%; }
+  .hero-texto, .hero-texto * { pointer-events: auto; }
+  .aroma-3d, .aroma-perto { position: absolute; inset: 0; pointer-events: none; }
+  .aroma-3d canvas, .aroma-perto canvas { display: block; width: 100%; height: 100%; }
+  .aroma-perto { z-index: 3; filter: blur(7px); }
+  .hero-paralaxe { position: absolute; inset: -12% 0; z-index: -1; will-change: transform; }
+  .hero-bg { position: absolute; inset: 0; background: url("img/moinhos.jpg") center/cover; transform: scale(1.15); transition: transform 2.6s cubic-bezier(.2,.7,.2,1); }
+  body.pronto .hero-bg { transform: scale(1); }
+  .hero h1 .p { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .1em; margin-bottom: -.1em; }
+  .hero h1 .p > span { display: inline-block; transform: translateY(110%); transition: transform 1s cubic-bezier(.2,.7,.2,1); }
+  body.pronto .hero h1 .p > span { transform: none; }
+  .hero-entra { opacity: 0; transform: translateY(20px); transition: opacity .9s, transform .9s cubic-bezier(.2,.7,.2,1); transition-delay: var(--atraso, 0s); }
+  body.pronto .hero-entra { opacity: 1; transform: none; }
+  .desce { position: absolute; bottom: 96px; left: 0; right: 0; margin: auto; width: max-content; z-index: 2; color: var(--toldo); font-size: .68rem; letter-spacing: .3em; text-align: center; text-decoration: none; }
+  .desce i { display: block; width: 1px; height: 46px; margin: 8px auto 0; background: linear-gradient(var(--toldo), transparent); transform-origin: top; animation: pingo 2.2s ease-in-out infinite; }
+  @keyframes pingo { 0% { transform: scaleY(0); opacity: 1; } 55% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1); opacity: 0; } }
+  .hero-texto { position: relative; z-index: 1; max-width: 620px; }
+  .selo-ano { display: inline-flex; align-items: center; gap: 10px; border: 1px solid rgba(241,228,189,.5); color: var(--toldo); padding: 6px 16px; border-radius: 999px; font-size: .85rem; letter-spacing: .08em; margin-bottom: 22px; }
+  .hero h1 { font-size: clamp(2.5rem, 6.2vw, 4.4rem); margin-bottom: 20px; }
+  .hero h1 em { color: var(--toldo); }
+  .hero p { font-size: 1.15rem; opacity: .9; max-width: 48ch; margin-bottom: 32px; }
+  .hero-acoes { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  /* Destaques */
+  .destaques { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: -30px; position: relative; z-index: 2; }
+  .destaque { background: #fff; border-radius: var(--raio); padding: 28px; box-shadow: 0 10px 30px rgba(59,36,24,.08); border: 1px solid var(--creme-2); }
+  .destaque .ic { width: 46px; height: 46px; border-radius: 12px; background: var(--creme); display: grid; place-items: center; margin-bottom: 14px; color: var(--moinho); }
+  .destaque h3 { font-size: 1.2rem; color: var(--cafe); margin-bottom: 6px; }
+  .destaque p { color: var(--suave); font-size: .95rem; }
+
+  /* História */
+  .historia-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
+  .foto-moldura { position: relative; }
+  .foto-moldura img { border-radius: var(--raio); width: 100%; aspect-ratio: 4/3; object-fit: cover; box-shadow: 0 20px 50px rgba(59,36,24,.18); }
+  .foto-moldura .carimbo {
+    position: absolute; right: -18px; bottom: -22px; width: 118px; height: 118px; border-radius: 50%;
+    background: var(--cafe); color: var(--toldo); display: grid; place-items: center; text-align: center;
+    border: 4px solid var(--leite); box-shadow: 0 10px 30px rgba(0,0,0,.2); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+  }
+  .carimbo strong { display: block; font-family: Fraunces, serif; font-size: 2rem; letter-spacing: 0; }
+  .numeros { display: flex; gap: 36px; margin-top: 28px; flex-wrap: wrap; }
+  .numeros strong { font-family: Fraunces, serif; font-size: 2rem; color: var(--cafe); display: block; }
+  .numeros span { color: var(--suave); font-size: .9rem; }
+
+  /* Origens */
+  #cafes { background: var(--creme); }
+  .origens-grid { display: grid; grid-template-columns: .62fr 1.38fr; gap: 40px; align-items: start; margin-top: 36px; }
+  .placa {
+    background: var(--toldo); border: 10px solid #8a5a34; border-radius: 6px; padding: 34px 28px; text-align: center;
+    box-shadow: inset 0 0 0 1px rgba(90,58,38,.25), 0 20px 40px rgba(59,36,24,.18); color: var(--cafe-2); font-family: Fraunces, serif;
+  }
+  /* Com 3D: a placa é uma tabuleta de madeira pintada, pendurada por correntes, numa vitrine escura */
+  .placa.com-3d { position: relative; padding: 0; border: 0; aspect-ratio: 3/4; max-width: 100%; overflow: hidden; border-radius: var(--raio); box-shadow: 0 24px 60px rgba(59,36,24,.28); background: radial-gradient(ellipse 50% 45% at 50% 0%, rgba(255,214,160,.18), transparent 70%), radial-gradient(ellipse at 50% 45%, #5a3622 0%, #2a170d 45%, #0e0603 90%); }
+  .placa.com-3d > :not(.placa-3d) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .placa-3d { display: none; }
+  .placa.com-3d .placa-3d { display: block; position: absolute; inset: 0; }
+  .placa-3d canvas { display: block; width: 100%; height: 100%; }
+  .placa .moldura { border: 2px solid var(--cafe-2); border-radius: 4px; padding: 14px 10px; margin-bottom: 22px; }
+  .placa .moldura small { display: flex; justify-content: space-between; font-size: .8rem; padding: 0 10px; }
+  .placa .moldura b { display: block; font-size: 2rem; font-weight: 400; letter-spacing: .04em; }
+  .placa .moldura i { font-style: normal; font-size: .8rem; letter-spacing: .25em; }
+  .placa h3 { font-weight: 400; font-size: 1.5rem; margin-bottom: 12px; }
+  .placa ul { list-style: none; font-size: 1.2rem; line-height: 1.75; }
+  .origens { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .origem { background: #fff; border: 1px solid var(--creme-2); border-radius: var(--raio); padding: 20px; cursor: default; transition: border-color .2s, transform .2s; }
+  .origem:hover { border-color: var(--moinho); transform: translateY(-2px); }
+  .origem h4 { font-family: Fraunces, serif; font-size: 1.2rem; color: var(--cafe); display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .origem h4 span { text-align: right; }
+  .origem h4 span { font-family: Inter, sans-serif; font-size: .72rem; color: var(--suave); font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
+  .origem p { color: var(--suave); font-size: .9rem; margin-top: 4px; }
+  .barra { height: 5px; background: var(--creme-2); border-radius: 9px; margin-top: 12px; overflow: hidden; }
+  .barra i { display: block; height: 100%; background: linear-gradient(90deg, var(--ouro), var(--moinho)); border-radius: 9px; }
+  .legenda { font-size: .78rem; color: var(--suave); margin-top: 14px; }
+
+  .mistura { margin-top: 22px; background: var(--cafe); color: #fff; border-radius: var(--raio); padding: 22px 24px; }
+  .mistura h4 { font-family: Fraunces, serif; font-size: 1.2rem; color: var(--toldo); margin-bottom: 6px; }
+  .mistura p { color: rgba(255,255,255,.82); font-size: .95rem; }
+  .mistura em { color: var(--toldo); }
+
+  /* Tabela das origens */
+  .origens-grid > * { min-width: 0; }
+  .origens-t-wrap { overflow-x: auto; background: #fff; border: 1px solid var(--creme-2); border-radius: var(--raio); box-shadow: 0 10px 30px rgba(59,36,24,.06); }
+  table.origens-t { width: 100%; border-collapse: collapse; min-width: 600px; font-size: .92rem; }
+  .origens-t th { text-align: left; font: 600 .7rem Inter, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--suave); padding: 14px; background: var(--creme); border-bottom: 1px solid var(--creme-2); white-space: nowrap; }
+  .origens-t td { padding: 14px; border-bottom: 1px solid var(--creme-2); vertical-align: middle; }
+  .origens-t tbody tr:last-child td { border-bottom: 0; }
+  .origens-t tbody tr { transition: background .2s; }
+  .origens-t tbody tr:hover { background: var(--leite); }
+  .origens-t .o-nome, .origens-t th:first-child { position: sticky; left: 0; z-index: 1; background: #fff; box-shadow: 1px 0 0 var(--creme-2); }
+  .origens-t th:first-child { background: var(--creme); }
+  .o-nome strong { display: block; font-family: Fraunces, serif; font-size: 1.1rem; color: var(--cafe); }
+  .o-nome span { font-size: .78rem; color: var(--suave); }
+  .pontos { display: inline-flex; gap: 4px; }
+  .pontos i { width: 9px; height: 9px; border-radius: 50%; background: var(--creme-2); }
+  .pontos i.on { background: var(--moinho); transform: scale(0); transition: transform .4s cubic-bezier(.3,1.6,.5,1); }
+  tr.visivel .pontos i.on { transform: none; }
+  .moagem-tag { display: inline-block; font-size: .75rem; padding: 3px 9px; border-radius: 999px; background: var(--creme); color: var(--cafe); margin: 2px 4px 2px 0; white-space: nowrap; }
+
+  /* Globo */
+  .globo { position: relative; border-radius: var(--raio); overflow: hidden; min-height: 480px; background: radial-gradient(circle at 50% 45%, #3a2416, #170c06 72%); color: #fff; }
+  .globo canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; cursor: grab; touch-action: pan-y; }
+  .globo-rotulos { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .rotulo { position: absolute; left: 0; top: 0; font: 600 .7rem Inter, sans-serif; letter-spacing: .05em; background: rgba(20,10,5,.75); color: var(--toldo); padding: 3px 9px; border-radius: 999px; white-space: nowrap; transition: opacity .3s; opacity: 0; }
+  .rotulo.aveiro { background: var(--moinho); color: #fff; }
+  .globo-topo { position: absolute; left: 20px; top: 18px; right: 20px; pointer-events: none; }
+  .globo-topo strong { font-family: Fraunces, serif; font-size: 1.25rem; display: block; }
+  .globo-topo span { font-size: .82rem; color: rgba(255,255,255,.7); }
+  .globo-ui { position: absolute; left: 20px; right: 20px; bottom: 20px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; pointer-events: none; }
+  .globo-ui > * { pointer-events: auto; }
+  .globo-ui p { font-size: .8rem; color: rgba(255,255,255,.65); }
+  .globo-ui button, .chegada button { border: 0; cursor: pointer; font-family: Inter, sans-serif; font-size: 1rem; }
+  .chegada .btn-linha { background: transparent; border: 1.5px solid rgba(255,255,255,.75); }
+  .globo-ui, .globo-topo { transition: opacity .5s; }
+  .globo.longe .globo-ui, .globo.longe .globo-topo { opacity: 0; pointer-events: none; }
+  .chegada { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; background: radial-gradient(circle at 50% 50%, rgba(23,12,6,.2), rgba(23,12,6,.88) 70%); opacity: 0; visibility: hidden; transition: opacity .7s, visibility 0s .7s; }
+  .chegada.ativa { opacity: 1; visibility: visible; transition: opacity .7s; }
+  .pino { width: 18px; height: 18px; background: var(--moinho); border-radius: 50%; margin: 0 auto 20px; position: relative; box-shadow: 0 0 0 4px rgba(179,38,43,.35); }
+  .pino::before, .pino::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid #e0605a; animation: onda 2s infinite; }
+  .pino::after { animation-delay: 1s; }
+  @keyframes onda { from { transform: scale(1); opacity: 1; } to { transform: scale(4); opacity: 0; } }
+  .chegada strong { font-family: Fraunces, serif; font-size: 1.7rem; display: block; }
+  .chegada span { color: var(--toldo); }
+  .chegada .acoes { display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+  .globo-fallback { display: none; }
+  .globo.sem-3d .globo-fallback { display: block; position: absolute; inset: 0; }
+  .globo.sem-3d .globo-fallback .mapa-link { height: 100%; }
+  .globo.sem-3d .globo-ui, .globo.sem-3d .globo-topo { display: none; }
+
+  /* Moinhos */
+  .moinhos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .moinho-vitrine { position: relative; aspect-ratio: 4/5; max-width: 100%; border-radius: var(--raio); overflow: hidden; box-shadow: 0 24px 60px rgba(59,36,24,.28); background: radial-gradient(ellipse 50% 45% at 50% 0%, rgba(255,214,160,.16), transparent 70%), radial-gradient(ellipse at 50% 45%, #5a3622 0%, #2a170d 45%, #0e0603 90%); }
+  .moinho-3d { position: absolute; inset: 0; }
+  .moinho-3d canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: pan-y; }
+  .moinho-3d canvas.a-arrastar { cursor: grabbing; }
+  .moinho-3d.sem-3d { background: url("img/moinhos.jpg") center/cover; }
+  .dica-3d { position: absolute; left: 0; right: 0; bottom: 18px; text-align: center; color: var(--toldo); font-size: .72rem; text-transform: uppercase; opacity: .75; pointer-events: none; }
+  .ficha-moagem { list-style: none; margin-top: 22px; max-width: 380px; font-size: .76rem; text-transform: uppercase; color: var(--cafe); }
+  .ficha-moagem li { display: flex; justify-content: space-between; gap: 16px; padding: 9px 0; border-top: 1px dashed var(--creme-2); }
+  .ficha-moagem li:last-child { border-bottom: 1px dashed var(--creme-2); }
+  .ficha-moagem span { color: var(--moinho); }
+  .moinho-vitrine .marca { position: absolute; left: 18px; top: 18px; background: var(--moinho); color: #fff; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; font-weight: 600; }
+
+  /* Encomenda (exemplo) */
+  #encomenda { background: var(--leite); }
+  .exemplo-tag { display: inline-block; border: 1.5px dashed var(--ouro); color: var(--cafe-2); font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: 4px 12px; border-radius: 999px; margin-bottom: 14px; }
+  .encomenda-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; margin-top: 32px; }
+  .form-enc { background: #fff; border: 1px solid var(--creme-2); border-radius: var(--raio); padding: 26px; display: grid; gap: 16px; box-shadow: 0 10px 30px rgba(59,36,24,.06); }
+  .form-enc label { display: grid; gap: 6px; font-weight: 600; font-size: .9rem; color: var(--cafe); }
+  .form-enc select, .form-enc input { font: 400 1rem Inter, sans-serif; padding: 11px 12px; border: 1.5px solid var(--creme-2); border-radius: 10px; background: var(--leite); color: var(--texto); width: 100%; }
+  .form-enc select:disabled { opacity: .45; }
+  .form-enc select:focus, .form-enc input:focus { outline: 2px solid var(--ouro); outline-offset: 1px; }
+  .form-enc .duas { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-enc button { border: 0; cursor: pointer; font: 600 1rem Inter, sans-serif; }
+  .talao { background: var(--creme); border-radius: var(--raio); padding: 26px; font-size: .95rem; color: var(--cafe); }
+  .talao h4 { font-family: Fraunces, serif; font-size: 1.25rem; margin-bottom: 10px; }
+  .talao ul { list-style: none; display: grid; gap: 6px; margin: 12px 0; }
+  .talao li { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px dashed var(--creme-2); padding-bottom: 6px; }
+  .talao .nota { color: var(--suave); font-size: .85rem; }
+  .passos-enc { display: grid; gap: 14px; margin-top: 18px; }
+  .passos-enc div { display: flex; gap: 14px; align-items: flex-start; }
+  .passos-enc b { flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; background: var(--moinho); color: #fff; display: grid; place-items: center; font-family: Fraunces, serif; }
+  .passos-enc p { color: var(--suave); }
+
+  /* Painel "o que o site pode fazer" */
+  .btn-ideias { position: fixed; right: 16px; bottom: 16px; z-index: 61; background: var(--moinho); color: #fff; border: 0; border-radius: 999px; padding: 10px 16px; font: 600 .85rem Inter, sans-serif; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+  .painel-ideias { position: fixed; right: 16px; bottom: 66px; z-index: 62; width: min(380px, calc(100vw - 32px)); max-height: min(70vh, 620px); overflow: auto; background: var(--leite); color: var(--texto); border: 1px solid var(--creme-2); border-radius: var(--raio); box-shadow: 0 20px 50px rgba(0,0,0,.25); padding: 22px; }
+  .painel-ideias h3 { color: var(--cafe); font-size: 1.25rem; margin-bottom: 4px; }
+  .painel-ideias h5 { font: 600 .74rem Inter, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--moinho); margin: 18px 0 8px; }
+  .painel-ideias ul { list-style: none; display: grid; gap: 8px; font-size: .9rem; }
+  .painel-ideias li { display: flex; gap: 10px; }
+  .painel-ideias li::before { content: "✓"; color: #2f9e5b; font-weight: 700; flex-shrink: 0; }
+  .painel-ideias .mais li::before { content: "+"; color: var(--ouro); }
+  .painel-ideias .precisa li::before { content: "•"; color: var(--moinho); }
+  .painel-ideias .fechar { float: right; background: none; border: 0; font-size: 1.3rem; cursor: pointer; color: var(--suave); line-height: 1; }
+
+  /* Moagem */
+  .moagem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .moagem-grid img { border-radius: var(--raio); width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+  .seletor { display: flex; gap: 8px; flex-wrap: wrap; margin: 24px 0 18px; }
+  .seletor button { border: 1.5px solid var(--cafe-2); background: transparent; color: var(--cafe); padding: 9px 16px; border-radius: 999px; font: 600 .88rem Inter, sans-serif; cursor: pointer; }
+  .seletor button[aria-pressed="true"] { background: var(--cafe); color: #fff; border-color: var(--cafe); }
+  .resultado { background: var(--creme); border-radius: var(--raio); padding: 22px; display: flex; gap: 18px; align-items: center; }
+  .graos { display: flex; gap: 3px; flex-wrap: wrap; width: 74px; flex-shrink: 0; }
+  .graos i { background: var(--cafe-2); border-radius: 50%; transition: all .3s; }
+  .resultado h4 { font-family: Fraunces, serif; color: var(--cafe); font-size: 1.15rem; }
+  .resultado p { color: var(--suave); font-size: .93rem; }
+
+  /* Loja */
+  #loja, #mercearia { background: var(--cafe); color: #fff; }
+  #loja .titulo, #mercearia .titulo { color: #fff; }
+  #loja .lead, #mercearia .lead { color: rgba(255,255,255,.75); }
+  #loja .eyebrow, #mercearia .eyebrow { color: var(--toldo); }
+  /* Frutos secos a voar, como os grãos da entrada */
+  #mercearia { padding-top: 0; }
+  /* os frutos voam por trás da secção inteira, até à tabela: o fundo fica preso ao ecrã enquanto se desce */
+  .frutos-fundo { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .frutos-fixo { position: sticky; top: 0; height: 100vh; overflow: hidden; background: radial-gradient(ellipse 40% 55% at 64% 0%, rgba(255,214,160,.14), transparent 70%), radial-gradient(ellipse at 64% 45%, #6a3e24 0%, #3b2418 60%); }
+  #mercearia > .wrap { position: relative; z-index: 1; }
+  .frutos-palco { position: relative; z-index: 1; min-height: 92vh; display: flex; align-items: center; margin-bottom: 40px; }
+  .frutos-palco::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, rgba(30,17,10,.7), rgba(30,17,10,.2) 50%, transparent 70%); }
+  #mercearia .categoria { background: rgba(43,26,17,.74); }
+  .frutos-texto { position: relative; z-index: 2; width: 100%; }
+  .frutos-texto h2 { font-size: clamp(2.4rem, 5.6vw, 4.4rem); line-height: 1.04; margin-bottom: 20px; }
+  .frutos-texto h2 em { color: var(--toldo); font-weight: 400; }
+  .frutos-texto .ficha-moagem { color: rgba(255,255,255,.85); }
+  .frutos-texto .ficha-moagem li { border-color: rgba(241,228,189,.28); }
+  .frutos-texto .ficha-moagem span { color: var(--toldo); }
+  #loja { background: #2c1a11; }
+
+  /* Montra dos frutos secos */
+  .frutos-cab { margin-top: 56px; }
+  .frutos-cab h3 { font-size: clamp(1.5rem, 3vw, 2rem); color: var(--toldo); margin-bottom: 4px; }
+  .frutos-cab p { color: rgba(255,255,255,.7); }
+  .exemplo-tag.claro { color: var(--toldo); border-color: var(--toldo); }
+  .montra { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; margin: 28px 0 24px; padding: 0 0 14px; border-bottom: 8px solid #8a5a34; border-radius: 0 0 4px 4px; }
+  .frasco { background: none; border: 0; cursor: pointer; color: rgba(255,255,255,.85); text-align: center; font: 600 .82rem Inter, sans-serif; padding: 6px 2px 8px; border-radius: 12px; transition: background .25s, color .25s; }
+  .frasco svg { width: 100%; max-width: 110px; height: auto; display: block; margin: 0 auto 8px; filter: drop-shadow(0 10px 14px rgba(0,0,0,.35)); transition: transform .35s cubic-bezier(.3,1.5,.5,1); }
+  .frasco:hover svg, .frasco[aria-pressed="true"] svg { transform: translateY(-8px) rotate(-4deg); }
+  .frasco[aria-pressed="true"] { background: rgba(255,255,255,.08); color: var(--toldo); }
+  .frutos-t-wrap .origens-t tbody tr.escolhido td { background: #fff4d6; }
+  .frutos-t-wrap { margin-top: 0; }
+  .frutos-t-wrap table.origens-t { min-width: 520px; }
+  .categorias { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 36px 0; }
+  .categoria { border: 1px solid rgba(255,255,255,.15); border-radius: var(--raio); padding: 18px; }
+  .categoria h4 { font-family: Fraunces, serif; font-size: 1.05rem; margin-bottom: 4px; }
+  .categoria p { font-size: .85rem; color: rgba(255,255,255,.7); }
+  .galeria { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 210px; gap: 14px; }
+  .galeria figure { border-radius: var(--raio); overflow: hidden; position: relative; }
+  .galeria img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
+  .galeria figure:hover img { transform: scale(1.05); }
+  .galeria figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 14px 12px; background: linear-gradient(transparent, rgba(0,0,0,.65)); font-size: .88rem; font-weight: 600; }
+  .g1 { grid-column: span 2; grid-row: span 2; }
+  .g4 { grid-column: span 2; }
+  .creditos { font-size: .75rem; color: rgba(255,255,255,.5); margin-top: 12px; }
+
+  /* Visita */
+  .visita-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 48px; margin-top: 36px; }
+  .horario { list-style: none; }
+  .horario li { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--creme-2); }
+  .horario li.hoje { color: var(--moinho); font-weight: 600; }
+  .contacto { margin-top: 28px; display: grid; gap: 12px; }
+  .contacto a, .contacto div { display: flex; gap: 12px; align-items: center; text-decoration: none; color: var(--cafe); }
+  .contacto svg { color: var(--moinho); flex-shrink: 0; }
+  .mapa { border-radius: var(--raio); overflow: hidden; min-height: 360px; background: var(--creme); border: 1px solid var(--creme-2); }
+  .mapa iframe { width: 100%; height: 100%; min-height: 360px; border: 0; }
+  .mapa-link {
+    display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; height: 100%; min-height: 360px; padding: 28px;
+    color: #fff; text-decoration: none; background: linear-gradient(transparent 30%, rgba(30,17,10,.85)), url("img/fachada.jpg") center/cover;
+  }
+  .mapa-link strong { font-family: Fraunces, serif; font-size: 1.5rem; }
+  .mapa-link span { color: var(--toldo); font-weight: 600; }
+  .mapa-link:hover span, .mapa-link:focus-visible span { text-decoration: underline; }
+  .estado { display: inline-flex; align-items: center; gap: 8px; background: var(--creme); padding: 6px 14px; border-radius: 999px; font-size: .88rem; margin-bottom: 18px; color: var(--cafe); }
+  .estado i { width: 9px; height: 9px; border-radius: 50%; background: #2f9e5b; }
+  .estado.fechado i { background: var(--moinho); }
+  .confirmar { background: #fff3c4; padding: 0 4px; border-radius: 3px; }
+
+  footer { background: #22140d; color: rgba(255,255,255,.6); padding: 32px 0; font-size: .88rem; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .redes { display: flex; gap: 16px; }
+  .redes a { color: rgba(255,255,255,.8); text-decoration: none; }
+  .assinatura strong { color: var(--toldo); font-weight: 600; }
+
+  .aviso-prototipo { position: fixed; bottom: 16px; left: 16px; z-index: 60; background: var(--cafe); color: var(--toldo); font-size: .78rem; padding: 8px 14px; border-radius: 999px; box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+
+  /* Entrada */
+  /* Entrada: o moinho mói, o saco enche e a página sobe como uma cortina */
+  .intro { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; color: var(--toldo); background: radial-gradient(ellipse at 50% 38%, #563322 0%, #24130a 48%, #0d0603 100%); border-radius: 0 0 32px 32px; box-shadow: 0 30px 60px rgba(0,0,0,.5); transition: transform 1.1s cubic-bezier(.76,0,.24,1), visibility 0s 1.1s; }
+  .intro.saiu { transform: translateY(-105%); visibility: hidden; }
+  .intro.sem-transicao { transition: none; }
+  .intro-conteudo { text-align: center; }
+  .intro-cena { width: min(260px, 60vw, 44vh); margin: 0 auto 14px; overflow: visible; display: block; }
+  .intro-cena .roda { transform-box: fill-box; transform-origin: center; animation: rodar .9s linear infinite; }
+  @keyframes rodar { to { transform: rotate(360deg); } }
+  .intro-cena .jorro { stroke-dasharray: 3 5; opacity: 0; animation: jorrar .35s linear infinite, mostrarJorro 2.1s .35s both; }
+  @keyframes jorrar { to { stroke-dashoffset: -16; } }
+  @keyframes mostrarJorro { 0%, 100% { opacity: 0; } 8%, 88% { opacity: 1; } }
+  .intro-cena .enche { transform-box: fill-box; transform: translateY(100%); animation: encher 1.9s .5s cubic-bezier(.4,.1,.3,1) forwards; }
+  @keyframes encher { to { transform: translateY(12%); } }
+  .intro-cena .monte { transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0); animation: monte .6s 2s ease-out forwards; }
+  @keyframes monte { to { transform: none; } }
+  .intro-conteudo p, .intro-conteudo strong { opacity: 0; animation: aparecer .7s forwards; }
+  .intro-conteudo p { font-family: "JetBrains Mono", ui-monospace, monospace; letter-spacing: .3em; font-size: .74rem; animation-delay: .7s; }
+  .intro-conteudo strong { display: block; font-family: Fraunces, serif; font-weight: 400; font-style: italic; font-size: 1.8rem; animation-delay: 1s; }
+  @keyframes aparecer { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .progresso { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 70; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, var(--ouro), var(--moinho)); }
+
+  /* Grãos a flutuar */
+  .grao { position: absolute; color: #7a4a2e; opacity: .22; pointer-events: none; z-index: 0; will-change: transform; }
+  section > .wrap { position: relative; z-index: 1; }
+
+  /* Faixa de origens */
+  .faixa-zona { overflow: hidden; padding: 30px 0 0; margin-top: 50px; }
+  .faixa { background: var(--cafe); color: var(--toldo); padding: 16px 0; transform: rotate(-1.5deg); width: 104%; margin-left: -2%; overflow: hidden; }
+  .faixa-trilho { display: inline-flex; white-space: nowrap; font-family: Fraunces, serif; font-style: italic; font-size: 1.45rem; will-change: transform; }
+  /* Faixa de juta, como as sacas do café verde, com os carimbos das origens */
+  .faixa.juta {
+    position: relative; padding: 20px 0; color: #3b2418;
+    background-color: #b08957;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(70,42,18,.22) 0 1px, transparent 1px 4px),
+      repeating-linear-gradient(90deg, rgba(70,42,18,.18) 0 1px, rgba(255,236,200,.08) 1px 3px, transparent 3px 5px),
+      radial-gradient(ellipse at 30% 50%, rgba(255,230,190,.18), transparent 60%),
+      radial-gradient(ellipse at 80% 40%, rgba(60,35,15,.18), transparent 55%);
+    box-shadow: 0 12px 30px rgba(59,36,24,.22), inset 0 0 40px rgba(60,35,15,.25);
+  }
+  .faixa.juta::before, .faixa.juta::after { content: ""; position: absolute; left: 0; right: 0; height: 0; border-top: 2px dashed rgba(59,36,24,.55); }
+  .faixa.juta::before { top: 7px; } .faixa.juta::after { bottom: 7px; }
+  .faixa.juta .faixa-trilho { align-items: center; font: inherit; }
+  /* Com 3D: a faixa vira uma cena, como a da entrada: juta a ondular sob a luz, com grãos e frutos a voar */
+  .faixa-zona.com-3d { position: relative; height: 320px; padding: 0; clip-path: polygon(0 7%, 100% 0, 100% 93%, 0 100%); background: radial-gradient(ellipse 40% 70% at 60% 0%, rgba(255,214,160,.16), transparent 70%), radial-gradient(ellipse at 55% 50%, #5a3622 0%, #2a170d 45%, #0e0603 95%); }
+  .faixa-zona.com-3d .faixa { display: none; }
+  .faixa-cena { position: absolute; inset: 0; }
+  .faixa-cena canvas { display: block; width: 100%; height: 100%; }
+  .selo-saca {
+    display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; flex-shrink: 0;
+    margin-right: 2.6rem; padding: 8px 18px; border: 3px solid currentColor; outline: 1.5px solid currentColor; outline-offset: 3px;
+    font-family: "JetBrains Mono", ui-monospace, Consolas, monospace; text-transform: uppercase; opacity: .82; mix-blend-mode: multiply;
+    transform: rotate(var(--r, 0deg));
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3 0 0 0 2.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3 0 0 0 2.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .selo-saca small { font-size: .6rem; letter-spacing: .22em; font-weight: 500; }
+  .selo-saca b { font-family: Fraunces, Georgia, serif; font-size: 1.55rem; letter-spacing: .06em; line-height: 1; font-weight: 700; }
+  .selo-saca.vermelho { color: #8e1f1c; }
+  .selo-saca.redondo { width: 98px; height: 98px; padding: 0; border-radius: 50%; }
+  .selo-saca.redondo b { font-size: 1.2rem; }
+
+  /* Processo */
+  .linha-tempo { position: relative; max-width: 860px; margin: 52px auto 0; }
+  .linha-tempo::before, .linha-enche { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--creme-2); }
+  .linha-enche { background: linear-gradient(var(--ouro), var(--moinho)); transform-origin: top; transform: scaleY(0); }
+  .passo { position: relative; width: 50%; padding: 0 48px 56px 0; text-align: right; }
+  .passo.dir { margin-left: 50%; padding: 0 0 56px 48px; text-align: left; }
+  .passo::after { content: ""; position: absolute; top: 14px; right: -9px; width: 18px; height: 18px; border-radius: 50%; background: var(--leite); border: 2px solid var(--creme-2); transition: all .5s; }
+  .passo.dir::after { right: auto; left: -9px; }
+  .passo.ativo::after { background: var(--moinho); border-color: var(--moinho); box-shadow: 0 0 0 7px rgba(179,38,43,.14); }
+  .passo .num { font-family: Fraunces, serif; font-size: 3rem; line-height: 1; color: var(--creme-2); transition: color .6s; }
+  .passo.ativo .num { color: var(--ouro); }
+  .passo h3 { color: var(--cafe); font-size: 1.35rem; margin: 6px 0 4px; }
+  .passo p { color: var(--suave); }
+
+  /* Etiquetas em letra de máquina, como num talão */
+  .eyebrow, .mono { font-family: "JetBrains Mono", ui-monospace, Consolas, monospace; font-weight: 500; letter-spacing: .1em; }
+  .eyebrow::before { content: "// "; opacity: .55; }
+
+  /* Só duas cortinas: o resto da página sobe por cima da entrada, e no fim o "Visite-nos" sobe por cima da loja */
+  .cortina { position: relative; z-index: 1; background: var(--leite); border-radius: 32px 32px 0 0; box-shadow: 0 -24px 60px rgba(14,6,3,.35); padding-top: 56px; }
+  .hero::after, section.painel::after { content: ""; position: absolute; inset: 0; background: #0e0603; opacity: calc(var(--tapa, 0) * .6); pointer-events: none; z-index: 20; }
+  section.painel { position: sticky; z-index: 0; isolation: isolate; }
+  section.painel-fim { position: relative; z-index: 1; background: var(--leite); border-radius: 30px 30px 0 0; box-shadow: 0 -22px 50px rgba(20,10,5,.25); }
+  footer { position: relative; z-index: 1; }
+
+  /* Revelar ao scroll */
+  .revelar { opacity: 0; transform: translateY(40px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1), clip-path 1.2s cubic-bezier(.7,0,.2,1); transition-delay: var(--atraso, 0s); }
+  .revelar[data-anim="esquerda"] { transform: translateX(-60px); }
+  .revelar[data-anim="direita"] { transform: translateX(60px); }
+  .revelar[data-anim="cortina"] { opacity: 1; transform: none; clip-path: inset(0 0 100% 0); }
+  .revelar.visivel { opacity: 1; transform: none; clip-path: inset(0); }
+  .revelar[data-anim="placa"] { transform: none; }
+  .revelar[data-anim="placa"].visivel { animation: balancar 2s cubic-bezier(.3,.6,.3,1) both; transform-origin: 50% -40px; }
+  @keyframes balancar { 0% { opacity: 0; transform: translateY(-40px) rotate(-10deg); } 30% { opacity: 1; transform: rotate(6deg); } 52% { transform: rotate(-3deg); } 72% { transform: rotate(1.5deg); } 100% { transform: none; } }
+  .galeria figure.revelar img { transform: scale(1.25); transition: transform 1.8s cubic-bezier(.2,.7,.2,1); }
+  .galeria figure.visivel img { transform: scale(1); }
+  .galeria figure.visivel:hover img { transform: scale(1.05); transition-duration: .6s; }
+  .barra i { transform: scaleX(0); transform-origin: left; transition: transform 1.4s .4s cubic-bezier(.2,.7,.2,1); }
+  .origem.visivel .barra i { transform: none; }
+  .carimbo { will-change: transform; }
+
+  @media (max-width: 960px) { .categorias { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 860px) {
+    section { padding: 64px 0; }
+    .burger { display: block; }
+    .menu-links { position: fixed; inset: 72px 0 auto 0; flex-direction: column; gap: 0; background: var(--cafe); padding: 8px 20px 20px; display: none; }
+    .menu-links.aberto { display: flex; }
+    .menu-links a { display: block; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+    header:has(.aberto) { background: var(--cafe); }
+    .hero { align-items: flex-end; padding: 84px 0 64px; }
+    .hero::before { background: linear-gradient(transparent 30%, rgba(14,6,3,.8) 75%); }
+    .origens-t-wrap { margin-top: 8px; }
+    .linha-tempo::before, .linha-enche { left: 9px; }
+    .passo, .passo.dir { width: auto; margin-left: 0; padding: 0 0 44px 44px; text-align: left; }
+    .passo::after, .passo.dir::after { left: 0; right: auto; }
+    .faixa.juta { padding: 16px 0; }
+    .faixa-zona.com-3d { height: 230px; }
+    .selo-saca { margin-right: 1.8rem; padding: 6px 12px; }
+    .selo-saca b { font-size: 1.2rem; }
+    .selo-saca.redondo { width: 80px; height: 80px; }
+    .selo-saca.redondo b { font-size: 1rem; }
+    .desce { display: none; }
+    .historia-grid, .origens-grid, .moagem-grid, .visita-grid, .moinhos-grid, .encomenda-grid { grid-template-columns: 1fr; }
+    .moinho-vitrine { aspect-ratio: 1; }
+    .aviso-prototipo { bottom: 64px; }
+    .destaques { grid-template-columns: 1fr; }
+    .foto-moldura .carimbo { right: 10px; }
+    .galeria { grid-template-columns: 1fr 1fr; grid-auto-rows: 150px; }
+    .montra { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .frasco { font-size: .7rem; hyphens: auto; -webkit-hyphens: auto; }
+    .cortina { border-radius: 24px 24px 0 0; padding-top: 40px; }
+    section.painel-fim { border-radius: 22px 22px 0 0; }
+    .ficha-moagem { max-width: none; }
+    .frutos-palco { min-height: 86vh; align-items: flex-end; padding: 80px 0 40px; }
+    .frutos-palco::before { background: linear-gradient(transparent 25%, rgba(30,17,10,.6) 70%, transparent); }
+    .aroma-perto { opacity: .75; }
+  }
+  @media (max-width: 480px) { .origens, .categorias { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) {
+    .revelar, .hero-entra, .hero h1 .p > span, .hero-bg, .galeria figure.revelar img, .barra i { opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important; animation: none !important; }
+    .desce i { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-conteudo">
+    <svg class="intro-cena" viewBox="0 0 220 300">
+      <defs>
+        <linearGradient id="i-verm" x1="0" x2="1"><stop offset="0" stop-color="#4a0709"/><stop offset=".32" stop-color="#9c1d22"/><stop offset=".48" stop-color="#d9564f"/><stop offset=".62" stop-color="#8f1a1e"/><stop offset="1" stop-color="#3a0507"/></linearGradient>
+        <linearGradient id="i-crom" x1="0" x2="1"><stop offset="0" stop-color="#5c5c5c"/><stop offset=".38" stop-color="#f4f4f4"/><stop offset=".6" stop-color="#8f8f8f"/><stop offset=".82" stop-color="#e2e2e2"/><stop offset="1" stop-color="#5a5a5a"/></linearGradient>
+        <linearGradient id="i-kraft" x1="0" x2="1"><stop offset="0" stop-color="#6e4a28"/><stop offset=".25" stop-color="#b98a55"/><stop offset=".5" stop-color="#d4a86f"/><stop offset=".78" stop-color="#a87a47"/><stop offset="1" stop-color="#5e3e20"/></linearGradient>
+        <linearGradient id="i-moido" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a522c"/><stop offset="1" stop-color="#3e2112"/></linearGradient>
+        <filter id="i-papel" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .2  0 0 0 0 .12  0 0 0 0 .05  0 0 0 .35 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+        <filter id="i-desf"><feGaussianBlur stdDeviation="4"/></filter>
+        <clipPath id="i-janela"><rect x="93" y="206" width="34" height="62" rx="5"/></clipPath>
+      </defs>
+      <ellipse cx="110" cy="292" rx="66" ry="7" fill="rgba(0,0,0,.55)" filter="url(#i-desf)"/>
+      <!-- moinho -->
+      <path d="M78 8h64l-15 36h-34z" fill="url(#i-crom)" opacity=".55"/>
+      <g fill="#3b1e10"><ellipse cx="98" cy="34" rx="4" ry="2.6" transform="rotate(30 98 34)"/><ellipse cx="108" cy="37" rx="4" ry="2.6" transform="rotate(-20 108 37)"/><ellipse cx="118" cy="33" rx="4" ry="2.6" transform="rotate(60 118 33)"/><ellipse cx="104" cy="28" rx="4" ry="2.6" transform="rotate(-50 104 28)"/><ellipse cx="114" cy="26" rx="4" ry="2.6"/><ellipse cx="124" cy="27" rx="4" ry="2.6" transform="rotate(40 124 27)"/></g>
+      <rect x="76" y="5" width="68" height="5" rx="2.5" fill="url(#i-crom)"/>
+      <rect x="100" y="43" width="20" height="9" fill="url(#i-crom)"/>
+      <rect x="76" y="51" width="68" height="58" rx="15" fill="url(#i-verm)"/>
+      <circle cx="110" cy="80" r="21" fill="none" stroke="url(#i-crom)" stroke-width="2.5"/>
+      <g class="roda"><circle cx="110" cy="80" r="16" fill="none" stroke="#e8e8e8" stroke-width="3"/><path d="M110 64v32M94 80h32M98.7 68.7l22.6 22.6M121.3 68.7l-22.6 22.6" stroke="#cfcfcf" stroke-width="1.6"/><circle cx="110" cy="80" r="4" fill="#f4f4f4"/></g>
+      <path d="M95 109h30l-5 13h-20z" fill="url(#i-verm)"/>
+      <path d="M103 121h14l-2 10h-10z" fill="url(#i-crom)"/>
+      <!-- café moído a cair -->
+      <path class="jorro" d="M110 131V236" stroke="#9a5e34" stroke-width="4" stroke-linecap="round"/>
+      <!-- saco de papel -->
+      <path d="M62 170l9-11h78l9 11z" fill="#4e331b"/>
+      <path d="M62 170h96l6 118H56z" fill="url(#i-kraft)"/>
+      <path d="M62 170h96l6 118H56z" filter="url(#i-papel)"/>
+      <path d="M74 172l-4 116M146 172l4 116" stroke="rgba(0,0,0,.14)" stroke-width="1.2"/>
+      <path d="M62 170h96l.6 7H61.4z" fill="rgba(0,0,0,.22)"/>
+      <text x="110" y="196" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="12.5" font-weight="700" fill="#3b2418">Casa do Café</text>
+      <rect x="93" y="206" width="34" height="62" rx="5" fill="rgba(255,246,230,.22)"/>
+      <g clip-path="url(#i-janela)"><rect class="enche" x="93" y="206" width="34" height="62" fill="url(#i-moido)"/><path class="monte" d="M93 214q17-9 34 0v6H93z" fill="#8a522c"/></g>
+      <rect x="93" y="206" width="34" height="62" rx="5" fill="none" stroke="rgba(255,240,215,.5)" stroke-width="1.2"/>
+      <path d="M97 211v50" stroke="rgba(255,255,255,.22)" stroke-width="2.4" stroke-linecap="round"/>
+      <text x="110" y="281" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5.6" letter-spacing=".9" fill="#3b2418">MOÍDO NA HORA · AVEIRO</text>
+    </svg>
+    <p>CASA DO CAFÉ</p>
+    <strong>desde 1971</strong>
+  </div>
+</div>
+<script>
+  // Mostrar a entrada só na primeira visita da sessão
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  try {
+    if (sessionStorage.getItem('intro-vista') === '1' || matchMedia('(prefers-reduced-motion: reduce)').matches)
+      document.getElementById('intro').classList.add('saiu', 'sem-transicao');
+    sessionStorage.setItem('intro-vista', '1');
+  } catch (e) {}
+</script>
+<div class="progresso" id="progresso"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="grao" viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="12" ry="17" fill="currentColor"/><path d="M20 4C13 14 27 26 20 36" stroke="rgba(0,0,0,.35)" stroke-width="2.5" fill="none"/></symbol>
+</svg>
+
+<header id="topo">
+  <div class="wrap nav">
+    <a href="#inicio" class="logo" aria-label="Casa do Café — início">
+      <svg width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="19" stroke="#f1e4bd" stroke-width="2"/><path d="M11 17h15v6a6 6 0 0 1-6 6h-3a6 6 0 0 1-6-6z" fill="#f1e4bd"/><path d="M26 19h2a3 3 0 0 1 0 6h-2" stroke="#f1e4bd" stroke-width="2"/><path d="M15 10q-2 2.5 0 5M19 9q-2 3 0 6M23 10q-2 2.5 0 5" stroke="#f1e4bd" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div><span>Casa do Café</span><small>Desde 1971 · Aveiro</small></div>
+    </a>
+    <button class="burger" aria-label="Abrir menu" aria-expanded="false">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <ul class="menu-links">
+      <li><a href="#historia">História</a></li>
+      <li><a href="#cafes">Os cafés</a></li>
+      <li><a href="#mercearia">Mercearia</a></li>
+      <li><a href="#moinhos">Moinhos</a></li>
+      <li><a href="#encomenda">Encomendar</a></li>
+      <li><a href="#visita">Visite-nos</a></li>
+    </ul>
+  </div>
+</header>
+
+<section class="hero" id="inicio">
+  <div class="aroma-3d" id="aroma3d" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-texto">
+      <span class="selo-ano hero-entra" style="--atraso:.15s">☕ DESDE 1971 · VERA CRUZ, AVEIRO</span>
+      <h1><span class="p"><span>Café</span></span> <span class="p"><span>moído</span></span> <span class="p"><span>na</span></span> <span class="p"><span>hora,</span></span> <em><span class="p"><span>como</span></span> <span class="p"><span>sempre</span></span> <span class="p"><span>foi.</span></span></em></h1>
+      <p class="hero-entra" style="--atraso:.9s">Arábica pura de seis origens, escolhida e moída à sua frente nos nossos moinhos tradicionais. Há mais de 50 anos no centro de Aveiro.</p>
+      <div class="hero-acoes hero-entra" style="--atraso:1.1s">
+        <a href="#cafes" class="btn btn-primario">Conhecer os cafés</a>
+        <a href="#visita" class="btn btn-linha">Visitar a loja</a>
+      </div>
+    </div>
+  </div>
+  <div class="aroma-perto" id="aroma3d-perto" aria-hidden="true"></div>
+  <a href="#historia" class="desce hero-entra" style="--atraso:1.5s">DESCUBRA<i></i></a>
+</section>
+
+<div class="cortina" id="cortina">
+<div class="wrap destaques">
+  <div class="destaque revelar">
+    <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="12" rx="6" ry="9" transform="rotate(30 12 12)"/><path d="M8 6c3 3 5 8 8 12"/></svg></div>
+    <h3>Arábica pura</h3>
+    <p>Colômbia, S. Tomé, Brasil, Quénia, Honduras e Timor — a granel ou em misturas da casa.</p>
+  </div>
+  <div class="destaque revelar">
+    <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="14" r="6"/><circle cx="12" cy="14" r="2"/><path d="M9 3h6l-1 5h-4z"/></svg></div>
+    <h3>Moído à sua medida</h3>
+    <p>Diga-nos como faz o café em casa e nós acertamos a moagem: expresso, cafeteira ou filtro.</p>
+  </div>
+  <div class="destaque revelar">
+    <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16l-1.5 12a2 2 0 0 1-2 2h-9a2 2 0 0 1-2-2z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg></div>
+    <h3>Mercearia fina</h3>
+    <p>Frutos secos, bacalhau, vinhos, chás, especiarias, biscoitos e sementes de horta.</p>
+  </div>
+</div>
+
+<div class="faixa-zona" id="faixa-zona" aria-hidden="true">
+  <div class="faixa-cena" id="faixa3d"></div>
+  <div class="aroma-perto" id="faixa3d-perto"></div>
+  <div class="faixa juta"><div class="faixa-trilho">
+    <span class="selo-saca" style="--r:-2deg"><small>Café verde</small><b>Colômbia</b><small>Arábica pura</small></span><span class="selo-saca vermelho" style="--r:1.5deg"><small>Café verde</small><b>S. Tomé</b><small>Arábica pura</small></span><span class="selo-saca" style="--r:-1deg"><small>Café verde</small><b>Brasil</b><small>Arábica pura</small></span><span class="selo-saca redondo" style="--r:-6deg"><small>Casa do Café</small><b>1971</b><small>Aveiro</small></span><span class="selo-saca vermelho" style="--r:2deg"><small>Café verde</small><b>Kenya</b><small>Arábica pura</small></span><span class="selo-saca" style="--r:-1.5deg"><small>Café verde</small><b>Honduras</b><small>Arábica pura</small></span><span class="selo-saca vermelho" style="--r:1deg"><small>Café verde</small><b>Timor</b><small>Arábica pura</small></span><span class="selo-saca redondo vermelho" style="--r:5deg"><small>Casa do Café</small><b>Moído</b><small>na hora</small></span>
+    <span class="selo-saca" style="--r:-2deg"><small>Café verde</small><b>Colômbia</b><small>Arábica pura</small></span><span class="selo-saca vermelho" style="--r:1.5deg"><small>Café verde</small><b>S. Tomé</b><small>Arábica pura</small></span><span class="selo-saca" style="--r:-1deg"><small>Café verde</small><b>Brasil</b><small>Arábica pura</small></span><span class="selo-saca redondo" style="--r:-6deg"><small>Casa do Café</small><b>1971</b><small>Aveiro</small></span><span class="selo-saca vermelho" style="--r:2deg"><small>Café verde</small><b>Kenya</b><small>Arábica pura</small></span><span class="selo-saca" style="--r:-1.5deg"><small>Café verde</small><b>Honduras</b><small>Arábica pura</small></span><span class="selo-saca vermelho" style="--r:1deg"><small>Café verde</small><b>Timor</b><small>Arábica pura</small></span><span class="selo-saca redondo vermelho" style="--r:5deg"><small>Casa do Café</small><b>Moído</b><small>na hora</small></span>
+  </div></div>
+</div>
+
+<section id="historia">
+  <svg class="grao" data-vel=".2" data-rot="10" style="left:3%;top:12%;width:30px"><use href="#grao"/></svg>
+  <svg class="grao" data-vel=".35" data-rot="-50" style="right:4%;bottom:8%;width:24px"><use href="#grao"/></svg>
+  <div class="wrap historia-grid">
+    <div class="foto-moldura revelar" data-anim="esquerda">
+      <img src="img/fachada.jpg" alt="Fachada da Casa do Café com o toldo creme" loading="lazy">
+      <div class="carimbo"><div><strong>1971</strong>desde</div></div>
+    </div>
+    <div class="revelar">
+      <p class="eyebrow">A nossa história</p>
+      <h2 class="titulo">Mais de meio século a cheirar a café</h2>
+      <p class="lead">Desde 1971 que a Casa do Café abre a porta debaixo do mesmo toldo creme, na Praça 14 de Julho, logo depois dos Arcos. Lá dentro, os balcões de madeira, as gavetas a granel e os moinhos vermelhos continuam a fazer o que sempre fizeram: servir café acabado de moer a quem passa.</p>
+      <p class="lead" style="margin-top:14px">Hoje é o Sr. Frutuoso Seabra de Almeida quem está ao balcão, com o filho. Mercearia fina à moda antiga, sem largar a qualidade nem as coisas novas que valem a pena. <span class="confirmar">[Confirmar com o Sr. Frutuoso: como começou a casa e quando ficou com ela]</span></p>
+      <div class="numeros">
+        <div><strong data-conta="1971">1971</strong><span>ano de abertura</span></div>
+        <div><strong data-conta="6">6</strong><span>origens de arábica</span></div>
+        <div><strong data-conta="5">5</strong><span>moinhos tradicionais</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cafes">
+  <svg class="grao" data-vel=".3" data-rot="40" style="right:5%;top:10%;width:28px"><use href="#grao"/></svg>
+  <svg class="grao" data-vel=".18" data-rot="-15" style="left:2%;bottom:15%;width:36px"><use href="#grao"/></svg>
+  <div class="wrap">
+    <p class="eyebrow">Os nossos cafés</p>
+    <h2 class="titulo">Arábica pura, de seis cantos do mundo</h2>
+    <p class="lead">Vendido ao peso, em grão ou moído na hora. Prove uma origem pura ou peça a nossa mistura da casa.</p>
+
+    <div class="origens-grid">
+      <div class="placa revelar" data-anim="placa" aria-label="Placa da loja com as origens do café">
+        <div class="placa-3d" id="placa3d" aria-hidden="true"></div>
+        <div class="moldura">
+          <small><span>Desde</span><span>1971</span></small>
+          <b>CASA DO CAFÉ</b>
+          <i>VERA CRUZ</i>
+        </div>
+        <h3>Arábica Pura</h3>
+        <ul><li>Colômbia</li><li>S. Tomé</li><li>Brasil</li><li>Kenya</li><li>Honduras</li><li>Timor</li></ul>
+      </div>
+
+      <div>
+        <div class="origens-t-wrap">
+          <table class="origens-t">
+            <thead><tr><th>Arábica pura</th><th>Corpo</th><th>Acidez</th><th>Doçura</th><th>Intensidade</th><th>Melhor para</th></tr></thead>
+            <tbody>
+              <tr class="revelar"><td class="o-nome"><strong>Colômbia</strong><span>Suave, notas de caramelo</span></td><td data-n="3"></td><td data-n="3"></td><td data-n="4"></td><td data-n="3"></td><td><span class="moagem-tag">Expresso</span><span class="moagem-tag">Filtro</span></td></tr>
+              <tr class="revelar"><td class="o-nome"><strong>S. Tomé</strong><span>Encorpado, chocolate amargo</span></td><td data-n="4"></td><td data-n="2"></td><td data-n="3"></td><td data-n="4"></td><td><span class="moagem-tag">Expresso</span><span class="moagem-tag">Italiana</span></td></tr>
+              <tr class="revelar"><td class="o-nome"><strong>Brasil</strong><span>Doce, frutos secos</span></td><td data-n="3"></td><td data-n="2"></td><td data-n="4"></td><td data-n="3"></td><td><span class="moagem-tag">Expresso</span><span class="moagem-tag">Italiana</span></td></tr>
+              <tr class="revelar"><td class="o-nome"><strong>Kenya</strong><span>Vivo e frutado</span></td><td data-n="3"></td><td data-n="5"></td><td data-n="3"></td><td data-n="3"></td><td><span class="moagem-tag">Filtro</span><span class="moagem-tag">Prensa</span></td></tr>
+              <tr class="revelar"><td class="o-nome"><strong>Honduras</strong><span>Macio, mel e fruta</span></td><td data-n="3"></td><td data-n="3"></td><td data-n="4"></td><td data-n="2"></td><td><span class="moagem-tag">Filtro</span><span class="moagem-tag">Italiana</span></td></tr>
+              <tr class="revelar"><td class="o-nome"><strong>Timor</strong><span>Terroso, final longo</span></td><td data-n="5"></td><td data-n="2"></td><td data-n="2"></td><td data-n="5"></td><td><span class="moagem-tag">Expresso</span><span class="moagem-tag">Prensa</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="legenda">Escala de 1 a 5. Valores e notas indicativos <span class="confirmar">[a confirmar com o Sr. Frutuoso]</span></p>
+        <div class="mistura revelar">
+          <h4>As misturas da casa</h4>
+          <p>Além das origens puras, o Sr. Frutuoso faz as suas próprias misturas no misturador da loja. Há clientes que ainda hoje pedem o <em>"lote do Sr. Macedo"</em>, de uma casa de Aveiro que já fechou — e saem com ele.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="mercearia">
+  <div class="frutos-fundo" aria-hidden="true"><div class="frutos-fixo">
+    <div class="aroma-3d" id="frutos3d"></div>
+    <div class="aroma-perto" id="frutos3d-perto"></div>
+  </div></div>
+  <div class="frutos-palco">
+    <div class="wrap frutos-texto">
+      <p class="eyebrow">A mercearia</p>
+      <h2>Muito mais<br><em>do que café.</em></h2>
+      <p class="lead">Uma mercearia fina à moda antiga. E os frutos secos, sempre expostos à porta, são uma das razões para entrar.</p>
+      <ul class="ficha-moagem mono">
+        <li><span>Tâmaras</span>Figos · Cajus · Amêndoas</li>
+        <li><span>Ao natural</span>Ou caramelizados</li>
+        <li><span>Vendidos</span>Ao peso, à sua escolha</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="categorias">
+      <div class="categoria revelar"><h4>Frutos secos</h4><p>Tâmaras, figos, cajus, amêndoas — ao natural e caramelizados</p></div>
+      <div class="categoria revelar"><h4>Vinhos</h4><p>Para a mesa e para oferecer</p></div>
+      <div class="categoria revelar"><h4>Bacalhau</h4><p>Da mercearia de sempre</p></div>
+      <div class="categoria revelar"><h4>Chás & especiarias</h4><p>A granel, vendidos ao peso</p></div>
+      <div class="categoria revelar"><h4>Biscoitos</h4><p>Para acompanhar o café</p></div>
+      <div class="categoria revelar"><h4>Sementes & leguminosas</h4><p>Para a horta e para a panela</p></div>
+      <div class="categoria revelar"><h4>Acessórios</h4><p>Cafeteiras, filtros e chaleiras</p></div>
+      <div class="categoria revelar"><h4>Cafés</h4><p>Em grão ou moído, origens e misturas da casa</p></div>
+    </div>
+
+    <div class="frutos-cab revelar">
+      <span class="exemplo-tag claro">Exemplo para mostrar a ideia</span>
+      <h3>A montra dos frutos secos</h3>
+      <p>Toque num frasco para ver como é.</p>
+    </div>
+    <div class="montra" id="montra" role="group" aria-label="Frutos secos"></div>
+    <div class="origens-t-wrap frutos-t-wrap">
+      <table class="origens-t" id="frutos-t">
+        <thead><tr><th>Fruto seco</th><th>Doçura</th><th>Crocância</th><th>Bom para</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="legenda" style="color:rgba(255,255,255,.6)">Escala de 1 a 5. <span class="confirmar" style="color:var(--texto)">[Produtos e valores de exemplo — confirmar com o Sr. Frutuoso o que há na loja]</span></p>
+  </div>
+</section>
+
+<section id="moinhos">
+  <div class="wrap moinhos-grid">
+    <div class="moinho-vitrine revelar" data-anim="esquerda">
+      <div class="moinho-3d" id="moinho3d" role="img" aria-label="Moinho de café vermelho em 3D, como os da loja. Arraste para rodar."></div>
+      <span class="marca">Almacinha · Porto</span>
+      <span class="dica-3d mono">↻ Arraste para rodar</span>
+    </div>
+    <div class="revelar" data-anim="direita">
+      <p class="eyebrow">O coração da casa</p>
+      <h2 class="titulo">Cinco moinhos com história</h2>
+      <p class="lead">Os moinhos vermelhos do balcão vieram da antiga fábrica Almacinha, no Porto. O Sr. Frutuoso foi procurá-los pelo norte do país, um a um, e restaurou-os. Um deles foi salvo da sucata.</p>
+      <p class="lead" style="margin-top:14px">Hoje são uma raridade em Portugal — e continuam a trabalhar todos os dias. Cada saco é moído e fechado à sua frente.</p>
+      <ul class="ficha-moagem mono">
+        <li><span>Peso</span>250 g · 500 g · 1 kg</li>
+        <li><span>Moagem</span>Em grão ou à medida</li>
+        <li><span>Saco</span>Fechado na hora</li>
+      </ul>
+      <div class="numeros">
+        <div><strong data-conta="5">5</strong><span>moinhos restaurados</span></div>
+        <div><strong data-conta="2">2</strong><span>gavetas em cada um</span></div>
+        <div><strong data-conta="1">1</strong><span>salvo da sucata</span></div>
+      </div>
+      <p class="legenda"><span class="confirmar">[História dos moinhos tirada de blogues de café (2013–2014) — confirmar com o Sr. Frutuoso]</span></p>
+    </div>
+  </div>
+</section>
+
+<section id="moagem">
+  <div class="wrap moagem-grid">
+    <div class="revelar" data-anim="esquerda">
+      <p class="eyebrow">Moagem à medida</p>
+      <h2 class="titulo">Como faz o café em casa?</h2>
+      <p class="lead">Cada máquina pede uma moagem diferente. Escolha a sua e nós moemos na hora, à sua frente.</p>
+      <div class="seletor" role="group" aria-label="Método de preparação">
+        <button aria-pressed="true" data-m="0">Máquina expresso</button>
+        <button aria-pressed="false" data-m="1">Cafeteira italiana</button>
+        <button aria-pressed="false" data-m="2">Filtro / V60</button>
+        <button aria-pressed="false" data-m="3">Prensa francesa</button>
+      </div>
+      <div class="resultado" aria-live="polite">
+        <div class="graos" id="graos"></div>
+        <div><h4 id="moagem-titulo"></h4><p id="moagem-texto"></p></div>
+      </div>
+    </div>
+    <img class="revelar" data-anim="direita" src="img/acessorios.jpg" alt="Chaleira e filtro de café em inox na montra" loading="lazy">
+  </div>
+</section>
+
+<section id="processo" style="background:var(--creme)">
+  <svg class="grao" data-vel=".15" data-rot="20" style="left:6%;top:20%;width:30px"><use href="#grao"/></svg>
+  <svg class="grao" data-vel=".32" data-rot="-40" style="right:8%;top:60%;width:22px"><use href="#grao"/></svg>
+  <div class="wrap">
+    <div class="revelar" style="text-align:center">
+      <p class="eyebrow">Como sempre se fez</p>
+      <h2 class="titulo">Do grão à sua chávena</h2>
+    </div>
+    <div class="linha-tempo">
+      <span class="linha-enche"></span>
+      <div class="passo revelar" data-anim="esquerda"><span class="num">01</span><h3>Escolhe a origem</h3><p>Sinta o aroma e peça conselho ao balcão — cada origem tem a sua personalidade.</p></div>
+      <div class="passo dir revelar" data-anim="direita"><span class="num">02</span><h3>Pesamos à medida</h3><p>Do quarto de quilo ao quilo, leva só o que precisa, sempre fresco.</p></div>
+      <div class="passo revelar" data-anim="esquerda"><span class="num">03</span><h3>Moemos na hora</h3><p>Nos moinhos vermelhos da casa, com a moagem certa para a sua máquina.</p></div>
+      <div class="passo dir revelar" data-anim="direita"><span class="num">04</span><h3>Leva o aroma para casa</h3><p>Num saco fechado na hora, para chegar a casa como saiu do moinho.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="encomenda">
+  <div class="wrap">
+    <span class="exemplo-tag">Ideia em aberto · exemplo do que o site pode fazer</span>
+    <p class="eyebrow">Encomende e levante na loja</p>
+    <h2 class="titulo">O seu café pronto quando chegar</h2>
+    <p class="lead">Escolha o café ou os frutos secos, a quantidade e a moagem. Nós preparamos e é só passar na loja para levantar e pagar.</p>
+    <div class="encomenda-grid">
+      <form class="form-enc revelar" id="form-enc" novalidate>
+        <label>Produto
+          <select id="enc-cafe">
+            <optgroup label="Café"><option>Mistura da casa</option><option>Colômbia</option><option>S. Tomé</option><option>Brasil</option><option>Kenya</option><option>Honduras</option><option>Timor</option></optgroup>
+            <optgroup label="Frutos secos"><option>Tâmaras</option><option>Figos secos</option><option>Cajus</option><option>Amêndoas</option><option>Nozes</option><option>Damascos</option><option>Caramelizados</option></optgroup>
+          </select>
+        </label>
+        <div class="duas">
+          <label>Quantidade
+            <select id="enc-qtd"><option>250 g</option><option selected>500 g</option><option>1 kg</option></select>
+          </label>
+          <label>Moagem
+            <select id="enc-moagem"><option>Em grão</option><option selected>Expresso</option><option>Cafeteira italiana</option><option>Filtro</option><option>Prensa francesa</option></select>
+          </label>
+        </div>
+        <div class="duas">
+          <label>Nome<input id="enc-nome" placeholder="O seu nome" autocomplete="off"></label>
+          <label>Levantar
+            <select id="enc-dia"></select>
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primario">Fazer encomenda</button>
+      </form>
+      <div>
+        <div class="talao revelar" id="talao" aria-live="polite">
+          <h4>Como funciona</h4>
+          <div class="passos-enc">
+            <div><b>1</b><p>O cliente escolhe o café no telemóvel, a qualquer hora.</p></div>
+            <div><b>2</b><p>A encomenda chega à loja por email ou WhatsApp.</p></div>
+            <div><b>3</b><p>O café é moído na hora e fica à espera, com o nome do cliente.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="loja" class="painel">
+  <div class="wrap">
+    <p class="eyebrow">A loja por dentro</p>
+    <h2 class="titulo">Gavetas, balcões e cheiro a café</h2>
+    <p class="lead">Uma mercearia à moda antiga, com tudo arrumado em gavetas e prateleiras de madeira.</p>
+    <div class="galeria" style="margin-top:36px">
+      <figure class="g1 revelar" data-anim="cortina"><img src="img/moinhos.jpg" alt="Moinhos de café vermelhos tradicionais" loading="lazy"><figcaption>Os moinhos da casa</figcaption></figure>
+      <figure class="revelar" data-anim="cortina"><img src="img/fachada.jpg" alt="Fachada da loja" loading="lazy"><figcaption>A nossa porta</figcaption></figure>
+      <figure class="revelar" data-anim="cortina"><img src="img/acessorios.jpg" alt="Acessórios para café" loading="lazy"><figcaption>Acessórios</figcaption></figure>
+      <figure class="g4 revelar" data-anim="cortina"><img src="img/balcao.jpg" alt="Balcão de madeira com prateleiras cheias de produtos" loading="lazy"><figcaption>O balcão</figcaption></figure>
+      <figure class="g4 revelar" data-anim="cortina" style="grid-column: span 4"><img src="img/interior.jpg" alt="Interior da loja com gavetas a granel" loading="lazy" style="object-position: center 60%"><figcaption>As gavetas a granel</figcaption></figure>
+    </div>
+    <p class="creditos">Fotografias provisórias retiradas do Google Maps (Smart CoDi, Prof. Oscar Bastidas Delgado) — a substituir por fotografias da casa.</p>
+  </div>
+</section>
+
+<section id="visita" class="painel-fim">
+  <div class="wrap">
+    <p class="eyebrow">Visite-nos</p>
+    <h2 class="titulo">Passe cá pela casa</h2>
+    <p class="lead">No centro de Aveiro, a poucos minutos dos canais.</p>
+    <div class="visita-grid">
+      <div>
+        <div class="estado" id="estado"><i></i><span>A verificar…</span></div>
+        <ul class="horario" id="horario">
+          <li data-dia="1"><span>Segunda-feira</span><span>09:00 – 19:00</span></li>
+          <li data-dia="2"><span>Terça-feira</span><span>09:00 – 19:00</span></li>
+          <li data-dia="3"><span>Quarta-feira</span><span>09:00 – 19:00</span></li>
+          <li data-dia="4"><span>Quinta-feira</span><span>09:00 – 19:00</span></li>
+          <li data-dia="5"><span>Sexta-feira</span><span>09:00 – 19:00</span></li>
+          <li data-dia="6"><span>Sábado</span><span>09:00 – 13:00</span></li>
+          <li data-dia="0"><span>Domingo</span><span>Encerrado</span></li>
+        </ul>
+        <p class="legenda"><span class="confirmar">[Horário de exemplo — confirmar]</span></p>
+        <div class="contacto">
+          <div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Praça 14 de Julho, 14 A · 3800-131 Aveiro</span></div>
+          <a href="tel:+351234428383"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span>234 428 383</span></a>
+          <a href="https://www.facebook.com/CasadoCafeAveiro" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg><span>facebook.com/CasadoCafeAveiro</span></a>
+          <div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg><span class="confirmar">[Email, se houver]</span></div>
+        </div>
+      </div>
+      <div class="globo revelar" data-anim="direita" id="globo" aria-label="Globo 3D com as seis origens do café ligadas a Aveiro. Toque para viajar até à loja.">
+        <div class="globo-rotulos" id="globo-rotulos"></div>
+        <div class="globo-topo"><strong>Seis cantos do mundo, uma porta em Aveiro</strong><span>Cada linha é um café que chega à Praça 14 de Julho.</span></div>
+        <div class="globo-ui">
+          <p>Arraste para rodar · toque para viajar</p>
+          <button class="btn btn-primario" id="btn-viajar" type="button">Viajar até à loja</button>
+        </div>
+        <div class="chegada" id="chegada">
+          <div>
+            <div class="pino"></div>
+            <strong>Chegou à Casa do Café</strong>
+            <span>Praça 14 de Julho, 14 A · 3800-131 Aveiro</span>
+            <div class="acoes">
+              <a class="btn btn-primario" href="https://www.google.com/maps/search/?api=1&amp;query=Casa%20do%20Caf%C3%A9%20Pra%C3%A7a%2014%20de%20Julho%2014%20Aveiro" target="_blank" rel="noopener">Abrir no Google Maps</a>
+              <button class="btn btn-linha" id="btn-voltar" type="button">Voltar ao mundo</button>
+            </div>
+          </div>
+        </div>
+        <div class="globo-fallback">
+          <a class="mapa-link" href="https://www.google.com/maps/search/?api=1&amp;query=Casa%20do%20Caf%C3%A9%20Pra%C3%A7a%2014%20de%20Julho%2014%20Aveiro" target="_blank" rel="noopener"><strong>Praça 14 de Julho, 14 A</strong><span>Abrir no Google Maps →</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="ano"></span> Casa do Café · Vera Cruz, Aveiro · Desde 1971</span>
+    <span class="assinatura">Site feito por <strong>Sérgio David Ferreira</strong></span>
+    <div class="redes"><a href="https://www.facebook.com/CasadoCafeAveiro" target="_blank" rel="noopener">Facebook</a><a href="https://www.google.com/maps/search/?api=1&amp;query=Casa%20do%20Caf%C3%A9%20Pra%C3%A7a%2014%20de%20Julho%20Aveiro" target="_blank" rel="noopener">Google Maps</a></div>
+  </div>
+</footer>
+</div>
+
+<div class="aviso-prototipo">Protótipo · texto em amarelo a confirmar</div>
+
+<button class="btn-ideias" id="btn-ideias" aria-expanded="false" aria-controls="painel-ideias">O que o site pode fazer</button>
+<aside class="painel-ideias" id="painel-ideias" hidden>
+  <button class="fechar" id="fechar-ideias" aria-label="Fechar">×</button>
+  <h3>O que o site pode fazer</h3>
+  <p class="legenda" style="margin-top:0">Para conversar com a Casa do Café.</p>
+  <h5>Já neste modelo</h5>
+  <ul>
+    <li>História da casa e dos moinhos</li>
+    <li>As seis origens e as misturas da casa</li>
+    <li>Guia de moagem para cada máquina</li>
+    <li>Horário com "aberto agora", morada, mapa e telefone</li>
+    <li>Moinho vermelho em 3D na abertura, que mói com o scroll</li>
+    <li>Tabela de sabores das seis origens</li>
+    <li>Globo 3D: das origens até à porta da loja</li>
+    <li>Pensado primeiro para o telemóvel</li>
+  </ul>
+  <h5>Vai ter</h5>
+  <ul class="mais">
+    <li>Site em português, inglês e outras línguas, para quem visita Aveiro</li>
+    <li>Ficha no Google Maps atualizada, com fotos novas e horário certo</li>
+    <li>Facebook e Instagram criados e geridos, com publicações regulares</li>
+  </ul>
+  <h5>Fica em aberto</h5>
+  <ul class="mais">
+    <li>Encomendas para levantar na loja (exemplo neste modelo)</li>
+    <li>Envio de café pelo correio, com pagamento online</li>
+    <li>Cabazes de Natal e de oferta: café, frutos secos, vinho</li>
+  </ul>
+  <h5>Precisamos da casa</h5>
+  <ul class="precisa">
+    <li>Fotografias novas da loja, dos moinhos e dos produtos</li>
+    <li>Horário certo e email</li>
+    <li>A história da casa contada pelo Sr. Frutuoso</li>
+    <li>Notas de prova de cada origem</li>
+  </ul>
+</aside>
+
+<script>
+  const topo = document.getElementById('topo');
+  const reduzido = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Entrada: o moinho enche o saco e a página sobe como uma cortina
+  const intro = document.getElementById('intro');
+  document.querySelectorAll('.hero h1 .p > span').forEach((s, i) => s.style.transitionDelay = (.5 + i * .08) + 's');
+  const comecar = () => { intro.classList.add('saiu'); document.body.classList.add('pronto'); };
+  if (intro.classList.contains('saiu')) requestAnimationFrame(comecar); else setTimeout(comecar, 2900);
+
+  // Menu móvel
+  const burger = document.querySelector('.burger');
+  const links = document.querySelector('.menu-links');
+  burger.addEventListener('click', () => {
+    const aberto = links.classList.toggle('aberto');
+    burger.setAttribute('aria-expanded', aberto);
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('aberto');
+    burger.setAttribute('aria-expanded', 'false');
+  }));
+
+  // Guia de moagem
+  const moagens = [
+    { t: 'Moagem fina', d: 'Quase como açúcar em pó. Ideal para máquinas de expresso.', n: 36, s: 6 },
+    { t: 'Moagem média-fina', d: 'Um pouco mais grossa que para expresso — perfeita para a cafeteira italiana.', n: 20, s: 9 },
+    { t: 'Moagem média', d: 'Textura de areia. Para máquinas de filtro, V60 e Chemex.', n: 12, s: 12 },
+    { t: 'Moagem grossa', d: 'Grãos bem visíveis, como sal grosso. Para prensa francesa e cold brew.', n: 6, s: 17 }
+  ];
+  const graos = document.getElementById('graos');
+  function mostrarMoagem(i) {
+    const m = moagens[i];
+    document.getElementById('moagem-titulo').textContent = m.t;
+    document.getElementById('moagem-texto').textContent = m.d;
+    graos.innerHTML = Array.from({ length: m.n }, () => `<i style="width:${m.s}px;height:${m.s}px"></i>`).join('');
+    document.querySelectorAll('.seletor button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m == i));
+  }
+  document.querySelectorAll('.seletor button').forEach(b => b.addEventListener('click', () => mostrarMoagem(+b.dataset.m)));
+  mostrarMoagem(0);
+
+  // Horário: destacar hoje e mostrar se está aberto
+  const agora = new Date();
+  const hoje = document.querySelector(`#horario li[data-dia="${agora.getDay()}"]`);
+  hoje.classList.add('hoje');
+  const estado = document.getElementById('estado');
+  const m = hoje.lastElementChild.textContent.match(/(\d+):(\d+)\s*–\s*(\d+):(\d+)/);
+  const minutos = agora.getHours() * 60 + agora.getMinutes();
+  const aberto = m && minutos >= m[1] * 60 + +m[2] && minutos < m[3] * 60 + +m[4];
+  estado.classList.toggle('fechado', !aberto);
+  estado.querySelector('span').textContent = aberto ? 'Aberto agora' : 'Fechado agora';
+
+  document.getElementById('ano').textContent = agora.getFullYear();
+
+  // Encomenda de exemplo: nada é enviado
+  const diaSel = document.getElementById('enc-dia');
+  const nomesDias = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+  for (let d = 0, n = 0; n < 4 && d < 10; d++) {
+    const data = new Date(agora); data.setDate(agora.getDate() + d);
+    if (data.getDay() === 0) continue;
+    const rotulo = d === 0 ? 'Hoje' : d === 1 ? 'Amanhã' : nomesDias[data.getDay()][0].toUpperCase() + nomesDias[data.getDay()].slice(1);
+    diaSel.add(new Option(`${rotulo}, ${data.getDate()}/${data.getMonth() + 1}`));
+    n++;
+  }
+  document.getElementById('form-enc').addEventListener('submit', e => {
+    e.preventDefault();
+    const v = id => document.getElementById(id).value;
+    const nome = v('enc-nome').trim() || 'Cliente';
+    const talao = document.getElementById('talao');
+    talao.innerHTML = `<h4>Encomenda registada ✓</h4>
+      <ul><li><span>Café</span><b></b></li><li><span>Quantidade</span><b></b></li><li><span>Moagem</span><b></b></li><li><span>Nome</span><b></b></li><li><span>Levantar</span><b></b></li></ul>
+      <p class="nota">Isto é só um exemplo: nada foi enviado. No site final, a encomenda chegaria à loja por email ou WhatsApp.</p>`;
+    talao.querySelector('li span').textContent = 'Produto';
+    [v('enc-cafe'), v('enc-qtd'), moagemSel.disabled ? '—' : v('enc-moagem'), nome, v('enc-dia')].forEach((t, i) => talao.querySelectorAll('b')[i].textContent = t);
+  });
+  // A moagem só faz sentido para o café
+  const produtoSel = document.getElementById('enc-cafe'), moagemSel = document.getElementById('enc-moagem');
+  produtoSel.addEventListener('change', () => { moagemSel.disabled = produtoSel.selectedOptions[0].parentElement.label !== 'Café'; });
+
+  // Painel de ideias
+  const btnIdeias = document.getElementById('btn-ideias');
+  const painel = document.getElementById('painel-ideias');
+  const alternarPainel = abrir => { painel.hidden = !abrir; btnIdeias.setAttribute('aria-expanded', abrir); };
+  btnIdeias.addEventListener('click', () => alternarPainel(painel.hidden));
+  document.getElementById('fechar-ideias').addEventListener('click', () => alternarPainel(false));
+
+  // Efeitos ligados ao scroll
+  const progresso = document.getElementById('progresso');
+  const graosFlutuantes = [...document.querySelectorAll('.grao')];
+  const carimbo = document.querySelector('.carimbo');
+  const linhaTempo = document.querySelector('.linha-tempo');
+  const linhaEnche = document.querySelector('.linha-enche');
+  const passos = [...document.querySelectorAll('.passo')];
+  let ultimoY = window.scrollY, velFaixa = 0, pedido = false;
+
+  function aoScroll() {
+    // primeiro todas as medições, depois todas as mudanças (assim o navegador só calcula a página uma vez)
+    const y = window.scrollY, h = innerHeight;
+    const max = document.documentElement.scrollHeight - h;
+    const subir = y > ultimoY;
+    velFaixa += (y - ultimoY) * .12;
+    ultimoY = y;
+    const animar = !reduzido;
+    const topos = animar ? graosFlutuantes.map(g => g.parentElement.getBoundingClientRect().top) : [];
+    const topoCarimbo = animar ? carimbo.getBoundingClientRect().top : 0;
+    const r = animar ? linhaTempo.getBoundingClientRect() : null;
+    const ativos = animar ? passos.map(p => p.getBoundingClientRect().top < h * .6) : [];
+    const tapas = animar ? cortinas.map(([, cima]) => Math.min(1, Math.max(0, 1 - cima.getBoundingClientRect().top / h))) : [];
+
+    progresso.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+    topo.classList.toggle('solido', y > 40);
+    topo.classList.toggle('escondido', subir && y > 500 && !links.classList.contains('aberto'));
+    if (!animar) return;
+    graosFlutuantes.forEach((g, i) => {
+      g.style.transform = `translateY(${-topos[i] * g.dataset.vel}px) rotate(${+g.dataset.rot - topos[i] * .06}deg)`;
+    });
+    carimbo.style.transform = `rotate(${(topoCarimbo - h / 2) * -.06}deg)`;
+    linhaEnche.style.transform = `scaleY(${Math.min(1, Math.max(0, (h * .6 - r.top) / r.height))})`;
+    passos.forEach((p, i) => p.classList.toggle('ativo', ativos[i]));
+    // cortinas: escurecer o que está a ser tapado
+    cortinas.forEach(([baixo], i) => baixo.style.setProperty('--tapa', tapas[i].toFixed(3)));
+  }
+
+  // Só duas cortinas: a página sobe por cima da entrada; no fim, "Visite-nos" sobe por cima da loja
+  const cortinas = [[document.getElementById('inicio'), document.getElementById('cortina')], [document.getElementById('loja'), document.getElementById('visita')]];
+  function medirCortinas() {
+    cortinas.forEach(([s]) => { s.style.top = Math.min(0, innerHeight - s.offsetHeight) + 'px'; });
+  }
+  medirCortinas();
+  addEventListener('resize', medirCortinas);
+  addEventListener('load', medirCortinas);
+  if ('ResizeObserver' in window) new ResizeObserver(() => medirCortinas()).observe(document.body);
+  window.addEventListener('scroll', () => {
+    if (pedido) return;
+    pedido = true;
+    requestAnimationFrame(() => { aoScroll(); pedido = false; });
+  }, { passive: true });
+  aoScroll();
+
+  // Faixa de origens: anda sozinha e acelera com o scroll
+  const trilho = document.querySelector('.faixa-trilho');
+  // (é a versão sem 3D: só anda quando está à vista)
+  let posFaixa = 0, metade = 0, faixaVisivel = false, faixaACorrer = false;
+  const medirFaixa = () => { metade = trilho.scrollWidth / 2; };
+  addEventListener('resize', medirFaixa); addEventListener('load', medirFaixa); medirFaixa();
+  function animarFaixa() {
+    if (!faixaVisivel) { faixaACorrer = false; return; }
+    velFaixa *= .92;
+    posFaixa -= .5 + velFaixa;
+    if (metade) { if (posFaixa <= -metade) posFaixa += metade; if (posFaixa > 0) posFaixa -= metade; }
+    trilho.style.transform = `translateX(${posFaixa}px)`;
+    requestAnimationFrame(animarFaixa);
+  }
+  if (!reduzido) new IntersectionObserver(e => {
+    faixaVisivel = e[0].isIntersecting;
+    if (faixaVisivel && !faixaACorrer) { faixaACorrer = true; requestAnimationFrame(animarFaixa); }
+  }).observe(trilho);
+
+  // Contadores
+  function contar(el) {
+    const alvo = +el.dataset.conta, inicio = alvo > 1000 ? alvo - 60 : 0, t0 = performance.now();
+    (function passo(t) {
+      const k = Math.min(1, (t - t0) / 1600), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = Math.round(inicio + (alvo - inicio) * e);
+      if (k < 1) requestAnimationFrame(passo);
+    })(t0);
+  }
+
+  // Montra e tabela dos frutos secos (exemplo)
+  const FRUTOS = [
+    { n: 'Tâmaras', d: 'Macias, doces como caramelo', doce: 5, croc: 1, bom: ['Lanche', 'Sobremesa'], cor: '#6b3a1f', rx: 7, ry: 3.6 },
+    { n: 'Figos secos', d: 'Doces, com sementes estaladiças', doce: 4, croc: 2, bom: ['Lanche', 'Oferta'], cor: '#8a6a3a', rx: 6, ry: 5.5 },
+    { n: 'Cajus', d: 'Amanteigados e suaves', doce: 2, croc: 3, bom: ['Petisco', 'Cozinha'], cor: '#ead6a8', caju: true },
+    { n: 'Amêndoas', d: 'Estaladiças, sabor delicado', doce: 1, croc: 5, bom: ['Petisco', 'Doçaria'], cor: '#a4683a', rx: 5.5, ry: 3.2 },
+    { n: 'Nozes', d: 'Sabor intenso, ligeiramente amargo', doce: 1, croc: 3, bom: ['Sobremesa', 'Natal'], cor: '#b08955', rx: 6, ry: 5 },
+    { n: 'Damascos', d: 'Macios e doce-ácidos', doce: 4, croc: 1, bom: ['Lanche', 'Cozinha'], cor: '#e08a2e', rx: 6, ry: 5 },
+    { n: 'Caramelizados', d: 'Cobertos de açúcar, muito estaladiços', doce: 5, croc: 5, bom: ['Oferta', 'Lanche'], cor: '#c98a2b', rx: 5, ry: 5 }
+  ];
+  function desenharFrasco(f, semente) {
+    let s = semente * 9301 + 49297;
+    const aleat = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+    let conteudo = '';
+    for (let y = 88; y > 40; y -= 6.5) for (let x = 22; x < 60; x += 9) {
+      const cx = x + aleat() * 6, cy = y - aleat() * 3, rot = Math.round(aleat() * 180), luz = Math.round(aleat() * 30 - 15);
+      const cor = `color-mix(in srgb, ${f.cor} ${85 + luz / 3}%, ${luz > 0 ? '#fff' : '#000'})`;
+      conteudo += f.caju
+        ? `<path d="M${cx - 5} ${cy}a5.5 5.5 0 0 1 10 0a3 3 0 0 1-3 2.5a3 3 0 0 0-4 0a3 3 0 0 1-3-2.5z" fill="${cor}" transform="rotate(${rot} ${cx} ${cy})"/>`
+        : `<ellipse cx="${cx}" cy="${cy}" rx="${f.rx}" ry="${f.ry}" fill="${cor}" transform="rotate(${rot} ${cx} ${cy})"/>`;
+    }
+    return `<svg viewBox="0 0 80 100" aria-hidden="true">
+      <defs><clipPath id="vidro${semente}"><path d="M17 25h46v60a8 8 0 0 1-8 8H25a8 8 0 0 1-8-8z"/></clipPath></defs>
+      <rect x="20" y="6" width="40" height="12" rx="3" fill="#b9862f"/><rect x="16" y="16" width="48" height="6" rx="2" fill="#8a5a34"/>
+      <g clip-path="url(#vidro${semente})">${conteudo}</g>
+      <path d="M16 24h48v61a9 9 0 0 1-9 9H25a9 9 0 0 1-9-9z" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
+      <path d="M22 32v44" stroke="rgba(255,255,255,.45)" stroke-width="3" stroke-linecap="round"/>
+    </svg>`;
+  }
+  const montra = document.getElementById('montra'), tbodyFrutos = document.querySelector('#frutos-t tbody');
+  FRUTOS.forEach((f, i) => {
+    montra.insertAdjacentHTML('beforeend', `<button class="frasco revelar" type="button" aria-pressed="false" data-i="${i}">${desenharFrasco(f, i + 1)}${f.n}</button>`);
+    tbodyFrutos.insertAdjacentHTML('beforeend', `<tr class="revelar"><td class="o-nome"><strong>${f.n}</strong><span>${f.d}</span></td><td data-n="${f.doce}"></td><td data-n="${f.croc}"></td><td>${f.bom.map(b => `<span class="moagem-tag">${b}</span>`).join('')}</td></tr>`);
+  });
+  montra.addEventListener('click', e => {
+    const b = e.target.closest('.frasco'); if (!b) return;
+    montra.querySelectorAll('.frasco').forEach(x => x.setAttribute('aria-pressed', x === b));
+    tbodyFrutos.querySelectorAll('tr').forEach((tr, i) => tr.classList.toggle('escolhido', i === +b.dataset.i));
+  });
+
+  // Pontos de 1 a 5 na tabela das origens
+  document.querySelectorAll('.origens-t td[data-n]').forEach(td => {
+    const n = +td.dataset.n;
+    td.innerHTML = `<span class="pontos" aria-label="${n} em 5">${[1, 2, 3, 4, 5].map(i => `<i class="${i <= n ? 'on' : ''}" style="transition-delay:${i * 70}ms"></i>`).join('')}</span>`;
+  });
+
+  // Revelar ao aparecer, em cascata entre irmãos
+  document.querySelectorAll('.revelar').forEach(el => {
+    const irmaos = [...el.parentElement.children].filter(c => c.classList.contains('revelar'));
+    el.style.setProperty('--atraso', Math.min(irmaos.indexOf(el), 5) * .1 + 's');
+  });
+  const obs = new IntersectionObserver(entradas => entradas.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('visivel');
+    if (!reduzido) e.target.querySelectorAll('[data-conta]').forEach(contar);
+    obs.unobserve(e.target);
+  }), { threshold: .15, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.revelar').forEach(el => obs.observe(el));
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script>
+(() => {
+  // ---------- 3D: moinho na abertura e globo das origens ----------
+  const reduzido = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const D = Math.PI / 180;
+  const temWebGL = () => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl') || c.getContext('experimental-webgl')); } catch (e) { return false; } };
+  const com3D = typeof THREE !== 'undefined' && temWebGL();
+
+  // Qualidade adaptável: em computadores fracos baixa a resolução das cenas até correrem bem
+  const renderers = [];
+  let qualidade = 1, somaDt = 0, frames = 0;
+  function medirFrame(dtReal) {
+    somaDt += dtReal; frames++;
+    if (frames < 45) return;
+    const media = somaDt / frames; somaDt = 0; frames = 0;
+    if (media > 1 / 40 && qualidade > .5) { qualidade = Math.max(.5, qualidade - .15); renderers.forEach(r => r.setPixelRatio(r.base * qualidade)); }
+  }
+
+  // "perto" = camada desfocada da frente: como fica desfocada, desenha-se em baixa resolução
+  function criarRenderer(caixa, perto) {
+    const r = new THREE.WebGLRenderer({ antialias: !perto, alpha: true, powerPreference: 'high-performance' });
+    r.base = perto ? .35 : Math.min(devicePixelRatio, 1.5);
+    r.setPixelRatio(r.base * qualidade);
+    r.outputEncoding = THREE.sRGBEncoding;
+    r.toneMapping = THREE.ACESFilmicToneMapping;
+    r.toneMappingExposure = 1.05;
+    caixa.prepend(r.domElement);
+    renderers.push(r);
+    return r;
+  }
+
+  // Ciclo de desenho que só corre quando a peça está no ecrã
+  function cicloVisivel(el, frame) {
+    let visivel = false, aCorrer = false, ultimo = 0;
+    const passo = agora => {
+      if (!visivel || document.hidden) { aCorrer = false; return; }
+      const dtReal = (agora - ultimo) / 1000, dt = Math.min(.05, dtReal); ultimo = agora;
+      if (dtReal < .5) medirFrame(dtReal);
+      frame(agora, dt);
+      requestAnimationFrame(passo);
+    };
+    const iniciar = () => { if (aCorrer || !visivel) return; aCorrer = true; ultimo = performance.now(); requestAnimationFrame(passo); };
+    new IntersectionObserver(e => { visivel = e[0].isIntersecting; iniciar(); }).observe(el);
+    document.addEventListener('visibilitychange', iniciar);
+  }
+
+  // Reflexos para o cromado: uma "sala" simples com caixas de luz
+  function ambienteMetal(renderer) {
+    const pm = new THREE.PMREMGenerator(renderer), sala = new THREE.Scene();
+    sala.add(new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), new THREE.MeshBasicMaterial({ color: 0x24150d, side: THREE.BackSide })));
+    [[0xfff3dc, 9, 3, [0, 8, 2]], [0xffe2b8, 3, 8, [-8, 1, 3]], [0xffffff, 2, 6, [8, 2, -2]], [0x7a3a22, 12, 5, [0, -8, 0]]].forEach(([cor, w, h, p]) => {
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: cor, side: THREE.DoubleSide }));
+      m.position.set(...p); m.lookAt(0, 0, 0); sala.add(m);
+    });
+    const env = pm.fromScene(sala, .04).texture; pm.dispose(); return env;
+  }
+
+  const geoGrao = () => { const g = new THREE.SphereGeometry(.07, 10, 8); g.scale(1, .72, 1.4); return g; };
+
+  function criarMoinho() {
+    const grupo = new THREE.Group();
+    const vermelho = new THREE.MeshStandardMaterial({ color: 0x720a0f, metalness: .25, roughness: .34, envMapIntensity: .6 });
+    const cromado = new THREE.MeshStandardMaterial({ color: 0xeeeeee, metalness: 1, roughness: .12 });
+    const vidro = new THREE.MeshStandardMaterial({ color: 0xfff6e6, roughness: .05, transparent: true, opacity: .2, side: THREE.DoubleSide, depthWrite: false });
+    const torno = (pts, mat, y = 0) => { const m = new THREE.Mesh(new THREE.LatheGeometry(pts.map(p => new THREE.Vector2(p[0], p[1])), 64), mat); m.position.y = y; return m; };
+    const peca = (geo, mat, x, y, z, rx = 0) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.rotation.x = rx; grupo.add(m); return m; };
+
+    grupo.add(torno([[0, 0], [1.35, 0], [1.4, .08], [1.3, .32], [1.05, .42], [0, .42]], vermelho));
+    peca(new THREE.CylinderGeometry(.95, .95, .05, 64), cromado, 0, .45, 0);
+    grupo.add(torno([[0, .42], [.62, .42], [.5, .7], [.4, 1.2], [.38, 1.6], [.48, 1.9], [.72, 2.1], [.8, 2.25], [0, 2.25]], vermelho));
+    // câmara de moagem
+    peca(new THREE.CylinderGeometry(.82, .82, .9, 64), vermelho, 0, 2.75, 0, Math.PI / 2);
+    peca(new THREE.CylinderGeometry(.74, .74, .08, 64), cromado, 0, 2.75, .48, Math.PI / 2);
+    peca(new THREE.TorusGeometry(.8, .05, 16, 64), cromado, 0, 2.75, .46);
+    peca(new THREE.TorusGeometry(.8, .05, 16, 64), cromado, 0, 2.75, -.46);
+    // letreiro à volta da tampa da câmara
+    const c = document.createElement('canvas'); c.width = c.height = 512;
+    const x = c.getContext('2d'); x.translate(256, 256); x.fillStyle = '#3b2418'; x.font = '600 34px Georgia, serif'; x.textAlign = 'center';
+    const frase = 'CASA DO CAFÉ  ·  DESDE 1971  ·  AVEIRO  ·  ';
+    [...frase].forEach((l, i) => { x.save(); x.rotate(i / frase.length * Math.PI * 2); x.fillText(l, 0, -196); x.restore(); });
+    const tex = new THREE.CanvasTexture(c); tex.encoding = THREE.sRGBEncoding;
+    peca(new THREE.CircleGeometry(.74, 64), new THREE.MeshStandardMaterial({ map: tex, transparent: true, metalness: .2, roughness: .5 }), 0, 2.75, .525);
+    // roda de afinação, gira quando o moinho mói
+    const roda = new THREE.Group(); roda.position.set(0, 2.75, .58); grupo.add(roda);
+    roda.add(new THREE.Mesh(new THREE.TorusGeometry(.42, .045, 12, 48), vermelho));
+    for (let i = 0; i < 3; i++) { const r = new THREE.Mesh(new THREE.CylinderGeometry(.025, .025, .84, 8), cromado); r.rotation.z = i * Math.PI / 3; roda.add(r); }
+    roda.add(new THREE.Mesh(new THREE.SphereGeometry(.11, 24, 16), cromado));
+    // bica
+    const bica = torno([[.1, 0], [.15, -.35], [.17, -.42], [0, -.42]], cromado); bica.position.set(0, 2.15, .62); bica.rotation.x = -.25; grupo.add(bica);
+    // funil de vidro com grãos
+    peca(new THREE.CylinderGeometry(.26, .3, .32, 32), cromado, 0, 3.66, 0);
+    const perfil = [[.26, 0], [.55, .18], [.9, .55], [1.02, .9], [1.05, 1.02]];
+    grupo.add(torno(perfil, vidro, 3.8));
+    peca(new THREE.TorusGeometry(1.05, .04, 12, 64), cromado, 0, 4.82, 0, Math.PI / 2);
+    const tampa = peca(new THREE.SphereGeometry(1.06, 48, 12, 0, Math.PI * 2, 0, Math.PI / 2), cromado, 0, 4.82, 0); tampa.scale.y = .22;
+    peca(new THREE.SphereGeometry(.12, 20, 14), vermelho, 0, 5.08, 0);
+    const raioEm = h => { for (let i = 1; i < perfil.length; i++) if (h <= perfil[i][1]) { const [r0, h0] = perfil[i - 1], [r1, h1] = perfil[i]; return r0 + (r1 - r0) * (h - h0) / (h1 - h0); } return 1; };
+    const N = 230, dentro = new THREE.InstancedMesh(geoGrao(), new THREE.MeshStandardMaterial({ color: 0x4a2716, roughness: .45 }), N), t = new THREE.Object3D();
+    for (let i = 0; i < N; i++) {
+      const h = .06 + Math.random() * .62, r = Math.sqrt(Math.random()) * (raioEm(h) - .09), a = Math.random() * 7;
+      t.position.set(Math.cos(a) * r, 3.8 + h, Math.sin(a) * r); t.rotation.set(Math.random() * 6, Math.random() * 6, 0); t.updateMatrix(); dentro.setMatrixAt(i, t.matrix);
+    }
+    grupo.add(dentro);
+    // sombra suave no chão
+    const s = document.createElement('canvas'); s.width = s.height = 128;
+    const sx = s.getContext('2d'), gr = sx.createRadialGradient(64, 64, 0, 64, 64, 64); gr.addColorStop(0, 'rgba(0,0,0,.55)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); sx.fillStyle = gr; sx.fillRect(0, 0, 128, 128);
+    const sombra = new THREE.Mesh(new THREE.PlaneGeometry(4.2, 4.2), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(s), transparent: true, depthWrite: false }));
+    sombra.rotation.x = -Math.PI / 2; sombra.position.y = .005; grupo.add(sombra);
+    return { grupo, roda, emissor: new THREE.Vector3(0, 1.74, .72), tabuleiroY: .475 };
+  }
+
+  function heroMoinho() {
+    const caixa = document.getElementById('moinho3d');
+    if (!com3D) { caixa.classList.add('sem-3d'); return; }
+    const renderer = criarRenderer(caixa), cena = new THREE.Scene();
+    cena.environment = ambienteMetal(renderer);
+    const cam = new THREE.PerspectiveCamera(30, 1, .1, 100);
+    cam.position.set(0, 2.9, 13.5); cam.lookAt(0, 2.65, 0);
+    cena.add(new THREE.HemisphereLight(0xffe9cc, 0x2a160c, .5));
+    const luz = new THREE.DirectionalLight(0xfff0dd, 1.7); luz.position.set(4, 6, 6); cena.add(luz);
+    const contra = new THREE.DirectionalLight(0xffb37a, 1.3); contra.position.set(-5, 3, -4); cena.add(contra);
+    const { grupo, roda, emissor, tabuleiroY } = criarMoinho();
+    cena.add(grupo);
+
+    // grãos a sair da bica
+    const N = reduzido ? 0 : 50, caindo = new THREE.InstancedMesh(geoGrao(), new THREE.MeshStandardMaterial({ color: 0x4a2716, roughness: .45 }), 50);
+    caindo.count = N; grupo.add(caindo);
+    const graos = Array.from({ length: N }, () => ({ p: new THREE.Vector3(0, -99, 0), v: new THREE.Vector3(), r: new THREE.Euler(), vr: 2 + Math.random() * 6, parado: 0, ativo: false }));
+    const t = new THREE.Object3D();
+    const largar = () => {
+      const g = graos.find(g => !g.ativo); if (!g) return;
+      g.ativo = true; g.parado = 0;
+      g.p.set(emissor.x + (Math.random() - .5) * .08, emissor.y, emissor.z + (Math.random() - .5) * .06);
+      g.v.set((Math.random() - .5) * .3, -.2, .05 + Math.random() * .2);
+    };
+
+    const ajustar = () => {
+      const w = caixa.clientWidth, h = caixa.clientHeight; if (!w || !h) return;
+      renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix();
+    };
+    addEventListener('resize', ajustar); ajustar();
+
+    // arrastar para rodar
+    const cv = renderer.domElement;
+    let arrasto = 0, inercia = 0, pressionado = false, ultX = 0, rato = 0, ultScroll = scrollY, velScroll = 0, acumulado = 0, entrada = 0;
+    cv.addEventListener('pointerdown', e => { pressionado = true; ultX = e.clientX; cv.setPointerCapture(e.pointerId); cv.classList.add('a-arrastar'); });
+    cv.addEventListener('pointermove', e => { if (!pressionado) return; const dx = (e.clientX - ultX) * .01; ultX = e.clientX; arrasto += dx; inercia = dx; velScroll += Math.abs(dx) * 40; });
+    const soltar = () => { pressionado = false; cv.classList.remove('a-arrastar'); };
+    cv.addEventListener('pointerup', soltar); cv.addEventListener('pointercancel', soltar);
+    addEventListener('pointermove', e => { rato = e.clientY / innerHeight - .5; }, { passive: true });
+    addEventListener('scroll', () => { velScroll += Math.abs(scrollY - ultScroll); ultScroll = scrollY; }, { passive: true });
+    const t0 = performance.now();
+
+    cicloVisivel(caixa, (agora, dt) => {
+      if (document.body.classList.contains('pronto')) entrada = Math.min(1, entrada + dt / 1.6);
+      const e = 1 - Math.pow(1 - entrada, 3);
+      if (!pressionado) { inercia *= .94; arrasto += inercia; }
+      grupo.rotation.y = -.55 + (reduzido ? 0 : (agora - t0) / 1000 * .18) + arrasto + scrollY * .0022;
+      grupo.rotation.x += ((reduzido ? 0 : rato * .12) - grupo.rotation.x) * .05;
+      grupo.position.y = (1 - e) * -1.4;
+      grupo.scale.setScalar(.8 + .2 * e);
+      // quanto mais scroll, mais depressa mói
+      velScroll *= .9;
+      const moer = reduzido ? 0 : .35 + Math.min(velScroll * .02, 3);
+      roda.rotation.z -= dt * moer * 3;
+      acumulado += dt * moer * 9 * e;
+      while (acumulado > 1) { largar(); acumulado--; }
+      graos.forEach((g, i) => {
+        if (g.ativo) {
+          if (g.parado > 0) { g.parado -= dt; if (g.parado <= 0) { g.ativo = false; g.p.y = -99; } }
+          else {
+            g.v.y -= 9 * dt; g.p.addScaledVector(g.v, dt); g.r.x += g.vr * dt; g.r.y += g.vr * .7 * dt;
+            if (g.p.y < tabuleiroY + .05) { g.p.y = tabuleiroY + .04 + Math.random() * .04; g.parado = 2 + Math.random() * 3; }
+          }
+        }
+        t.position.copy(g.p); t.rotation.copy(g.r); t.updateMatrix(); caindo.setMatrixAt(i, t.matrix);
+      });
+      caindo.instanceMatrix.needsUpdate = true;
+      renderer.render(cena, cam);
+    });
+  }
+
+  function globoOrigens() {
+    const caixa = document.getElementById('globo');
+    if (!com3D) { caixa.classList.add('sem-3d'); return; }
+    const renderer = criarRenderer(caixa), cena = new THREE.Scene();
+    const cam = new THREE.PerspectiveCamera(40, 1, .01, 100), DIST = 7.4;
+    cam.position.set(0, 0, DIST);
+    cena.add(new THREE.AmbientLight(0xffffff, .3));
+    const sol = new THREE.DirectionalLight(0xffe7c4, .9); sol.position.set(-4, 3, 5); cena.add(sol);
+    const R = 2, grupo = new THREE.Group(); cena.add(grupo);
+    const pos = (lat, lon, r = R) => { const f = (90 - lat) * D, l = (lon + 180) * D; return new THREE.Vector3(-r * Math.sin(f) * Math.cos(l), r * Math.cos(f), r * Math.sin(f) * Math.sin(l)); };
+
+    grupo.add(new THREE.Mesh(new THREE.SphereGeometry(R, 64, 48), new THREE.MeshStandardMaterial({ color: 0x1c0f08, roughness: .9, metalness: .05 })));
+    cena.add(new THREE.Mesh(new THREE.SphereGeometry(R * 1.12, 64, 48), new THREE.ShaderMaterial({
+      vertexShader: 'varying vec3 vN; void main(){ vN = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+      fragmentShader: 'varying vec3 vN; void main(){ float i = pow(0.62 - dot(vN, vec3(0.0, 0.0, 1.0)), 2.5); gl_FragColor = vec4(0.85, 0.58, 0.25, 1.0) * i; }',
+      side: THREE.BackSide, blending: THREE.AdditiveBlending, transparent: true, depthWrite: false
+    })));
+
+    // continentes em pontos, a partir do contorno da terra
+    const ponto = document.createElement('canvas'); ponto.width = ponto.height = 32;
+    const px = ponto.getContext('2d'); px.beginPath(); px.arc(16, 16, 14, 0, 7); px.fillStyle = '#fff'; px.fill();
+    const matPontos = new THREE.PointsMaterial({ color: 0xe9d6a8, size: .034, map: new THREE.CanvasTexture(ponto), transparent: true, alphaTest: .4, depthWrite: false });
+    fetch('data/land-110m.json').then(r => r.json()).then(topo => {
+      const terra = topojson.feature(topo, topo.objects.land), W = 1024, H = 512, c = document.createElement('canvas');
+      c.width = W; c.height = H;
+      const x = c.getContext('2d'); x.fillStyle = '#fff'; x.beginPath();
+      const anel = a => a.forEach(([lo, la], i) => { const X = (lo + 180) / 360 * W, Y = (90 - la) / 180 * H; i ? x.lineTo(X, Y) : x.moveTo(X, Y); });
+      terra.features.forEach(f => { const g = f.geometry; (g.type === 'Polygon' ? [g.coordinates] : g.coordinates).forEach(p => p.forEach(anel)); });
+      x.fill('evenodd');
+      const dados = x.getImageData(0, 0, W, H).data, v = [];
+      for (let la = -56; la <= 80; la += 1.25) {
+        const n = Math.max(1, Math.round(360 * Math.cos(la * D) / 1.25));
+        for (let i = 0; i < n; i++) {
+          const lo = -180 + (i + .5) * 360 / n, X = Math.floor((lo + 180) / 360 * W), Y = Math.floor((90 - la) / 180 * H);
+          if (dados[(Y * W + X) * 4] > 128) { const p = pos(la, lo, R * 1.003); v.push(p.x, p.y, p.z); }
+        }
+      }
+      const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.Float32BufferAttribute(v, 3));
+      grupo.add(new THREE.Points(geo, matPontos));
+    }).catch(() => {
+      // sem dados: meridianos e paralelos
+      const m = new THREE.LineBasicMaterial({ color: 0x8a6a4a, transparent: true, opacity: .5 });
+      for (let la = -60; la <= 60; la += 30) grupo.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(Array.from({ length: 73 }, (_, i) => pos(la, i * 5 - 180, R * 1.002))), m));
+      for (let lo = -180; lo < 180; lo += 30) grupo.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(Array.from({ length: 37 }, (_, i) => pos(i * 5 - 90, lo, R * 1.002))), m));
+    });
+
+    // origens, Aveiro e as linhas que os ligam
+    const ORIGENS = [['Colômbia', 2.5, -75.6], ['S. Tomé', .25, 6.6], ['Brasil', -19.9, -44], ['Kenya', -.4, 36.9], ['Honduras', 14.6, -87.9], ['Timor', -8.8, 125.6]];
+    const AVEIRO = pos(40.64, -8.65), rotulos = document.getElementById('globo-rotulos'), marcas = [];
+    const marca = (nome, p, casa) => {
+      const cor = casa ? 0xffd27a : 0xe0503f;
+      const m = new THREE.Mesh(new THREE.SphereGeometry(casa ? .05 : .035, 16, 12), new THREE.MeshBasicMaterial({ color: cor })); m.position.copy(p); grupo.add(m);
+      const anel = new THREE.Mesh(new THREE.RingGeometry(.06, .078, 32), new THREE.MeshBasicMaterial({ color: cor, transparent: true, side: THREE.DoubleSide, depthWrite: false }));
+      anel.position.copy(p).multiplyScalar(1.002); anel.lookAt(p.clone().multiplyScalar(2)); grupo.add(anel);
+      const el = document.createElement('span'); el.className = 'rotulo' + (casa ? ' aveiro' : ''); el.textContent = nome; rotulos.appendChild(el);
+      marcas.push({ p, anel, el, fase: Math.random() * 2 });
+    };
+    ORIGENS.forEach(([n, la, lo]) => marca(n, pos(la, lo), false));
+    marca('Casa do Café · Aveiro', AVEIRO, true);
+    const arcos = ORIGENS.map(([, la, lo], i) => {
+      const a = pos(la, lo), meio = a.clone().add(AVEIRO).multiplyScalar(.5);
+      meio.normalize().multiplyScalar(R + a.distanceTo(AVEIRO) * .32);
+      const curva = new THREE.QuadraticBezierCurve3(a, meio, AVEIRO), geo = new THREE.BufferGeometry().setFromPoints(curva.getPoints(90));
+      geo.setDrawRange(0, 0);
+      grupo.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0xd9a54a, transparent: true, opacity: .85 })));
+      const grao = new THREE.Mesh(new THREE.SphereGeometry(.028, 10, 8), new THREE.MeshBasicMaterial({ color: 0xfff1d0 }));
+      grao.visible = false; grupo.add(grao);
+      return { curva, geo, grao, atraso: i * .3 };
+    });
+
+    // posição inicial: Atlântico e Europa de frente, um pouco inclinado
+    const frente = (la, lo) => { const v = pos(la, lo, 1); return Math.atan2(-v.x, v.z); };
+    let rotY = frente(10, -15), rotX = .35, pressionado = false, movido = 0, ultX = 0, ultY = 0, estado = 'mundo', anim = null, inicioArcos = null;
+    const ajustar = () => { const w = caixa.clientWidth, h = caixa.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); };
+    addEventListener('resize', ajustar); ajustar();
+
+    const cv = renderer.domElement, chegada = document.getElementById('chegada');
+    cv.addEventListener('pointerdown', e => { pressionado = true; movido = 0; ultX = e.clientX; ultY = e.clientY; cv.setPointerCapture(e.pointerId); });
+    cv.addEventListener('pointermove', e => {
+      if (!pressionado || estado !== 'mundo') return;
+      const dx = e.clientX - ultX, dy = e.clientY - ultY; ultX = e.clientX; ultY = e.clientY; movido += Math.abs(dx) + Math.abs(dy);
+      rotY += dx * .006; rotX = Math.max(-.3, Math.min(.9, rotX + dy * .004));
+    });
+    cv.addEventListener('pointerup', () => { pressionado = false; if (movido < 6) viajar(); });
+    cv.addEventListener('pointercancel', () => { pressionado = false; });
+
+    function animar(para, ms, fim) {
+      const de = cam.position.clone(), d0 = de.length(), d1 = para.length(), u0 = de.normalize(), u1 = para.clone().normalize();
+      const q = new THREE.Quaternion().setFromUnitVectors(u0, u1), t0 = performance.now();
+      anim = agora => {
+        const k = reduzido ? 1 : Math.min(1, (agora - t0) / ms), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+        cam.position.copy(u0).applyQuaternion(new THREE.Quaternion().slerp(q, e)).multiplyScalar(d0 + (d1 - d0) * e);
+        cam.lookAt(0, 0, 0);
+        if (k === 1) { anim = null; fim(); }
+      };
+    }
+    function viajar() {
+      if (estado !== 'mundo') return;
+      estado = 'a-viajar'; caixa.classList.add('longe'); grupo.updateMatrixWorld();
+      animar(AVEIRO.clone().applyMatrix4(grupo.matrixWorld).normalize().multiplyScalar(R * 1.55), 2800, () => { estado = 'chegou'; chegada.classList.add('ativa'); });
+    }
+    function voltar() {
+      chegada.classList.remove('ativa'); estado = 'a-voltar';
+      animar(new THREE.Vector3(0, 0, DIST), 1800, () => { estado = 'mundo'; caixa.classList.remove('longe'); });
+    }
+    document.getElementById('btn-viajar').addEventListener('click', viajar);
+    document.getElementById('btn-voltar').addEventListener('click', voltar);
+
+    cicloVisivel(caixa, (agora, dt) => {
+      if (inicioArcos === null) inicioArcos = agora;
+      if (estado === 'mundo' && !pressionado && !reduzido) rotY += dt * .07;
+      grupo.rotation.set(rotX, rotY, 0);
+      if (anim) anim(agora);
+      grupo.updateMatrixWorld();
+      // as linhas desenham-se uma a uma e depois passa um grão por cada
+      const s = (agora - inicioArcos) / 1000;
+      arcos.forEach((a, i) => {
+        const k = reduzido ? 1 : Math.max(0, Math.min(1, (s - a.atraso) / 1.4));
+        a.geo.setDrawRange(0, Math.floor(k * 91));
+        a.grao.visible = k === 1 && !reduzido && estado === 'mundo';
+        if (a.grao.visible) a.grao.position.copy(a.curva.getPoint((s * .22 + i * .17) % 1));
+      });
+      // rótulos HTML por cima dos pontos visíveis
+      const w = caixa.clientWidth, h = caixa.clientHeight, dirCam = cam.position.clone().normalize(), limiar = R / cam.position.length() + .05;
+      marcas.forEach(m => {
+        const pm = m.p.clone().applyMatrix4(grupo.matrixWorld), ve = pm.clone().normalize().dot(dirCam) > limiar, ps = pm.project(cam);
+        m.el.style.transform = `translate(${(ps.x * .5 + .5) * w}px, ${(-ps.y * .5 + .5) * h}px) translate(-50%, -170%)`;
+        m.el.style.opacity = ve && estado === 'mundo' ? 1 : 0;
+        const k = ((s + m.fase) % 1.6) / 1.6;
+        m.anel.scale.setScalar(1 + k * 1.6); m.anel.material.opacity = 1 - k;
+      });
+      renderer.render(cena, cam);
+    });
+  }
+
+  // Grão realista: oval, costas redondas, face plana com o sulco em S
+  function geoGraoReal() {
+    const g = new THREE.SphereGeometry(1, 40, 28), p = g.attributes.position;
+    for (let i = 0; i < p.count; i++) {
+      let x = p.getX(i) * .66, y = p.getY(i), z = p.getZ(i);
+      if (z > 0) {
+        z *= .36;
+        const sulco = Math.exp(-Math.pow(x - .12 * Math.sin(y * 2.6), 2) / .01) * (1 - y * y) * .3;
+        z -= sulco;
+      } else z *= .55;
+      p.setXYZ(i, x * .16, y * .16, z * .16);
+    }
+    g.computeVertexNormals();
+    return g;
+  }
+
+  // Saco de papel kraft com a etiqueta da casa
+  function criarSaco() {
+    const c = document.createElement('canvas'); c.width = 512; c.height = 720;
+    const x = c.getContext('2d');
+    const tex = new THREE.CanvasTexture(c); tex.encoding = THREE.sRGBEncoding; tex.anisotropy = 4;
+    const desenhar = () => {
+    const gr = x.createLinearGradient(0, 0, 512, 0);
+    gr.addColorStop(0, '#a77a48'); gr.addColorStop(.5, '#cfa16a'); gr.addColorStop(1, '#a37443');
+    x.fillStyle = gr; x.fillRect(0, 0, 512, 720);
+    for (let i = 0; i < 9000; i++) { x.fillStyle = `rgba(${Math.random() < .5 ? '60,35,15' : '255,240,210'},${Math.random() * .08})`; x.fillRect(Math.random() * 512, Math.random() * 720, 1 + Math.random() * 2, 1 + Math.random() * 2); }
+    x.fillStyle = '#3b2418'; x.textAlign = 'center';
+    x.font = '500 22px "JetBrains Mono", monospace'; x.fillText('// DESDE 1971', 256, 150);
+    x.font = '700 70px Fraunces, Georgia, serif'; x.fillText('Casa', 256, 250); x.fillText('do Café', 256, 325);
+    x.strokeStyle = '#3b2418'; x.lineWidth = 3; x.beginPath(); x.moveTo(110, 365); x.lineTo(402, 365); x.stroke();
+    x.font = '500 22px "JetBrains Mono", monospace'; x.fillText('ARÁBICA · MOÍDO NA HORA', 256, 410);
+    x.fillStyle = '#b3262b'; x.beginPath(); x.arc(256, 520, 58, 0, Math.PI * 2); x.fill();
+    x.fillStyle = '#fff'; x.font = '700 22px "JetBrains Mono", monospace'; x.fillText('500 g', 256, 512); x.font = '500 16px "JetBrains Mono", monospace'; x.fillText('AVEIRO', 256, 540);
+    x.fillStyle = '#3b2418'; x.font = '500 18px "JetBrains Mono", monospace'; x.fillText('PRAÇA 14 DE JULHO · 14 A', 256, 650);
+    tex.needsUpdate = true;
+    };
+    desenhar();
+    // volta a desenhar quando as letras da casa acabarem de carregar
+    if (document.fonts) document.fonts.ready.then(desenhar);
+    const kraft = new THREE.MeshStandardMaterial({ color: 0xb98a55, roughness: .92 });
+    const frente = new THREE.MeshStandardMaterial({ map: tex, roughness: .9 });
+    const saco = new THREE.Group();
+    const corpo = new THREE.Mesh(new THREE.BoxGeometry(1.7, 2.4, .8), [kraft, kraft, kraft, kraft, frente, kraft]);
+    saco.add(corpo);
+    // a dobra de cima, fechada na hora, com o arame
+    const dobra = new THREE.Mesh(new THREE.BoxGeometry(1.72, .32, .16), new THREE.MeshStandardMaterial({ color: 0x7e5530, roughness: .95 }));
+    dobra.position.set(0, 1.36, .05); saco.add(dobra);
+    const arame = new THREE.Mesh(new THREE.BoxGeometry(1.9, .05, .04), new THREE.MeshStandardMaterial({ color: 0xd9d9d9, metalness: 1, roughness: .25 }));
+    arame.position.set(0, 1.3, .14); saco.add(arame);
+    return saco;
+  }
+
+  function aromaGraos() {
+    const caixa = document.getElementById('aroma3d'), caixaPerto = document.getElementById('aroma3d-perto'), seccao = document.getElementById('inicio'), tapa = document.getElementById('cortina');
+    if (!com3D) return;
+    const longe = criarRenderer(caixa), perto = criarRenderer(caixaPerto, true);
+    const cenaLonge = new THREE.Scene(), cenaPerto = new THREE.Scene();
+    const env = ambienteMetal(longe); cenaLonge.environment = env; cenaPerto.environment = ambienteMetal(perto);
+    const cam = new THREE.PerspectiveCamera(35, 1, .1, 60); cam.position.set(0, 0, 10);
+    [cenaLonge, cenaPerto].forEach(c => {
+      c.add(new THREE.HemisphereLight(0xffe2c0, 0x120804, .35));
+      const chave = new THREE.SpotLight(0xffe0b8, 2.1, 40, .6, .7); chave.position.set(3, 9, 6); c.add(chave);
+      const recorte = new THREE.DirectionalLight(0xff9a55, 1.4); recorte.position.set(-6, 2, -5); c.add(recorte);
+    });
+    const material = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .34, envMapIntensity: .55 });
+    const geo = geoGraoReal(), cor = new THREE.Color();
+    const fazer = (cena, n, zMin, zMax) => {
+      const m = new THREE.InstancedMesh(geo, material, n);
+      const lista = Array.from({ length: n }, (_, i) => {
+        const z = zMin + Math.random() * (zMax - zMin), alcance = (10 - z) * .42;
+        cor.setHSL(.055 + Math.random() * .02, .5 + Math.random() * .15, .065 + Math.random() * .05); m.setColorAt(i, cor);
+        return { x: (Math.random() * 2 - 1) * alcance * 1.6, y: (Math.random() * 2 - 1) * alcance, z, alcance, vy: .1 + Math.random() * .25, rx: Math.random() * 6, ry: Math.random() * 6, vr: (Math.random() - .5) * 1.6, s: .8 + Math.random() * .5 };
+      });
+      cena.add(m); return { m, lista };
+    };
+    const camadas = [fazer(cenaLonge, reduzido ? 35 : 70, -9, 4.5), fazer(cenaPerto, reduzido ? 4 : 9, 5.6, 7.6)];
+    const saco = criarSaco(); cenaLonge.add(saco);
+    const t = new THREE.Object3D();
+
+    let largo = true, sacoY = 0, sacoS = 1;
+    const texto = seccao.querySelector('.hero-texto');
+    const ajustar = () => {
+      const w = caixa.clientWidth, h = caixa.clientHeight; if (!w || !h) return;
+      [longe, perto].forEach(r => r.setSize(w, h, false));
+      cam.aspect = w / h; cam.updateProjectionMatrix(); largo = w > 860;
+      // no telemóvel o saco fica no espaço livre entre o menu e o título, sem tapar o texto
+      if (!largo) {
+        const livre = Math.max(70, texto.getBoundingClientRect().top - seccao.getBoundingClientRect().top - 84);
+        const alturaMundo = 2 * 13 * Math.tan(17.5 * D);
+        sacoS = Math.min(1, livre * .92 / (2.8 * h / alturaMundo));
+        sacoY = (.5 - (80 + livre / 2) / h) * alturaMundo;
+      }
+    };
+    addEventListener('resize', ajustar); addEventListener('load', ajustar); ajustar();
+    if (document.fonts) document.fonts.ready.then(ajustar);
+
+    let entrada = 0;
+    cicloVisivel(seccao, (agora, dt) => {
+      if (tapa.getBoundingClientRect().top <= 0) return; // a entrada já está tapada pela página
+      const prog = Math.min(1, Math.max(0, scrollY / innerHeight)); // 0 no topo, 1 quando a página a tapa
+      const tempo = agora / 1000;
+      if (document.body.classList.contains('pronto')) entrada = Math.min(1, entrada + dt / 2.2);
+      camadas.forEach(({ m, lista }, c) => {
+        lista.forEach((g, i) => {
+          if (!reduzido) { g.y += g.vy * dt * (c ? 1.6 : 1); g.rx += g.vr * dt; g.ry += g.vr * .7 * dt; }
+          // quanto mais perto, mais o scroll os empurra (profundidade)
+          let y = g.y + (prog - .5) * (14 - g.z) * .55;
+          const a = g.alcance * 1.25; y = ((y + a) % (2 * a) + 2 * a) % (2 * a) - a;
+          t.position.set(g.x, y, g.z); t.rotation.set(g.rx, g.ry, 0); t.scale.setScalar(g.s);
+          t.updateMatrix(); m.setMatrixAt(i, t.matrix);
+        });
+        m.instanceMatrix.needsUpdate = true;
+      });
+      // o saco sobe do fundo quando a página abre, e roda com o scroll
+      const e = reduzido ? 1 : 1 - Math.pow(1 - entrada, 3);
+      saco.position.set(largo ? 2.9 : 0, (largo ? -6.5 + e * 6.2 : sacoY - (1 - e) * 7) + prog * 1.2, largo ? 0 : -3);
+      saco.scale.setScalar(largo ? 1 : sacoS);
+      saco.rotation.set(.12, -.5 + prog * .9 + (1 - e) * -.8 + (reduzido ? 0 : Math.sin(tempo * .5) * .06), largo ? -.16 : -.1);
+      longe.render(cenaLonge, cam);
+      perto.render(cenaPerto, cam);
+    });
+  }
+
+  // Frutos secos da montra: tâmara (rugosa e brilhante), figo seco, caju e amêndoa
+  function geoFrutos() {
+    const deformar = (g, f) => { const p = g.attributes.position, v = new THREE.Vector3(); for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i); f(v); p.setXYZ(i, v.x, v.y, v.z); } g.center(); g.computeVertexNormals(); return g; };
+    const rugas = v => 1 + .05 * Math.sin(v.x * 23 + v.z * 9) * Math.sin(v.y * 19 + v.z * 13) + .03 * Math.sin(v.z * 41 + v.x * 7);
+    return {
+      tamara: deformar(new THREE.SphereGeometry(1, 40, 26), v => { v.multiplyScalar(rugas(v)); v.set(v.x * .12, v.y * .11, v.z * .28); }),
+      figo: deformar(new THREE.SphereGeometry(1, 36, 24), v => { v.multiplyScalar(rugas(v) * (1 + .1 * Math.max(0, v.z))); v.set(v.x * .19, v.y * .085, v.z * .2); }),
+      amendoa: deformar(new THREE.SphereGeometry(1, 32, 20), v => { const ponta = 1 - Math.max(0, v.z) * .55; v.set(v.x * .12 * ponta, v.y * .055 * (1 + .1 * Math.sin(v.x * 37 + v.z * 11)), v.z * .2); }),
+      caju: deformar(new THREE.TorusGeometry(.11, .06, 18, 36, Math.PI * 1.15), v => { v.z *= .85; })
+    };
+  }
+
+  function frutosVoar() {
+    const caixa = document.getElementById('frutos3d'), caixaPerto = document.getElementById('frutos3d-perto'), palco = document.getElementById('mercearia');
+    if (!com3D) return;
+    const longe = criarRenderer(caixa), perto = criarRenderer(caixaPerto, true);
+    const cenas = [new THREE.Scene(), new THREE.Scene()];
+    const cam = new THREE.PerspectiveCamera(35, 1, .1, 60); cam.position.set(0, 0, 10);
+    cenas.forEach((c, i) => {
+      c.environment = ambienteMetal(i ? perto : longe);
+      c.add(new THREE.HemisphereLight(0xffe2c0, 0x120804, .4));
+      const chave = new THREE.SpotLight(0xffe0b8, 2.2, 40, .6, .7); chave.position.set(3, 9, 6); c.add(chave);
+      const recorte = new THREE.DirectionalLight(0xff9a55, 1.3); recorte.position.set(-6, 2, -5); c.add(recorte);
+    });
+    const geos = geoFrutos(), cor = new THREE.Color();
+    // [geometria, rugosidade, matiz, saturação, luz, variação da luz]
+    const tipos = [
+      [geos.tamara, .26, .02, .65, .045, .03],
+      [geos.figo, .75, .06, .45, .09, .04],
+      [geos.amendoa, .6, .065, .6, .13, .05],
+      [geos.caju, .55, .1, .5, .42, .1]
+    ];
+    const camadas = [];
+    const fazer = (cena, n, zMin, zMax) => tipos.forEach(([geo, rug, h, s, l, dl]) => {
+      const m = new THREE.InstancedMesh(geo, new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: rug, envMapIntensity: .45 }), n);
+      const lista = Array.from({ length: n }, (_, i) => {
+        const z = zMin + Math.random() * (zMax - zMin), alcance = (10 - z) * .42;
+        cor.setHSL(h + Math.random() * .015, s, l + Math.random() * dl); m.setColorAt(i, cor);
+        // os desfocados da frente ficam do lado direito, para não taparem o texto
+        const x = (Math.random() * 2 - 1) * alcance * 1.6;
+        return { x: z > 5 ? Math.abs(x) * .8 + alcance * .3 : x, y: (Math.random() * 2 - 1) * alcance, z, alcance, vy: .12 + Math.random() * .25, rx: Math.random() * 6, ry: Math.random() * 6, vr: (Math.random() - .5) * 1.4, s: .85 + Math.random() * .4 };
+      });
+      cena.add(m); camadas.push({ m, lista, perto: cena === cenas[1] });
+    });
+    fazer(cenas[0], reduzido ? 8 : 17, -9, 4.5);
+    fazer(cenas[1], reduzido ? 1 : 2, 5.6, 7.6);
+    const t = new THREE.Object3D();
+
+    const ajustar = () => {
+      const w = caixa.clientWidth, h = caixa.clientHeight; if (!w || !h) return;
+      [longe, perto].forEach(r => r.setSize(w, h, false));
+      cam.aspect = w / h; cam.updateProjectionMatrix();
+    };
+    addEventListener('resize', ajustar); addEventListener('load', ajustar); ajustar();
+
+    cicloVisivel(palco, (agora, dt) => {
+      const r = palco.getBoundingClientRect(), vh = innerHeight;
+      const prog = Math.min(1, Math.max(0, (vh - r.top) / (r.height + vh)));
+      camadas.forEach(({ m, lista, perto: p }) => {
+        lista.forEach((g, i) => {
+          // ao contrário dos grãos, os frutos caem
+          if (!reduzido) { g.y -= g.vy * dt * (p ? 1.6 : 1); g.rx += g.vr * dt; g.ry += g.vr * .7 * dt; }
+          let y = g.y - (prog - .5) * (14 - g.z) * .5;
+          const a = g.alcance * 1.25; y = ((y + a) % (2 * a) + 2 * a) % (2 * a) - a;
+          t.position.set(g.x, y, g.z); t.rotation.set(g.rx, g.ry, 0); t.scale.setScalar(g.s);
+          t.updateMatrix(); m.setMatrixAt(i, t.matrix);
+        });
+        m.instanceMatrix.needsUpdate = true;
+      });
+      longe.render(cenas[0], cam);
+      perto.render(cenas[1], cam);
+    });
+  }
+
+  // Tira de juta de uma saca de café verde, com os carimbos das origens (textura desenhada à mão)
+  function texturasJuta() {
+    const W = 4096, H = 512, hash = n => { n = Math.sin(n * 127.1) * 43758.5453; return n - Math.floor(n); };
+    const cor = document.createElement('canvas'), relevo = document.createElement('canvas');
+    cor.width = relevo.width = W; cor.height = relevo.height = H;
+    const xc = cor.getContext('2d'), xr = relevo.getContext('2d');
+    const imgC = xc.createImageData(W, H), imgR = xr.createImageData(W, H), c = 8;
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const cx = Math.floor(x / c), cy = Math.floor(y / c), ix = (x % c) / c - .5, iy = (y % c) / c - .5;
+      // trama em cesto: fios na horizontal e na vertical, alternados
+      const horiz = (cx + cy) % 2 === 0, d = horiz ? iy : ix;
+      let s = Math.max(0, 1 - d * d * 3.6) * (.82 + .3 * Math.sin((horiz ? x : y) * .9 + (horiz ? cy : cx) * 3));
+      s *= .78 + .3 * hash(horiz ? cy * 7.1 + Math.floor(cx / 3) : cx * 5.3 + Math.floor(cy / 3));
+      // bainha dobrada em cima e em baixo
+      const borda = Math.min(y, H - 1 - y); if (borda < 34) s *= .62 + borda / 34 * .3;
+      const i = (y * W + x) * 4;
+      imgC.data[i] = 205 * s; imgC.data[i + 1] = 158 * s; imgC.data[i + 2] = 100 * s; imgC.data[i + 3] = 255;
+      imgR.data[i] = imgR.data[i + 1] = imgR.data[i + 2] = 255 * Math.min(1, s); imgR.data[i + 3] = 255;
+    }
+    xr.putImageData(imgR, 0, 0);
+    const tCor = new THREE.CanvasTexture(cor), tRelevo = new THREE.CanvasTexture(relevo);
+    tCor.encoding = THREE.sRGBEncoding;
+    const desenhar = () => {
+      xc.putImageData(imgC, 0, 0);
+      // costura da bainha
+      xc.strokeStyle = 'rgba(40,22,10,.75)'; xc.lineWidth = 5; xc.setLineDash([22, 16]);
+      [44, H - 44].forEach(y => { xc.beginPath(); xc.moveTo(0, y); xc.lineTo(W, y); xc.stroke(); });
+      xc.setLineDash([]);
+      // carimbos numa camada à parte, gastos com falhas de tinta
+      const tinta = document.createElement('canvas'); tinta.width = W; tinta.height = H;
+      const xt = tinta.getContext('2d'); xt.textAlign = 'center'; xt.textBaseline = 'middle';
+      const selos = [['Colômbia'], ['S. Tomé', 1], ['Brasil'], ['1971', 0, 'Casa do Café', 'Aveiro'], ['Kenya', 1], ['Honduras'], ['Timor', 1], ['Moído', 1, 'Casa do Café', 'na hora']];
+      selos.forEach(([nome, verm, cima = 'Café verde', baixo = 'Arábica pura'], k) => {
+        const redondo = cima !== 'Café verde', cx = (k + .5) * W / selos.length, cy = H / 2 + (hash(k) - .5) * 30;
+        xt.save(); xt.translate(cx, cy); xt.rotate((hash(k + 9) - .5) * (redondo ? .3 : .08));
+        xt.strokeStyle = xt.fillStyle = verm ? '#8e1f1c' : '#2b1a10';
+        if (redondo) {
+          xt.lineWidth = 13; xt.beginPath(); xt.arc(0, 0, 175, 0, 7); xt.stroke();
+          xt.lineWidth = 6; xt.beginPath(); xt.arc(0, 0, 152, 0, 7); xt.stroke();
+          xt.font = '700 84px Fraunces, Georgia, serif'; xt.fillText(nome.toUpperCase(), 0, 4, 270);
+          xt.font = '600 32px "JetBrains Mono", monospace'; xt.fillText(cima.toUpperCase(), 0, -84, 230); xt.fillText(baixo.toUpperCase(), 0, 92, 230);
+        } else {
+          xt.font = '700 80px Fraunces, Georgia, serif';
+          const w = Math.min(490, Math.max(380, xt.measureText(nome.toUpperCase()).width + 70));
+          xt.lineWidth = 13; xt.strokeRect(-w / 2, -150, w, 300);
+          xt.lineWidth = 6; xt.strokeRect(-w / 2 + 20, -130, w - 40, 260);
+          xt.fillText(nome.toUpperCase(), 0, 6, w - 60);
+          xt.font = '600 36px "JetBrains Mono", monospace'; xt.fillText(cima.toUpperCase(), 0, -82); xt.fillText(baixo.toUpperCase(), 0, 90);
+        }
+        xt.restore();
+      });
+      xt.globalCompositeOperation = 'destination-out';
+      for (let i = 0; i < 26000; i++) { xt.globalAlpha = Math.random() * .9; xt.beginPath(); xt.arc(Math.random() * W, Math.random() * H, .6 + Math.random() * 3.2, 0, 7); xt.fill(); }
+      xc.globalAlpha = .88; xc.globalCompositeOperation = 'multiply'; xc.drawImage(tinta, 0, 0);
+      xc.globalAlpha = 1; xc.globalCompositeOperation = 'source-over';
+      tCor.needsUpdate = true;
+    };
+    desenhar();
+    if (document.fonts) document.fonts.ready.then(desenhar);
+    [tCor, tRelevo].forEach(t => { t.wrapS = THREE.RepeatWrapping; t.anisotropy = 8; });
+    return { tCor, tRelevo };
+  }
+
+  function faixaSaca() {
+    const zona = document.getElementById('faixa-zona'), caixa = document.getElementById('faixa3d'), caixaPerto = document.getElementById('faixa3d-perto');
+    if (!com3D) return;
+    zona.classList.add('com-3d');
+    const longe = criarRenderer(caixa), perto = criarRenderer(caixaPerto, true);
+    const cenas = [new THREE.Scene(), new THREE.Scene()];
+    const cam = new THREE.PerspectiveCamera(30, 1, .1, 60);
+    cenas.forEach((c, i) => {
+      c.environment = ambienteMetal(i ? perto : longe);
+      c.add(new THREE.HemisphereLight(0xffe2c0, 0x120804, .4));
+      const chave = new THREE.SpotLight(0xffe0b8, 3.2, 40, .8, .6); chave.position.set(2, 6, 9); c.add(chave);
+      const recorte = new THREE.DirectionalLight(0xff9a55, 1.2); recorte.position.set(-6, 2, -5); c.add(recorte);
+    });
+
+    // a tira de juta, comprida e a ondular
+    const LARG = 44, ALT = 2.7, TILE = ALT * 8;
+    const { tCor, tRelevo } = texturasJuta();
+    [tCor, tRelevo].forEach(t => t.repeat.set(LARG / TILE, 1));
+    const geoPano = new THREE.PlaneGeometry(LARG, ALT, 220, 14), pos = geoPano.attributes.position, base = Float32Array.from(pos.array);
+    const pano = new THREE.Mesh(geoPano, new THREE.MeshStandardMaterial({ map: tCor, bumpMap: tRelevo, bumpScale: .035, roughness: .95, side: THREE.DoubleSide }));
+    pano.rotation.set(-.12, .06, -.05);
+    cenas[0].add(pano);
+
+    // grãos e alguns frutos secos a voar à volta da tira (como na entrada e na mercearia)
+    const frutos = geoFrutos(), cor = new THREE.Color(), t = new THREE.Object3D();
+    const tipos = [
+      [geoGraoReal(), .34, .055, .55, .065, .05, 30],
+      [frutos.tamara, .26, .02, .65, .045, .03, 3],
+      [frutos.caju, .55, .1, .5, .42, .1, 3],
+      [frutos.amendoa, .6, .065, .6, .13, .05, 3]
+    ];
+    const camadas = [];
+    const fazer = (cena, mult, zMin, zMax) => tipos.forEach(([geo, rug, h, s, l, dl, n]) => {
+      n = Math.max(1, Math.round(n * mult * (reduzido ? .5 : 1)));
+      const m = new THREE.InstancedMesh(geo, new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: rug, envMapIntensity: .5 }), n);
+      const lista = Array.from({ length: n }, (_, i) => {
+        cor.setHSL(h + Math.random() * .015, s, l + Math.random() * dl); m.setColorAt(i, cor);
+        return { x: Math.random(), y: (Math.random() * 2 - 1), z: zMin + Math.random() * (zMax - zMin), vx: .5 + Math.random() * .6, rx: Math.random() * 6, ry: Math.random() * 6, vr: (Math.random() - .5) * 2, s: .85 + Math.random() * .4 };
+      });
+      cena.add(m); camadas.push({ m, lista });
+    });
+    fazer(cenas[0], 1, -6, 3.2);
+    fazer(cenas[1], .12, 4.4, 6.4);
+
+    let dist = 10;
+    const ajustar = () => {
+      const w = caixa.clientWidth, h = caixa.clientHeight; if (!w || !h) return;
+      [longe, perto].forEach(r => r.setSize(w, h, false));
+      cam.aspect = w / h;
+      dist = w > 860 ? 10 : 9; // no telemóvel a câmara fica um pouco mais perto da juta
+      cam.position.set(0, 0, dist); cam.updateProjectionMatrix();
+    };
+    addEventListener('resize', ajustar); addEventListener('load', ajustar); ajustar();
+
+    let vel = 0, ultY = scrollY, desloca = 0;
+    addEventListener('scroll', () => { vel += Math.min(60, Math.abs(scrollY - ultY)) * .02; ultY = scrollY; }, { passive: true });
+    const tg = Math.tan(15 * D);
+
+    cicloVisivel(zona, (agora, dt) => {
+      const tempo = agora / 1000;
+      vel *= .94;
+      const rapido = reduzido ? 0 : .35 + vel;
+      // a juta anda para o lado, como a fita, e ondula como pano
+      desloca += rapido * dt * .06;
+      tCor.offset.x = tRelevo.offset.x = desloca;
+      if (!reduzido) {
+        for (let i = 0; i < pos.count; i++) {
+          const x = base[i * 3], y = base[i * 3 + 1];
+          pos.setZ(i, Math.sin(x * .55 + tempo * 1.1) * .22 + Math.sin(x * 1.6 - tempo * 1.7) * .06 + Math.sin(x * .8 + tempo) * y * .08);
+        }
+        pos.needsUpdate = true; geoPano.computeVertexNormals();
+      }
+      camadas.forEach(({ m, lista }) => {
+        lista.forEach((g, i) => {
+          const meiaA = (dist - g.z) * tg, meiaL = meiaA * cam.aspect + 1;
+          if (!reduzido) { g.x -= g.vx * rapido * dt * .9 / (meiaL * 2); g.rx += g.vr * dt; g.ry += g.vr * .7 * dt; }
+          g.x = ((g.x % 1) + 1) % 1;
+          t.position.set((g.x * 2 - 1) * meiaL, g.y * meiaA * .9, g.z); t.rotation.set(g.rx, g.ry, 0); t.scale.setScalar(g.s);
+          t.updateMatrix(); m.setMatrixAt(i, t.matrix);
+        });
+        m.instanceMatrix.needsUpdate = true;
+      });
+      longe.render(cenas[0], cam);
+      perto.render(cenas[1], cam);
+    });
+  }
+
+  // Tabuleta da loja: tábua pintada a creme, letras pintadas à mão, tinta gasta só onde se gasta (nas bordas)
+  function texturasPlaca(PW, PH) {
+    const W = 1024, H = Math.round(W * PH / PW), aleat = (a, b) => a + Math.random() * (b - a);
+    // veio de madeira (serve para a moldura e para o que aparece por baixo da tinta)
+    const veio = (w, h, base) => {
+      const c = document.createElement('canvas'); c.width = w; c.height = h;
+      const x = c.getContext('2d'); x.fillStyle = base; x.fillRect(0, 0, w, h);
+      for (let i = 0; i < w * .35; i++) {
+        x.strokeStyle = Math.random() < .55 ? `rgba(30,14,5,${aleat(.12, .35)})` : `rgba(170,110,65,${aleat(.06, .16)})`; x.lineWidth = aleat(.6, 2.6);
+        const y0 = Math.random() * h, a = aleat(1, 6), f = aleat(.004, .018), ph = Math.random() * 6;
+        x.beginPath(); for (let px = 0; px <= w; px += 6) x.lineTo(px, y0 + Math.sin(px * f + ph) * a + Math.sin(px * f * 3.1) * a * .3); x.stroke();
+      }
+      return c;
+    };
+    const madeira = veio(1024, 256, '#4a2a16');
+    const tMad = new THREE.CanvasTexture(madeira); tMad.encoding = THREE.sRGBEncoding; tMad.wrapS = tMad.wrapT = THREE.RepeatWrapping; tMad.anisotropy = 8;
+
+    const cor = document.createElement('canvas'); cor.width = W; cor.height = H;
+    const relevo = document.createElement('canvas'); relevo.width = W; relevo.height = H;
+    const xc = cor.getContext('2d'), xr = relevo.getContext('2d');
+    const tCor = new THREE.CanvasTexture(cor), tRelevo = new THREE.CanvasTexture(relevo);
+    tCor.encoding = THREE.sRGBEncoding; tCor.anisotropy = 8;
+    const fundoMadeira = veio(W, H, '#6a4428');
+
+    const desenhar = () => {
+      const tinta = document.createElement('canvas'); tinta.width = W; tinta.height = H;
+      const xt = tinta.getContext('2d');
+      // demão de creme, com manchas suaves e pinceladas finas
+      xt.fillStyle = '#d6bf8c'; xt.fillRect(0, 0, W, H);
+      for (let i = 0; i < 60; i++) {
+        const g = xt.createRadialGradient(aleat(0, W), aleat(0, H), 0, aleat(0, W), aleat(0, H), aleat(80, 260));
+        const claro = Math.random() < .5; g.addColorStop(0, claro ? 'rgba(245,232,200,.12)' : 'rgba(150,115,60,.08)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+        xt.fillStyle = g; xt.fillRect(0, 0, W, H);
+      }
+      for (let i = 0; i < 900; i++) {
+        xt.strokeStyle = Math.random() < .5 ? 'rgba(255,248,225,.05)' : 'rgba(110,80,40,.05)'; xt.lineWidth = aleat(1, 3);
+        const y0 = aleat(0, H), x0 = aleat(-50, W), l = aleat(120, 420);
+        xt.beginPath(); xt.moveTo(x0, y0); xt.lineTo(x0 + l, y0 + aleat(-3, 3)); xt.stroke();
+      }
+      // sujidade acumulada junto à moldura
+      const sujo = xt.createRadialGradient(W / 2, H / 2, Math.min(W, H) * .35, W / 2, H / 2, Math.max(W, H) * .72);
+      sujo.addColorStop(0, 'rgba(0,0,0,0)'); sujo.addColorStop(1, 'rgba(80,50,20,.35)'); xt.fillStyle = sujo; xt.fillRect(0, 0, W, H);
+      // craquelado fino
+      xt.strokeStyle = 'rgba(70,45,20,.18)'; xt.lineWidth = .8;
+      for (let i = 0; i < 120; i++) { let px = aleat(0, W), py = aleat(0, H); xt.beginPath(); xt.moveTo(px, py); for (let k = 0; k < 6; k++) { px += aleat(-14, 14); py += aleat(-14, 14); xt.lineTo(px, py); } xt.stroke(); }
+
+      // letras pintadas à mão, como a placa da montra
+      const M = 70, tinteiro = '#3a2214';
+      xt.fillStyle = xt.strokeStyle = tinteiro; xt.textAlign = 'center'; xt.textBaseline = 'middle';
+      xt.lineWidth = 8; xt.strokeRect(M, M + 10, W - 2 * M, 300);
+      xt.lineWidth = 2.5; xt.strokeRect(M + 14, M + 24, W - 2 * M - 28, 272);
+      xt.font = '600 40px Fraunces, Georgia, serif'; xt.fillText('DESDE', M + 120, M + 68); xt.fillText('1971', W - M - 120, M + 68);
+      xt.font = '700 112px Fraunces, Georgia, serif'; xt.fillText('CASA DO CAFÉ', W / 2, M + 170, W - 2 * M - 70);
+      xt.font = '600 38px Fraunces, Georgia, serif'; xt.fillText('V  E  R  A      C  R  U  Z', W / 2, M + 262);
+      xt.font = 'italic 600 92px Fraunces, Georgia, serif'; xt.fillText('Arábica Pura', W / 2, 520);
+      xt.lineWidth = 5; xt.beginPath(); xt.moveTo(W / 2 - 180, 590); xt.lineTo(W / 2 + 180, 590); xt.stroke();
+      xt.font = '600 76px Fraunces, Georgia, serif';
+      const origens = ['Colômbia', 'S. Tomé', 'Brasil', 'Kenya', 'Honduras', 'Timor'], passo = (H - 120 - 680) / (origens.length - 1);
+      origens.forEach((o, i) => xt.fillText(o, W / 2, 680 + i * passo));
+
+      // desgaste: pó fino em toda a tinta, lascas só junto às bordas
+      xt.globalCompositeOperation = 'destination-out';
+      for (let i = 0; i < 14000; i++) { xt.globalAlpha = aleat(.05, .3); xt.fillRect(aleat(0, W), aleat(0, H), aleat(.6, 1.6), aleat(.6, 1.6)); }
+      for (let i = 0; i < 900; i++) {
+        const lado = Math.floor(Math.random() * 4), d = Math.pow(Math.random(), 3) * 46;
+        const px = lado === 0 ? d : lado === 1 ? W - d : aleat(0, W), py = lado === 2 ? d : lado === 3 ? H - d : aleat(0, H);
+        xt.globalAlpha = aleat(.5, 1); xt.beginPath();
+        const r = aleat(1.5, 7) * (1 - d / 60), n = 6; for (let k = 0; k < n; k++) { const a = k / n * Math.PI * 2; xt.lineTo(px + Math.cos(a) * r * aleat(.5, 1.4), py + Math.sin(a) * r * aleat(.5, 1.4)); }
+        xt.fill();
+      }
+      xt.globalAlpha = 1; xt.globalCompositeOperation = 'source-over';
+
+      // cor: madeira por baixo, tinta por cima
+      xc.drawImage(fundoMadeira, 0, 0); xc.drawImage(tinta, 0, 0);
+      // relevo: onde há tinta fica mais alto que a madeira lascada
+      xr.fillStyle = '#000'; xr.fillRect(0, 0, W, H);
+      const m = document.createElement('canvas'); m.width = W; m.height = H; const xm = m.getContext('2d');
+      xm.drawImage(tinta, 0, 0); xm.globalCompositeOperation = 'source-in'; xm.fillStyle = '#c8c8c8'; xm.fillRect(0, 0, W, H);
+      xr.drawImage(m, 0, 0);
+      tCor.needsUpdate = tRelevo.needsUpdate = true;
+    };
+    desenhar();
+    if (document.fonts) document.fonts.ready.then(desenhar);
+    return { tMad, tCor, tRelevo };
+  }
+
+  // Elo de corrente: um "estádio" (dois meios círculos ligados por retas), feito como tubo
+  function geoElo(r, reta, tubo) {
+    const pts = [];
+    for (let i = 0; i <= 16; i++) { const a = Math.PI * i / 16; pts.push(new THREE.Vector3(Math.cos(a) * r, reta / 2 + Math.sin(a) * r, 0)); }
+    for (let i = 0; i <= 16; i++) { const a = Math.PI + Math.PI * i / 16; pts.push(new THREE.Vector3(Math.cos(a) * r, -reta / 2 + Math.sin(a) * r, 0)); }
+    return new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, true), 64, tubo, 10, true);
+  }
+
+  function placaOrigens() {
+    const placa = document.querySelector('.placa'), caixa = document.getElementById('placa3d');
+    if (!com3D) return;
+    placa.classList.add('com-3d'); placa.removeAttribute('data-anim'); // a placa 3D balança sozinha
+    const renderer = criarRenderer(caixa), cena = new THREE.Scene();
+    renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    cena.environment = ambienteMetal(renderer);
+    const cam = new THREE.PerspectiveCamera(30, 1, .1, 60);
+    cena.add(new THREE.HemisphereLight(0xffe2c0, 0x120804, .35));
+    const chave = new THREE.SpotLight(0xffe0b8, 2.6, 40, .5, .55, 1.2); chave.position.set(2.2, 6.5, 7.5); chave.target.position.set(0, 0, 0);
+    chave.castShadow = true; chave.shadow.mapSize.set(1024, 1024); chave.shadow.bias = -.0004; chave.shadow.radius = 4;
+    cena.add(chave, chave.target);
+    const recorte = new THREE.DirectionalLight(0xff9a55, .9); recorte.position.set(-6, 2, -4); cena.add(recorte);
+
+    // medidas (em metros "de cena"); tudo é calculado a partir daqui para as peças encaixarem
+    const PW = 2.5, PH = 3.3, MOLD = .18;                 // área pintada e largura da moldura
+    const VARAO_Y = 2.6, VARAO_R = .045, PAREDE_Z = -1.5;  // varão de latão e parede (longe o bastante para a placa balançar sem lhe tocar)
+    const ARG_R = .066, ARG_T = .016;                      // argola à volta do varão
+    const ELO_R = .05, ELO_RETA = .12, ELO_T = .014, N_ELOS = 6;
+    const OLHAL_R = .06, OLHAL_T = .016, PRESO_X = .95;    // olhais aparafusados na moldura
+    const meioElo = ELO_RETA / 2 + ELO_R, passo = 2 * meioElo - 2 * ELO_T;
+    const elo1 = VARAO_Y - ARG_R + ARG_T + ELO_T - meioElo;
+    const eloN = elo1 - (N_ELOS - 1) * passo;
+    const olhalY = eloN - meioElo + ELO_T + OLHAL_T - OLHAL_R;
+    const moldTopo = olhalY - OLHAL_R - OLHAL_T + .01;
+    const centroY = moldTopo - PH / 2 - MOLD;
+
+    const { tMad, tCor, tRelevo } = texturasPlaca(PW, PH);
+    const latao = new THREE.MeshStandardMaterial({ color: 0xc29a52, metalness: 1, roughness: .32 });
+    const lataoVelho = new THREE.MeshStandardMaterial({ color: 0x9c7a3e, metalness: 1, roughness: .45 });
+    const sombra = m => { m.castShadow = true; m.receiveShadow = true; return m; };
+
+    // parede ao fundo, para a placa ter onde estar presa e fazer sombra
+    const parede = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.MeshStandardMaterial({ color: 0x120a05, roughness: 1 }));
+    parede.position.z = PAREDE_Z; parede.receiveShadow = true; cena.add(parede);
+
+    // varão com remates e dois braços aparafusados à parede
+    const varao = sombra(new THREE.Mesh(new THREE.CylinderGeometry(VARAO_R, VARAO_R, 3.5, 32), latao)); varao.rotation.z = Math.PI / 2; varao.position.y = VARAO_Y; cena.add(varao);
+    [-1, 1].forEach(s => {
+      const remate = sombra(new THREE.Mesh(new THREE.SphereGeometry(.09, 24, 16), latao)); remate.position.set(s * 1.79, VARAO_Y, 0); cena.add(remate);
+      const braco = sombra(new THREE.Mesh(new THREE.CylinderGeometry(.03, .03, -PAREDE_Z, 16), lataoVelho)); braco.rotation.x = Math.PI / 2; braco.position.set(s * 1.55, VARAO_Y, PAREDE_Z / 2); cena.add(braco);
+      const anel = sombra(new THREE.Mesh(new THREE.TorusGeometry(.055, .018, 10, 24), lataoVelho)); anel.position.set(s * 1.55, VARAO_Y, 0); anel.rotation.y = Math.PI / 2; cena.add(anel);
+      const roseta = sombra(new THREE.Mesh(new THREE.CylinderGeometry(.14, .16, .04, 32), lataoVelho)); roseta.rotation.x = Math.PI / 2; roseta.position.set(s * 1.55, VARAO_Y, PAREDE_Z + .02); cena.add(roseta);
+    });
+
+    // tudo o que balança gira à volta do varão
+    const balanco = new THREE.Group(); balanco.position.y = VARAO_Y; cena.add(balanco);
+    const peca = (m, x, y, z) => { m.position.set(x, y - VARAO_Y, z); balanco.add(sombra(m)); return m; };
+
+    // correntes: argola à volta do varão, elos alternados, último elo preso ao olhal
+    const geoE = geoElo(ELO_R, ELO_RETA, ELO_T);
+    [-PRESO_X, PRESO_X].forEach(px => {
+      const arg = peca(new THREE.Mesh(new THREE.TorusGeometry(ARG_R, ARG_T, 12, 32), latao), px, VARAO_Y, 0); arg.rotation.y = Math.PI / 2;
+      for (let i = 0; i < N_ELOS; i++) { const e = peca(new THREE.Mesh(geoE, latao), px, elo1 - i * passo, 0); e.rotation.y = i % 2 ? Math.PI / 2 : 0; }
+      peca(new THREE.Mesh(new THREE.TorusGeometry(OLHAL_R, OLHAL_T, 12, 28), latao), px, olhalY, 0);
+      peca(new THREE.Mesh(new THREE.CylinderGeometry(.018, .014, .14, 10), lataoVelho), px, moldTopo - .03, 0);
+    });
+
+    // a tábua pintada (as UV vão de 0 a 1 em toda a frente)
+    const tabua = peca(new THREE.Mesh(new THREE.BoxGeometry(PW + .04, PH + .04, .08), [
+      new THREE.MeshStandardMaterial({ color: 0x4a2a16 }), new THREE.MeshStandardMaterial({ color: 0x4a2a16 }), new THREE.MeshStandardMaterial({ color: 0x4a2a16 }), new THREE.MeshStandardMaterial({ color: 0x4a2a16 }),
+      new THREE.MeshStandardMaterial({ map: tCor, bumpMap: tRelevo, bumpScale: .01, roughness: .78 }), new THREE.MeshStandardMaterial({ color: 0x3a2214, roughness: .9 })
+    ]), 0, centroY, 0);
+
+    // moldura com quatro peças em meia-esquadria, cada uma com o veio no sentido certo
+    const tMadV = tMad.clone(); tMadV.needsUpdate = true; tMadV.rotation = Math.PI / 2;
+    const matH = new THREE.MeshStandardMaterial({ map: tMad, roughness: .5, bumpMap: tMad, bumpScale: .006 });
+    const matV = new THREE.MeshStandardMaterial({ map: tMadV, roughness: .5, bumpMap: tMadV, bumpScale: .006 });
+    [tMad, tMadV].forEach(t => t.repeat.set(.55, .55));
+    const wi = PW / 2, hi = PH / 2, wo = wi + MOLD, ho = hi + MOLD;
+    const lados = [
+      [[-wo, ho], [wo, ho], [wi, hi], [-wi, hi], matH], [[-wo, -ho], [-wi, -hi], [wi, -hi], [wo, -ho], matH],
+      [[-wo, ho], [-wi, hi], [-wi, -hi], [-wo, -ho], matV], [[wo, ho], [wo, -ho], [wi, -hi], [wi, hi], matV]
+    ];
+    lados.forEach(l => {
+      const forma = new THREE.Shape(l.slice(0, 4).map(([px, py]) => new THREE.Vector2(px, py)));
+      const geo = new THREE.ExtrudeGeometry(forma, { depth: .1, bevelEnabled: true, bevelThickness: .025, bevelSize: .018, bevelSegments: 3 });
+      geo.translate(0, 0, -.06);
+      peca(new THREE.Mesh(geo, l[4]), 0, centroY, 0);
+    });
+
+    // câmara ligeiramente acima, para se ver a profundidade da moldura e as correntes
+    const ajustar = () => {
+      const w = caixa.clientWidth, h = caixa.clientHeight; if (!w || !h) return;
+      renderer.setSize(w, h, false); cam.aspect = w / h;
+      const alto = VARAO_Y + .35 - (centroY - PH / 2 - MOLD - .35), meio = (VARAO_Y + .35 + centroY - PH / 2 - MOLD - .35) / 2;
+      const largo = 3.9, d = Math.max(alto / (2 * Math.tan(15 * D)), largo / (2 * Math.tan(15 * D) * cam.aspect));
+      cam.position.set(0, meio + d * .09, d); cam.lookAt(0, meio, 0); cam.updateProjectionMatrix();
+    };
+    addEventListener('resize', ajustar); addEventListener('load', ajustar); ajustar();
+
+    // balanço físico à volta do varão (para a frente e para trás), com amortecimento
+    let ang = reduzido ? 0 : -.14, vel = 0, ultY = scrollY, alvo = 0;
+    addEventListener('scroll', () => { if (!reduzido) vel += Math.max(-.12, Math.min(.12, (scrollY - ultY) * .002)); ultY = scrollY; }, { passive: true });
+    placa.addEventListener('pointermove', e => { const r = placa.getBoundingClientRect(); alvo = ((e.clientY - r.top) / r.height - .5) * -.08; });
+    placa.addEventListener('pointerleave', () => { alvo = 0; });
+    placa.addEventListener('pointerdown', () => { if (!reduzido) vel -= .9; });
+
+    cicloVisivel(placa, (agora, dt) => {
+      vel += (-6.5 * (ang - alvo) - .55 * vel) * dt; ang += vel * dt;
+      // nunca deixa a placa ir contra a parede nem balançar de forma exagerada
+      if (ang > .2) { ang = .2; vel = -Math.abs(vel) * .3; }
+      if (ang < -.3) { ang = -.3; vel = Math.abs(vel) * .3; }
+      balanco.rotation.x = ang;
+      renderer.render(cena, cam);
+    });
+  }
+
+  heroMoinho();
+  aromaGraos();
+  frutosVoar();
+  faixaSaca();
+  placaOrigens();
+  globoOrigens();
+})();
+</script>
+</body>
+</html>
