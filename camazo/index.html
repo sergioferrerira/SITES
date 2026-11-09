@@ -100,10 +100,16 @@
   .estado { display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 8px 14px 8px 10px; background: #111; color: #e8e8e8; border-radius: 8px; font-size: .78rem; }
   .estado .luz { width: 10px; height: 10px; border-radius: 50%; background: #39d26b; box-shadow: 0 0 8px #39d26b, 0 0 2px #fff inset; }
   .estado.fechado .luz { background: var(--vermelho); box-shadow: 0 0 8px var(--vermelho); }
-  .quadro { position: relative; justify-self: center; width: min(100%, 470px); padding: 14px; background: #1a1a1a; border-radius: 4px; box-shadow: 0 2px 0 #000, 14px 26px 40px rgba(0,0,0,.28); transform: rotate(1.2deg); }
-  .quadro::before { content: ""; position: absolute; inset: 6px; border: 1px solid #333; pointer-events: none; }
-  .quadro img { width: 100%; height: auto; aspect-ratio: 4/4.2; object-fit: cover; }
-  .quadro .legenda { font-size: .64rem; letter-spacing: .2em; text-transform: uppercase; color: #8a8a8f; text-align: center; padding-top: 10px; }
+  /* o armário vermelho (SVG) */
+  .armario { position: relative; justify-self: center; width: min(100%, 480px); margin-top: -10px; }
+  .armario svg { width: 100%; height: auto; overflow: visible; display: block; }
+  .armario .legenda { font-family: "JetBrains Mono", monospace; font-size: .68rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #6c6c72; text-align: center; margin-top: 6px; }
+  .cx-g { cursor: pointer; outline: none; transition: transform .45s cubic-bezier(.25,1.4,.5,1); }
+  .cx-g .cx-caixa { opacity: 0; transition: opacity .2s; }
+  .cx-g:hover, .cx-g:focus-visible, .cx-g.puxa { transform: translate(-16px, 6px); }
+  .cx-g:hover .cx-caixa, .cx-g:focus-visible .cx-caixa, .cx-g.puxa .cx-caixa { opacity: 1; }
+  .cx-g:focus-visible .cx-frente { stroke: #1f4fb0; stroke-width: 3; }
+  .cx-g:active { transform: translate(-22px, 9px); }
   .poste { position: absolute; z-index: 3; right: max(16px, calc(50% - 600px)); top: 120px; width: 46px; }
   .poste .tampa { height: 16px; background: linear-gradient(90deg, #111, #555 40%, #111); border-radius: 8px 8px 3px 3px; }
   .poste .vidro { height: 170px; margin: 0 5px; border-radius: 4px; position: relative; overflow: hidden; box-shadow: inset 0 0 0 2px rgba(0,0,0,.25), 0 0 28px rgba(208,28,44,.35); }
@@ -114,13 +120,21 @@
 
   /* rodapé da parede + chão em perspectiva */
   .rodape-parede { position: absolute; left: 0; right: 0; bottom: 140px; height: 14px; background: #111; z-index: 1; }
-  .chao-3d { position: absolute; left: 0; right: 0; bottom: 0; height: 140px; z-index: 1; overflow: hidden; }
-  .chao-3d::before { content: ""; position: absolute; left: -200%; right: -200%; bottom: 0; height: 1400px; background: var(--chao); background-size: 380px 380px; transform-origin: 50% 100%; transform: perspective(500px) rotateX(70deg); }
+  .chao-3d { position: absolute; left: 0; right: 0; bottom: 0; height: 140px; z-index: 1; overflow: hidden; background: #3c3c40; }
+  .chao-3d::before { content: ""; position: absolute; left: -200%; right: -200%; bottom: 0; height: 1400px; background: var(--chao); background-size: 300px 300px; transform-origin: 50% 100%; transform: perspective(500px) rotateX(70deg); }
+  .chao-3d .reflexo { position: absolute; bottom: 0; width: 26%; height: 100%; background: radial-gradient(ellipse 50% 60% at 50% 100%, rgba(255,255,255,.28), transparent 70%); pointer-events: none; z-index: 1; }
   .chao-3d::after { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.1) 35%, transparent 60%, #161618); }
 
   /* ---------- CHÃO: base do resto do site ---------- */
-  .chao { position: relative; background: var(--chao); background-size: 240px 240px; }
-  .chao::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 45% 35% at 50% 6%, rgba(230,238,255,.16), transparent 70%), linear-gradient(rgba(16,16,18,.86), rgba(16,16,18,.9)); pointer-events: none; }
+  .chao { position: relative; background: var(--chao); background-size: 264px 264px; }
+  .chao::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 9% 30% at 20% 0%, rgba(235,242,255,.22), transparent 70%),
+      radial-gradient(ellipse 9% 30% at 50% 0%, rgba(235,242,255,.22), transparent 70%),
+      radial-gradient(ellipse 9% 30% at 80% 0%, rgba(235,242,255,.22), transparent 70%),
+      radial-gradient(ellipse 70% 40% at 50% 0%, rgba(230,238,255,.12), transparent 70%),
+      linear-gradient(rgba(12,12,14,.66), rgba(12,12,14,.8) 30%, rgba(12,12,14,.86)); }
+  .oficina-topo h2, .oficina-topo p { text-shadow: 0 2px 12px rgba(0,0,0,.9), 0 0 2px rgba(0,0,0,.8); }
   .chao > * { position: relative; }
 
   .faixa { background: #0f0f10; border-block: 1px solid #000; overflow: hidden; padding: 14px 0; }
@@ -265,7 +279,7 @@
   }
   @media (max-width: 900px) {
     .hero-grid, .marcar-grid, .visita-grid { grid-template-columns: minmax(0, 1fr); }
-    .quadro { max-width: 420px; }
+    .armario { max-width: 420px; }
     .fotos { grid-template-columns: repeat(2, 1fr); }
     .ordem { transform: none; }
   }
@@ -329,13 +343,13 @@
       </div>
       <div class="estado mono" id="estado"><i class="luz"></i><span id="estado-txt">Aberto</span></div>
     </div>
-    <figure class="quadro">
-      <img src="img/hero.jpg" alt="Interior da Camazo Barbershop: cadeira de barbeiro clássica em pele castanha, chão em mosaico preto e branco e bancada vermelha" width="1270" height="1310" fetchpriority="high">
-      <figcaption class="legenda">R. Conselheiro Luís de Magalhães · Aveiro</figcaption>
-    </figure>
+    <div class="armario">
+      <div id="armario" role="group" aria-label="Bancada vermelha: carrega numa gaveta para a abrir"></div>
+      <p class="legenda">↑ Carrega numa gaveta</p>
+    </div>
   </div>
   <div class="rodape-parede" aria-hidden="true"></div>
-  <div class="chao-3d" aria-hidden="true"></div>
+  <div class="chao-3d" aria-hidden="true"><span class="reflexo" style="left:7%"></span><span class="reflexo" style="left:37%"></span><span class="reflexo" style="left:67%"></span></div>
 </section>
 
 <!-- CHÃO -->
@@ -438,22 +452,205 @@ const paraMin = (t) => { const [h, m] = t.split(":").map(Number); return h * 60 
 const paraHora = (m) => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-/* --- o chão em mosaico, desenhado como o da barbearia --- */
+/* --- o chão: o mosaico da barbearia ---
+   Pastilhas cinza-escuras e brancas: losangos escuros com uma pastilha branca
+   no centro, contornados por uma escada dupla de pastilhas brancas. Repete a
+   cada 12 pastilhas. Cada pastilha tem tom, brilho e aresta próprios. */
 (function () {
   try {
-    let seed = 7;
+    let seed = 11;
     const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
-    const T = 10, N = 24, c = document.createElement("canvas");
-    c.width = c.height = T * N;
+    const P = 12, T = 22, N = P, c = document.createElement("canvas");
+    c.width = c.height = N * T;
     const g = c.getContext("2d");
-    g.fillStyle = "#1a1a1b"; g.fillRect(0, 0, c.width, c.height);
+    const centros = [[0, 0], [P, 0], [0, P], [P, P], [P / 2, P / 2]];
+    const branco = (x, y) => { const r = Math.min(...centros.map(([a, b]) => Math.abs(x - a) + Math.abs(y - b))); return r === 0 || r === 3 || r === 4; };
+    // junta (argamassa) com grão
+    g.fillStyle = "#8d8d8a"; g.fillRect(0, 0, c.width, c.height);
+    for (let k = 0; k < 2600; k++) { g.fillStyle = `rgba(${rnd() < .5 ? "40,40,40" : "220,220,215"},${.15 + rnd() * .2})`; g.fillRect(rnd() * c.width, rnd() * c.height, 1, 1); }
+    const G = 2; // largura da junta
     for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
-      const r = rnd();
-      g.fillStyle = r < .44 ? "#3c3c40" : r < .86 ? "#ecebe6" : r < .95 ? "#26262a" : "#9a9a9e";
-      g.fillRect(x * T + 1, y * T + 1, T - 1, T - 1);
+      const w = branco(x, y), v = (rnd() - .5) * (w ? 14 : 18);
+      const base = w ? [234 + v, 233 + v, 228 + v] : [74 + v, 75 + v, 80 + v];
+      const x0 = x * T + G / 2, y0 = y * T + G / 2, L = T - G;
+      // corpo da pastilha com leve gradiente
+      const gr = g.createLinearGradient(x0, y0, x0 + L, y0 + L);
+      gr.addColorStop(0, `rgb(${base.map((n) => Math.min(255, n + 12)).join()})`);
+      gr.addColorStop(1, `rgb(${base.map((n) => n - 12).join()})`);
+      g.fillStyle = gr;
+      g.beginPath(); g.roundRect ? g.roundRect(x0, y0, L, L, 2.5) : g.rect(x0, y0, L, L); g.fill();
+      // aresta: luz em cima/esquerda, sombra em baixo/direita
+      g.fillStyle = "rgba(255,255,255,.35)"; g.fillRect(x0 + 1, y0 + .5, L - 2, 1); g.fillRect(x0 + .5, y0 + 1, 1, L - 2);
+      g.fillStyle = "rgba(0,0,0,.28)"; g.fillRect(x0 + 1, y0 + L - 1.5, L - 2, 1); g.fillRect(x0 + L - 1.5, y0 + 1, 1, L - 2);
+      // brilho vidrado
+      const br = g.createRadialGradient(x0 + L * .3, y0 + L * .25, 0, x0 + L * .3, y0 + L * .25, L * .7);
+      br.addColorStop(0, `rgba(255,255,255,${w ? .25 : .12})`); br.addColorStop(1, "rgba(255,255,255,0)");
+      g.fillStyle = br; g.fillRect(x0, y0, L, L);
+      // grão e pequenos riscos de uso
+      for (let k = 0; k < 14; k++) { g.fillStyle = `rgba(${w ? "0,0,0" : "255,255,255"},${rnd() * .07})`; g.fillRect(x0 + rnd() * L, y0 + rnd() * L, 1, 1); }
+      if (rnd() < .12) { g.strokeStyle = `rgba(${w ? "0,0,0" : "255,255,255"},.08)`; g.beginPath(); const a = rnd() * L, b = rnd() * L; g.moveTo(x0 + a, y0 + b); g.lineTo(x0 + a + (rnd() - .5) * 10, y0 + b + (rnd() - .5) * 10); g.stroke(); }
     }
     document.documentElement.style.setProperty("--chao", `url(${c.toDataURL()})`);
   } catch (e) {}
+})();
+
+/* --- a bancada vermelha da barbearia, desenhada em SVG --- */
+(function () {
+  const F = { x: 60, y: 112, w: 360, h: 448 };      // frente
+  const D = { x: 34, y: -20 };                       // profundidade (vista de cima, ligeiramente à direita)
+  const R = F.x + F.w, B = F.y + F.h;
+  const gavetas = [
+    { id: "cortes",  y: 154, h: 44, etq: "CORTES" },
+    { id: "combos",  y: 200, h: 44, etq: "COMBOS" },
+    { id: "cor",     y: 246, h: 44, etq: "COR" },
+    { id: "galeria", y: 292, h: 44, etq: "GALERIA" },
+    { id: "marcar",  y: 338, h: 220, etq: "MARCAR", grande: true },
+  ];
+  const nomes = { cortes: "Cortes & barba", combos: "Combos", cor: "Cor", galeria: "Galeria", marcar: "Marcar" };
+  const puxador = (x1, x2, y) => `
+    <rect x="${x1 - 4}" y="${y - 1}" width="10" height="10" rx="2" fill="url(#cx-crom-v)" opacity=".9"/>
+    <rect x="${x2 - 6}" y="${y - 1}" width="10" height="10" rx="2" fill="url(#cx-crom-v)" opacity=".9"/>
+    <rect x="${x1}" y="${y + 4}" width="${x2 - x1}" height="8" rx="4" fill="rgba(60,0,6,.55)" filter="url(#cx-desfoca2)"/>
+    <rect x="${x1}" y="${y}" width="${x2 - x1}" height="8" rx="4" fill="url(#cx-crom)"/>
+    <rect x="${x1 + 6}" y="${y + 1.2}" width="${(x2 - x1) * .55}" height="1.6" rx=".8" fill="#fff" opacity=".85"/>`;
+  const fita = (x, y, txt) => { const w = 14 + txt.length * 8.2; return `
+    <g transform="translate(${x} ${y}) rotate(-.6)">
+      <rect width="${w}" height="15" rx="1.5" fill="#101012"/>
+      <rect width="${w}" height="15" rx="1.5" fill="url(#cx-fita)"/>
+      <text x="${w / 2}" y="11" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="10" letter-spacing="1.6" fill="#f2f2f2">${txt}</text>
+    </g>`; };
+
+  const gav = gavetas.map((g) => {
+    const x1 = F.x + 8, x2 = R - 8, y1 = g.y, y2 = g.y + g.h, pd = 14, pv = 9;
+    return `
+    <g class="cx-g" data-gaveta="${g.id}" tabindex="0" role="button" aria-label="Abrir gaveta: ${nomes[g.id]}">
+      <g class="cx-caixa">
+        <polygon points="${x1},${y1} ${x2},${y1} ${x2 + pd},${y1 - pv} ${x1 + pd},${y1 - pv}" fill="#1a1a1c"/>
+        <polygon points="${x1 + 3},${y1 - 1} ${x2 - 2},${y1 - 1} ${x2 + pd - 4},${y1 - pv + 1} ${x1 + pd},${y1 - pv + 1}" fill="#0b0b0c"/>
+        <polygon points="${x2},${y1} ${x2 + pd},${y1 - pv} ${x2 + pd},${y2 - pv} ${x2},${y2}" fill="url(#cx-lado-gav)"/>
+      </g>
+      <rect class="cx-frente" x="${x1}" y="${y1}" width="${x2 - x1}" height="${g.h}" rx="3" fill="url(#cx-frente)"/>
+      <rect x="${x1}" y="${y1}" width="${x2 - x1}" height="${g.h}" rx="3" fill="url(#cx-ruido)" opacity=".5"/>
+      <rect x="${x1 + 1}" y="${y1 + .5}" width="${x2 - x1 - 2}" height="1.4" fill="#ff8f98" opacity=".75"/>
+      <rect x="${x1 + 1}" y="${y2 - 2}" width="${x2 - x1 - 2}" height="2" fill="#5c0710" opacity=".7"/>
+      ${puxador(x1 + 18, x2 - 18, y1 + 9)}
+      ${g.grande ? `
+        <rect x="${(x1 + x2) / 2 - 42}" y="${y1 + 40}" width="84" height="22" rx="2" fill="#0d0d0e"/>
+        <rect x="${(x1 + x2) / 2 - 40}" y="${y1 + 42}" width="80" height="18" rx="1" fill="none" stroke="#3a3a3c" stroke-width=".8"/>
+        <text x="${(x1 + x2) / 2}" y="${y1 + 56}" text-anchor="middle" font-family="Yellowtail, cursive" font-size="15" fill="#f0f0f0">Camazo</text>
+        ${fita(x1 + 22, y1 + 30, g.etq + " ✂")}
+        <rect x="${x1 + 18}" y="${y2 - 30}" width="${x2 - x1 - 36}" height="1.2" fill="#000" opacity=".18"/>
+      ` : fita(x1 + 22, y1 + 23, g.etq)}
+    </g>`;
+  }).join("");
+
+  const svg = `
+  <svg viewBox="0 0 520 610" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cx-frente" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ea3542"/><stop offset=".18" stop-color="#d42232"/><stop offset=".7" stop-color="#bf1626"/><stop offset="1" stop-color="#a1101d"/>
+      </linearGradient>
+      <linearGradient id="cx-corpo" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#9d0f1c"/><stop offset=".05" stop-color="#c41b2b"/><stop offset=".95" stop-color="#c41b2b"/><stop offset="1" stop-color="#9d0f1c"/>
+      </linearGradient>
+      <linearGradient id="cx-lado" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#8a0c18"/><stop offset=".4" stop-color="#9f111e"/><stop offset="1" stop-color="#6c0811"/>
+      </linearGradient>
+      <linearGradient id="cx-lado-gav" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#b9b9bd"/><stop offset="1" stop-color="#6d6d72"/>
+      </linearGradient>
+      <linearGradient id="cx-topo" x1="0" y1="1" x2="0" y2="0">
+        <stop offset="0" stop-color="#d9303d"/><stop offset="1" stop-color="#f05a64"/>
+      </linearGradient>
+      <linearGradient id="cx-crom" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffffff"/><stop offset=".22" stop-color="#e3e6e9"/><stop offset=".5" stop-color="#8f949a"/><stop offset=".68" stop-color="#e9ecef"/><stop offset="1" stop-color="#5e6268"/>
+      </linearGradient>
+      <linearGradient id="cx-crom-v" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#f4f5f6"/><stop offset=".5" stop-color="#9a9ea4"/><stop offset="1" stop-color="#4f5358"/>
+      </linearGradient>
+      <linearGradient id="cx-fita" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity=".14"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/>
+      </linearGradient>
+      <linearGradient id="cx-brilho" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".34" stop-color="#fff" stop-opacity="0"/><stop offset=".42" stop-color="#fff" stop-opacity=".22"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset=".62" stop-color="#fff" stop-opacity=".08"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="cx-luz-tecto" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".3" stop-color="#fff" stop-opacity="0"/>
+      </linearGradient>
+      <pattern id="cx-ruido" width="120" height="120" patternUnits="userSpaceOnUse">
+        <rect width="120" height="120" fill="#000" filter="url(#cx-grao)"/>
+      </pattern>
+      <filter id="cx-grao" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4" stitchTiles="stitch"/>
+        <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .22 -.06"/>
+      </filter>
+      <filter id="cx-sombra" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="16"/></filter>
+      <filter id="cx-desfoca2" x="-10%" y="-100%" width="120%" height="300%"><feGaussianBlur stdDeviation="1.6"/></filter>
+    </defs>
+
+    <!-- sombra na parede -->
+    <polygon points="${F.x - 6},${F.y + 30} ${R + D.x + 16},${F.y + D.y + 30} ${R + D.x + 22},${B + D.y + 40} ${F.x + 10},${B + 44}" fill="rgba(0,0,0,.38)" filter="url(#cx-sombra)"/>
+
+    <!-- secador pendurado à esquerda -->
+    <g opacity=".95">
+      <path d="M44 150 C 30 170, 30 260, 38 330" stroke="#151516" stroke-width="3" fill="none"/>
+      <rect x="30" y="128" width="26" height="40" rx="7" fill="#1b1b1d"/>
+      <rect x="22" y="110" width="40" height="26" rx="12" fill="#232326"/>
+      <circle cx="52" cy="123" r="8" fill="#2c3e9e"/><circle cx="52" cy="123" r="4" fill="#16205a"/>
+      <rect x="34" y="114" width="12" height="3" rx="1.5" fill="#fff" opacity=".18"/>
+    </g>
+
+    <!-- corpo: lado e topo -->
+    <polygon points="${R},${F.y} ${R + D.x},${F.y + D.y} ${R + D.x},${B + D.y} ${R},${B}" fill="url(#cx-lado)"/>
+    <polygon points="${R},${F.y} ${R + D.x},${F.y + D.y} ${R + D.x},${B + D.y} ${R},${B}" fill="url(#cx-ruido)" opacity=".5"/>
+    <polygon points="${F.x},${F.y} ${R},${F.y} ${R + D.x},${F.y + D.y} ${F.x + D.x},${F.y + D.y}" fill="url(#cx-topo)"/>
+    <!-- tapete de borracha no topo -->
+    <polygon points="${F.x + 8},${F.y - 3} ${R - 6},${F.y - 3} ${R + D.x - 8},${F.y + D.y + 3} ${F.x + D.x + 6},${F.y + D.y + 3}" fill="#18181a"/>
+
+    <!-- coisas em cima da bancada -->
+    <g>
+      <ellipse cx="128" cy="100" rx="13" ry="4" fill="rgba(0,0,0,.5)"/>
+      <rect x="116" y="58" width="24" height="42" rx="3" fill="#1c1c1f"/><rect x="119" y="60" width="4" height="38" rx="2" fill="#fff" opacity=".18"/>
+      <rect x="121" y="46" width="14" height="13" rx="2" fill="#2a2a2e"/><rect x="125" y="40" width="6" height="7" fill="#111"/><rect x="131" y="41" width="10" height="3" fill="#111"/>
+      <ellipse cx="185" cy="101" rx="10" ry="3" fill="rgba(0,0,0,.5)"/>
+      <rect x="176" y="64" width="19" height="37" rx="5" fill="#d8dadc"/><rect x="178" y="66" width="4" height="33" rx="2" fill="#fff" opacity=".7"/><rect x="176" y="78" width="19" height="12" fill="#2a2a2e"/>
+      <rect x="181" y="54" width="9" height="10" rx="1" fill="#2b2b2f"/>
+      <ellipse cx="300" cy="98" rx="16" ry="4" fill="rgba(0,0,0,.5)"/>
+      <rect x="296" y="66" width="8" height="32" rx="3" fill="#1a1a1c"/>
+      <path d="M300 68 C 280 60, 278 36, 300 30 C 322 36, 320 60, 300 68Z" fill="#111"/>
+      <path d="M300 66 L300 34 M300 66 L290 40 M300 66 L310 40 M300 66 L284 50 M300 66 L316 50" stroke="#2c2c30" stroke-width="1"/>
+      <ellipse cx="366" cy="97" rx="22" ry="4" fill="rgba(0,0,0,.45)"/>
+      <rect x="346" y="80" width="44" height="17" rx="8" fill="#1f1f22"/><rect x="384" y="82" width="10" height="13" rx="2" fill="#c9cbce"/><rect x="350" y="83" width="26" height="3" rx="1.5" fill="#fff" opacity=".15"/>
+    </g>
+
+    <!-- frente da caixa -->
+    <rect x="${F.x}" y="${F.y}" width="${F.w}" height="${F.h}" rx="4" fill="url(#cx-corpo)"/>
+    <rect x="${F.x}" y="${F.y}" width="${F.w}" height="${F.h}" rx="4" fill="url(#cx-ruido)" opacity=".45"/>
+    <!-- cavidades das gavetas -->
+    ${gavetas.map((g) => `<rect x="${F.x + 6}" y="${g.y - 2}" width="${F.w - 12}" height="${g.h + 4}" rx="3" fill="#3a050b"/>`).join("")}
+    <!-- faixa de cima com a placa -->
+    <rect x="${F.x}" y="${F.y}" width="${F.w}" height="2" fill="#ff8b94" opacity=".8"/>
+    <rect x="${F.x + 18}" y="${F.y + 14}" width="62" height="16" rx="1.5" fill="#0e0e10"/>
+    <text x="${F.x + 49}" y="${F.y + 25.5}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="8.5" letter-spacing="1" fill="#e9e9e9">TW-100</text>
+    <circle cx="${R - 22}" cy="${F.y + 22}" r="5" fill="url(#cx-crom-v)"/><circle cx="${R - 22}" cy="${F.y + 22}" r="1.6" fill="#333"/>
+
+    ${gav}
+
+    <!-- brilho da tinta e luz do tecto -->
+    <rect x="${F.x}" y="${F.y}" width="${F.w}" height="${F.h}" rx="4" fill="url(#cx-brilho)" pointer-events="none"/>
+    <rect x="${F.x}" y="${F.y}" width="${F.w}" height="${F.h}" rx="4" fill="url(#cx-luz-tecto)" pointer-events="none"/>
+    <rect x="${F.x}" y="${B - 3}" width="${F.w}" height="3" fill="#000" opacity=".35" pointer-events="none"/>
+  </svg>`;
+  const alvo = document.getElementById("armario");
+  alvo.innerHTML = svg;
+  alvo.addEventListener("click", (e) => { const g = e.target.closest(".cx-g"); if (g) abrirGaveta(g.dataset.gaveta, true); });
+  alvo.addEventListener("keydown", (e) => { const g = e.target.closest(".cx-g"); if (g && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); abrirGaveta(g.dataset.gaveta, true); } });
+  // depois das luzes acenderem, a primeira gaveta abre e fecha para mostrar que mexe
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const g1 = alvo.querySelector(".cx-g");
+    setTimeout(() => g1.classList.add("puxa"), 1700);
+    setTimeout(() => g1.classList.remove("puxa"), 2600);
+  }
 })();
 
 /* --- acender as luzes --- */
