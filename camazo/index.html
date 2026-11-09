@@ -225,9 +225,14 @@
   /* ---------- MERGULHO: entrar dentro da gaveta ---------- */
   .mg-escuro { position: fixed; inset: 0; z-index: 88; background: #050506; opacity: 0; pointer-events: none; }
   /* cena 3D: a câmara entra na gaveta */
-  .c3-cena { position: fixed; inset: 0; z-index: 89; pointer-events: none; overflow: hidden; perspective-origin: 50% 50%; background: rgba(5,5,6,0); }
-  .c3-mundo, .c3-gaveta { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-style: preserve-3d; }
+  .c3-cena { position: fixed; inset: 0; z-index: 58; pointer-events: none; perspective-origin: 50% 50%; background: rgba(5,5,6,0); }
+  .c3-mundo { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-style: preserve-3d; transform-origin: 0 0; }
+  .c3-palco { position: absolute; margin: 0 !important; transform-style: preserve-3d; overflow: visible !important; filter: none !important; transition: none !important; animation: none !important; }
+  .c3-palco * { animation-play-state: paused !important; }
+  .c3-cav { background: #160306; box-shadow: inset 0 10px 14px rgba(0,0,0,.95); border-radius: 4px; }
+  .c3-gaveta { position: absolute; width: 0; height: 0; transform-style: preserve-3d; }
   .c3-face { position: absolute; left: 0; top: 0; backface-visibility: visible; transform-origin: 50% 50%; }
+  .c3-fundo-gav { background: radial-gradient(ellipse 80% 70% at 50% 45%, transparent 45%, rgba(0,0,0,.55)), url(img/espuma.webp) 0 0 repeat, #111113; }
   .c3-frente { margin: 0 !important; transition: none !important; filter: none !important; box-shadow: none !important; }
   .c3-frente::before, .c3-frente::after { display: none !important; }
   .c3-fundo { background: radial-gradient(ellipse 80% 70% at 50% 45%, transparent 45%, rgba(0,0,0,.6)), url(img/espuma.webp) 0 0 / 420px 420px repeat, #111113; }
@@ -242,14 +247,14 @@
     background-attachment: fixed, local, local; }
   .mergulho[hidden] { display: none; }
   /* moldura real da gaveta (borda vermelha e calhas), presa ao ecrã */
-  .mg-moldura { position: fixed; inset: 0; z-index: 4; pointer-events: none; border-style: solid; border-width: 44px 64px 70px 65px;
+  .mg-moldura { display: none; position: fixed; inset: 0; z-index: 4; pointer-events: none; border-style: solid; border-width: 44px 64px 70px 65px;
     border-image: url(img/gaveta-moldura.webp) 44 64 70 65 stretch; box-shadow: inset 0 22px 30px -8px rgba(0,0,0,.85), inset 0 -16px 24px -8px rgba(0,0,0,.7), inset 18px 0 24px -10px rgba(0,0,0,.7), inset -18px 0 24px -10px rgba(0,0,0,.7); }
-  .mg-topo { position: sticky; top: 44px; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 90px 14px; background: linear-gradient(rgba(10,10,12,.92), rgba(10,10,12,.6) 75%, transparent); }
+  .mg-topo { position: sticky; top: 0; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 40px 14px; background: linear-gradient(rgba(10,10,12,.92), rgba(10,10,12,.6) 75%, transparent); }
   .mg-titulo { display: flex; align-items: center; gap: 12px; min-width: 0; }
   .mg-titulo .etiqueta { font-size: .95rem; }
   .mg-titulo small { color: var(--cinza); font-size: .82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .mg-fechar { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; font-size: .78rem; flex: none; }
-  .mg-corpo { max-width: calc(var(--max) + 120px); margin: 0 auto; padding: 22px 90px 120px; position: relative; z-index: 2; }
+  .mg-corpo { max-width: calc(var(--max) + 120px); margin: 0 auto; padding: 22px 40px 80px; position: relative; z-index: 2; }
   .mg-corpo .caixa { margin: 0; padding: 0; background: none; box-shadow: none; border-radius: 0; }
   .mg-corpo .caixa::before { display: none; }
   .mergulho.entrar .mg-corpo, .mergulho.entrar .mg-topo { animation: chegar .55s cubic-bezier(.2,.8,.2,1) both; }
@@ -264,11 +269,11 @@
   html.mergulhado { overflow: hidden; }
   @media (max-width: 760px) {
     .mg-moldura { border-width: 24px 35px 38px 36px; }
-    .mg-topo { top: 24px; padding: 12px 46px 10px; }
+    .mg-topo { top: 0; padding: 12px 16px 10px; }
     .mg-titulo .etiqueta { font-size: .72rem; white-space: nowrap; padding: 6px 9px; }
     .mg-fechar { padding: 9px 12px; }
     .mg-titulo small { display: none; }
-    .mg-corpo { padding: 8px 46px 70px; }
+    .mg-corpo { padding: 8px 16px 50px; }
   }
   .lightbox { position: fixed; inset: 0; z-index: 120; background: rgba(5,5,6,.95); display: none; align-items: center; justify-content: center; padding: 60px 16px; }
   .lightbox.on { display: flex; }
@@ -471,6 +476,7 @@
   <button class="lb-seg" aria-label="Seguinte">›</button>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
 /* ============================================================
    DADOS: editar aqui preços, serviços, horário e fotos
@@ -777,87 +783,135 @@ function encherMergulho(id) {
   mg.atual = id;
   mg.el.scrollTop = 0;
 }
-/* Cena 3D: a gaveta é montada já no tamanho final do ecrã (para nada ficar
-   esticado) e começa lá ao fundo, onde aparece exatamente do tamanho da
-   gaveta na bancada. A câmara puxa-a, inclina-se para olhar lá para dentro e
-   desce até pousar sobre a espuma, vista de cima. */
+/* ---------------------------------------------------------------------
+   TRANSIÇÃO CINEMATOGRÁFICA PARA DENTRO DA GAVETA
+   A secção inteira onde está a gaveta (parede de mosaico, bancada, texto) é
+   clonada para um palco 3D. A câmara faz dolly-in sobre esse palco, a gaveta
+   desliza a direito para fora da bancada (só no eixo Z, sem desvio lateral),
+   a câmara passa por cima da frente metálica, inclina-se até ficar a olhar
+   de cima e desce até a espuma ocupar o ecrã inteiro.
+   Para nada perder qualidade, o palco é construído ampliado (zoom = k) e
+   começa afastado da câmara; no fim fica à escala 1:1.
+   --------------------------------------------------------------------- */
+const caminho = (de, ate) => { const c = []; for (let e = ate; e !== de; e = e.parentElement) c.unshift([...e.parentElement.children].indexOf(e)); return c; };
+const seguir = (raiz, c) => c.reduce((e, i) => e.children[i], raiz);
+
 function montarCena(origem) {
-  const r = origem.getBoundingClientRect();
-  const vw = innerWidth, vh = innerHeight, movel = vw <= 760;
-  const bx = movel ? 35 : 64, bt = movel ? 24 : 44, bb = movel ? 38 : 70;   // margens da moldura final
-  const P = Math.max(vw, vh) * 1.25;                                         // distância da câmara
-  const k = (vw - 2 * bx) / r.width;                                         // escala do modelo
-  const W = r.width * k, H = Math.max(r.height * k, 60), D = vh - bt - bb;   // largura, altura e fundo da gaveta
-  const z0 = P * (1 - k);                                                    // lá ao fundo, do tamanho da gaveta real
-  // lá ao fundo, a perspetiva encolhe as distâncias ao centro do ecrã por 1/k:
-  // o ponto de partida tem de estar k vezes mais afastado do centro
-  let cx = vw / 2 + (r.left + r.width / 2 - vw / 2) * k, cy = vh / 2 + (r.top + r.height / 2 - vh / 2) * k;
+  const sec = origem.closest("section") || document.body;
+  const rs = sec.getBoundingClientRect(), ro = origem.getBoundingClientRect();
+  const vw = innerWidth, vh = innerHeight, cxv = vw / 2, cyv = vh / 2;
+  const w = origem.offsetWidth, h = origem.offsetHeight;         // medidas sem zoom
+  const D = w * .8;                                               // fundo da gaveta
+  const k = Math.max(vw / w, vh / D) * 1.04;                      // ampliação total até a espuma encher o ecrã
+  const zk = Math.min(k, devicePixelRatio >= 2 ? 1.5 : 2.4);       // zoom do palco (nitidez sem estourar a memória)
+  const P = Math.max(vw, vh) * 1.15;                              // distância da câmara
 
+  // duas câmaras iguais em camadas separadas: a parede/bancada atrás e a gaveta à frente.
+  // A gaveta está sempre à frente da parede, por isso não há planos a ordenar entre as duas.
   const cena = document.createElement("div");
-  cena.className = "c3-cena"; cena.style.perspective = P + "px"; cena.setAttribute("aria-hidden", "true");
-  const mundo = document.createElement("div");
-  mundo.className = "c3-mundo"; mundo.style.left = cx + "px"; mundo.style.top = cy + "px";
-  const gav = document.createElement("div"); gav.className = "c3-gaveta";
-  const face = (cls, w, h, t) => { const f = document.createElement("div"); f.className = "c3-face " + cls; Object.assign(f.style, { width: w + "px", height: h + "px", marginLeft: -w / 2 + "px", marginTop: -h / 2 + "px", transform: t }); gav.appendChild(f); return f; };
-  // caixa da gaveta
-  const caixaFaces = [
-    face("c3-fundo", W, D, `translate3d(0, ${H / 2}px, ${-D / 2}px) rotateX(90deg)`),
-    face("c3-lado", D, H, `translate3d(${-W / 2}px, 0, ${-D / 2}px) rotateY(90deg)`),
-    face("c3-lado", D, H, `translate3d(${W / 2}px, 0, ${-D / 2}px) rotateY(-90deg)`),
-    face("c3-vermelho", W, H, `translate3d(0, 0, ${-D}px)`),
-    face("c3-vermelho", W, H, `translate3d(0, 0, -2px) rotateY(180deg)`),
-  ];
-  caixaFaces.forEach((f) => (f.style.opacity = 0));
-  // frente: a própria gaveta da bancada, em grande
-  const frente = origem.cloneNode(true);
-  frente.removeAttribute("id"); frente.removeAttribute("tabindex"); frente.removeAttribute("style");
-  frente.classList.remove("puxa"); frente.classList.add("c3-face", "c3-frente");
-  if (origem.classList.contains("bv-g")) {
-    const st = origem.style;
-    Object.assign(frente.style, { backgroundImage: st.backgroundImage || getComputedStyle(origem).backgroundImage, backgroundSize: st.backgroundSize, backgroundPosition: st.backgroundPosition, backgroundRepeat: "no-repeat" });
-    frente.querySelectorAll(".bv-fita, .bv-placa").forEach((el) => { el.style.fontSize = (parseFloat(getComputedStyle(origem.querySelector(".bv-fita") || origem).fontSize) * k) + "px"; });
-  }
-  Object.assign(frente.style, { width: W + "px", height: H + "px", marginLeft: -W / 2 + "px", marginTop: -H / 2 + "px", transform: "translateZ(1px)", borderRadius: (6 * k) + "px" });
-  if (!origem.classList.contains("bv-g")) frente.style.fontSize = (parseFloat(getComputedStyle(origem).fontSize) * k) + "px";
-  gav.appendChild(frente);
-  mundo.appendChild(gav); cena.appendChild(mundo); document.body.appendChild(cena);
+  cena.className = "c3-cena"; cena.setAttribute("aria-hidden", "true");
+  const camada = () => { const c = document.createElement("div"); Object.assign(c.style, { position: "absolute", inset: 0, perspective: P + "px", perspectiveOrigin: "50% 50%" }); cena.appendChild(c); return c; };
+  const camA = camada(), camB = camada(), camC = camada();
+  const mundo = document.createElement("div"); mundo.className = "c3-mundo";
+  const mundoG = document.createElement("div"); mundoG.className = "c3-mundo";
+  const mundoF = document.createElement("div"); mundoF.className = "c3-mundo";
+  const palco = sec.cloneNode(true);
+  palco.classList.add("c3-palco"); palco.removeAttribute("id");
+  Object.assign(palco.style, { left: rs.left + "px", top: rs.top + "px", width: rs.width + "px", height: rs.height + "px", zoom: zk });
+  mundo.appendChild(palco); camA.appendChild(mundo); camB.appendChild(mundoG); camC.appendChild(mundoF); document.body.appendChild(cena);
 
-  // pivot no centro do fundo da gaveta
-  const pv = `translate3d(0, ${-H / 2}px, ${D / 2}px)`;
-  const T = (x, y, z, a) => `translate3d(${x}px, ${y + H / 2}px, ${z - D / 2}px) rotateX(${a}deg) ${pv}`;
-  // acerto fino: mede onde a frente aparece no início e corrige para bater
-  // certo com a gaveta da bancada
-  gav.style.transform = T(0, 0, z0, 0);
-  for (let i = 0; i < 2; i++) {
-    const f = frente.getBoundingClientRect();
-    cx -= (f.left + f.width / 2 - (r.left + r.width / 2)) * k;
-    cy -= (f.top + f.height / 2 - (r.top + r.height / 2)) * k;
-    mundo.style.left = cx + "px"; mundo.style.top = cy + "px";
+  // no palco (plano, em z = 0) a gaveta escolhida passa a ser o buraco escuro da bancada
+  const gp = seguir(palco, caminho(sec, origem));
+  gp.classList.remove("puxa");
+  Object.assign(gp.style, { backgroundImage: "none", background: "#160306", boxShadow: "inset 0 10px 14px rgba(0,0,0,.95)", filter: "none", transform: "none", transition: "none" });
+  gp.querySelectorAll("*").forEach((e) => (e.style.visibility = "hidden"));
+
+  // a gaveta 3D, irmã do palco no mesmo espaço: caixa + frente, no sítio exato da gaveta real
+  const gav = document.createElement("div");
+  gav.className = "c3-gaveta";
+  Object.assign(gav.style, { left: (ro.left + ro.width / 2) * zk + "px", top: (ro.top + ro.height / 2) * zk + "px" });
+  mundoG.appendChild(gav);
+  const face = (cls, fw, fh, t) => { const f = document.createElement("div"); f.className = "c3-face " + cls; fw *= zk; fh *= zk; Object.assign(f.style, { width: fw + "px", height: fh + "px", marginLeft: -fw / 2 + "px", marginTop: -fh / 2 + "px", transform: t }); gav.appendChild(f); return f; };
+  const Z = (n) => n * zk; // medidas do mundo (o palco está ampliado zk vezes)
+  const fundo = face("c3-fundo-gav", w - 6, D, `translate3d(0, ${Z(h / 2 - 2)}px, ${Z(-D / 2 - 3)}px) rotateX(90deg)`);
+  fundo.style.backgroundSize = `auto, ${420 * zk / k}px ${420 * zk / k}px, auto`;
+  // (as paredes não tocam na frente: planos encostados confundem a ordenação 3D do browser)
+  const ladoE = face("c3-lado", D - 6, h - 2, ""), ladoD = face("c3-lado", D - 6, h - 2, "");
+  // a caixa só existe à frente da bancada: planos que atravessam a parede baralham a ordenação 3D do browser
+  const caixaAte = (zSaida) => {
+    const L = Math.max(.5, Math.min(D, zSaida - 1));
+    const fw = Z(w - 6), fl = Z(L), lh = Z(h - 2), ll = Z(Math.max(1, L - 6));
+    Object.assign(fundo.style, { height: fl + 'px', marginTop: -fl / 2 + 'px', transform: `translate3d(0, ${Z(h / 2 - 2)}px, ${-fl / 2 - Z(3)}px) rotateX(90deg)` });
+    for (const [el, sx, ry] of [[ladoE, -1, 90], [ladoD, 1, -90]]) Object.assign(el.style, { width: ll + 'px', marginLeft: -ll / 2 + 'px', transform: `translate3d(${sx * Z(w / 2 - 3)}px, 0, ${-ll / 2 - Z(4)}px) rotateY(${ry}deg)` });
+  };
+  // a frente é uma cópia da própria gaveta (com etiquetas); letras do contentor (cqw) passam a px
+  const g = origem.cloneNode(true);
+  const tams = [...origem.querySelectorAll(".bv-fita, .bv-placa")].map((e) => getComputedStyle(e).fontSize);
+  g.querySelectorAll(".bv-fita, .bv-placa").forEach((e, i) => { e.style.fontSize = tams[i]; });
+  g.removeAttribute("id"); g.removeAttribute("tabindex"); g.classList.remove("puxa");
+  const cs = getComputedStyle(origem);
+  Object.assign(g.style, { position: "absolute", left: -w / 2 + "px", top: -h / 2 + "px", width: w + "px", height: h + "px", margin: 0, zoom: zk,
+    transform: "translateZ(1px)", transition: "none", visibility: "visible", filter: "none", boxShadow: "none",
+    backgroundImage: cs.backgroundImage, backgroundSize: cs.backgroundSize, backgroundPosition: cs.backgroundPosition, backgroundRepeat: cs.backgroundRepeat, backgroundColor: cs.backgroundColor });
+  const gavF = gav.cloneNode(false); mundoF.appendChild(gavF);
+  gavF.appendChild(g);
+
+  // câmara: transform do mundo = translate(X,Y,Z) · rotateX(a) · translate(-F)
+  // F = centro do fundo da gaveta quando aberta (coordenadas do mundo, já com zoom)
+  const puxar = D * .92;
+  mundo.style.transform = mundoG.style.transform = mundoF.style.transform = "none";
+  const fr = g.getBoundingClientRect();
+  const F = { x: fr.left + fr.width / 2, y: fr.top + fr.height / 2 + (h * zk) / 2, z: (puxar - D / 2) * zk };
+  const cam = { X: 0, Y: 0, Z: 0, a: 0 }, gv = { z: 0 };
+  const aplicar = () => {
+    mundo.style.transform = mundoG.style.transform = mundoF.style.transform = `translate3d(${cam.X}px, ${cam.Y}px, ${cam.Z}px) rotateX(${cam.a}deg) translate3d(${-F.x}px, ${-F.y}px, ${-F.z}px)`;
+    gav.style.transform = gavF.style.transform = `translateZ(${gv.z * zk}px)`;
+    caixaAte(palco.style.visibility === 'hidden' ? D + 10 : gv.z);
+  };
+  // ponto de partida: o palco afastado, a parecer exatamente a página
+  cam.X = F.x + cxv * (1 - zk); cam.Y = F.y + cyv * (1 - zk); cam.Z = F.z + P * (1 - zk);
+  aplicar();
+  for (let i = 0; i < 3; i++) { // acerto fino com a gaveta real (escala e posição)
+    const m = g.getBoundingClientRect();
+    const esc = m.width / ro.width;
+    if (Math.abs(esc - 1) > .002) { const s0 = P / (P - (cam.Z - F.z)); cam.Z = F.z + P * (1 - esc / s0); }
+    aplicar();
+    const m2 = g.getBoundingClientRect(), s1 = P / (P - (cam.Z - F.z));
+    cam.X -= ((m2.left + m2.width / 2) - (ro.left + ro.width / 2)) / s1;
+    cam.Y -= ((m2.top + m2.height / 2) - (ro.top + ro.height / 2)) / s1;
+    aplicar();
   }
-  gav.style.transform = "";
-  const dx = vw / 2 - cx, dy = (bt + (vh - bt - bb) / 2) - cy;
-  const puxar = Math.min(D, W) * .55;
-  const fotos = [
-    { transform: T(0, 0, z0, 0), offset: 0 },
-    { transform: T(0, 0, z0 + puxar, 0), offset: .28, easing: "cubic-bezier(.4,0,.2,1)" },
-    { transform: T(dx * .35, dy * .35 - H * .6, z0 * .55 + puxar * .6, -38), offset: .58, easing: "cubic-bezier(.45,0,.55,1)" },
-    { transform: T(dx, dy, 0, -90), offset: 1 },
-  ];
-  fotos[0].easing = "cubic-bezier(.3,0,.2,1)";
-  return { cena, gav, fotos, caixaFaces };
+  const ini = { ...cam };
+  // meio: a gaveta já saiu e a câmara aproximou-se; a frente vai a caminho do centro
+  const sM = Math.max(.72 * vw / (w * zk), 1.8 / zk);
+  const alvoX = ro.left + ro.width / 2 + (cxv - (ro.left + ro.width / 2)) * .65;
+  const alvoY = ro.top + ro.height / 2 + (cyv - (ro.top + ro.height / 2)) * .5;
+  const fW = { x: F.x, y: F.y - (h * zk) / 2 };
+  const meio = { a: 0, Z: F.z - puxar * zk + P * (1 - 1 / sM) };
+  meio.X = (alvoX - cxv) / sM + cxv - fW.x + F.x;
+  meio.Y = (alvoY - cyv) / sM + cyv - fW.y + F.y;
+  const fim = { X: cxv, Y: cyv, Z: P * (1 - zk / k), a: -89.2 };
+  return { cena, palco, gav, g, cam, gv, aplicar, ini, meio, fim, puxar: puxar * zk / zk, k };
 }
-function correrCena(c, entrar, dur) {
-  const fotos = entrar ? c.fotos : c.fotos.slice().reverse().map((f) => ({ ...f, offset: 1 - f.offset }));
-  const a = c.gav.animate(fotos, { duration: dur, fill: "forwards" });
-  // a caixa da gaveta só aparece depois de a gaveta sair da bancada
-  const op = [{ opacity: 0 }, { opacity: 0, offset: .2 }, { opacity: 1, offset: .32 }, { opacity: 1 }];
-  c.caixaFaces.forEach((f) => f.animate(entrar ? op : op.slice().reverse().map((x, i, arr) => ({ ...x, offset: x.offset == null ? (i === 0 ? 0 : 1) : 1 - x.offset })), { duration: dur, fill: "forwards" }));
-  c.cena.animate(entrar
-    ? [{ background: "rgba(5,5,6,0)" }, { background: "rgba(5,5,6,0)", offset: .2 }, { background: "rgba(5,5,6,1)", offset: .6 }, { background: "rgba(5,5,6,1)" }]
-    : [{ background: "rgba(5,5,6,1)" }, { background: "rgba(5,5,6,1)", offset: .4 }, { background: "rgba(5,5,6,0)", offset: .8 }, { background: "rgba(5,5,6,0)" }],
-    { duration: dur, fill: "forwards" });
-  return a.finished.catch(() => {});
+
+function linhaTempo(c) {
+  const tl = gsap.timeline({ paused: true, onUpdate: c.aplicar });
+  // 1) a gaveta desliza a direito para fora da bancada
+  tl.to(c.gv, { z: c.puxar, duration: .7, ease: "power2.inOut" }, 0);
+  // 2) dolly-in a acompanhar a gaveta
+  tl.to(c.cam, { X: c.meio.X, Y: c.meio.Y, Z: c.meio.Z, duration: .7, ease: "power1.in" }, 0);
+  // 3) a câmara passa por cima da frente, inclina-se e desce até à espuma
+  tl.to(c.cam, { X: c.fim.X, Y: c.fim.Y, Z: c.fim.Z, duration: .85, ease: "power2.out" }, .7);
+  tl.to(c.cam, { a: c.fim.a, duration: .85, ease: "power2.inOut" }, .62);
+  // o resto da página escurece e o menu desaparece
+  tl.to(c.cena, { backgroundColor: "rgba(5,5,6,1)", duration: .5, ease: "power1.in" }, .15);
+  tl.to("#topo", { autoAlpha: 0, duration: .35, ease: "power1.out" }, 0);
+  // já a olhar de cima: a parede e a bancada saem de cena, fica só a gaveta
+  tl.set(c.palco, { visibility: "hidden" }, 1.12);
+  tl.set(c.gav, { visibility: "visible" }, 1.12);
+  return tl;
 }
+
 async function mergulhar(id, preferida) {
   if (mg.ocupado) return;
   if (!mg.el.hidden) { encherMergulho(id); mg.el.classList.remove("entrar"); void mg.el.offsetWidth; mg.el.classList.add("entrar"); return; }
@@ -867,38 +921,49 @@ async function mergulhar(id, preferida) {
   mg.origem = origem;
   mg.foco = document.activeElement;
   encherMergulho(id);
-  let cena = null;
-  if (origem && !semMovimento()) {
-    cena = montarCena(origem);
+  let c = null;
+  if (origem && window.gsap && !semMovimento()) {
+    origem.classList.remove("puxa");
+    c = montarCena(origem);
     origem.style.visibility = "hidden";
-    await correrCena(cena, true, 1250);
+    c.tl = linhaTempo(c);
+    await new Promise((r) => { c.tl.eventCallback("onComplete", r); c.tl.play(0); });
   }
   document.documentElement.classList.add("mergulhado");
   mg.el.hidden = false;
   mg.el.classList.remove("entrar"); void mg.el.offsetWidth; mg.el.classList.add("entrar");
-  if (cena) { await mg.el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 260, easing: "ease-out" }).finished.catch(() => {}); cena.cena.remove(); }
+  if (c) {
+    await mg.el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, easing: "ease-out" }).finished.catch(() => {});
+    c.cena.remove();
+  }
   if (history.state?.gaveta == null) history.pushState({ gaveta: id }, "");
   $("#mg-fechar").focus({ preventScroll: true });
   mg.ocupado = false;
 }
+
 async function emergir(viaHistorico) {
   if (mg.el.hidden || mg.ocupado) return;
   mg.ocupado = true;
   const origem = mg.origem;
-  const animar = origem && !semMovimento();
-  let cena = null;
-  if (animar) {
+  let c = null;
+  if (origem && window.gsap && !semMovimento()) {
     document.documentElement.classList.remove("mergulhado");
-    cena = montarCena(origem);
-    cena.gav.style.transform = cena.fotos[cena.fotos.length - 1].transform;
-    cena.cena.style.background = "rgba(5,5,6,1)";
+    origem.style.visibility = "";
+    c = montarCena(origem);
+    origem.style.visibility = "hidden";
+    c.tl = linhaTempo(c);
+    c.tl.progress(1);
     await mg.el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, easing: "ease-in" }).finished.catch(() => {});
   }
   mg.el.hidden = true;
   document.documentElement.classList.remove("mergulhado");
   $(`#i-${mg.atual} > div`).appendChild(mg.corpo.firstElementChild);
   mg.atual = null;
-  if (cena) { await correrCena(cena, false, 1000); cena.cena.remove(); }
+  if (c) {
+    await new Promise((r) => { c.tl.eventCallback("onReverseComplete", r); c.tl.timeScale(1.15).reverse(); });
+    c.cena.remove();
+  }
+  gsap?.set?.("#topo", { clearProps: "opacity,visibility" });
   if (origem) origem.style.visibility = "";
   if (!viaHistorico && history.state?.gaveta != null) history.back();
   (mg.foco && document.contains(mg.foco) ? mg.foco : origem)?.focus?.({ preventScroll: true });
