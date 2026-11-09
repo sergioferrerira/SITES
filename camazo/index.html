@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Camazo Barbershop · Aveiro</title>
+<meta name="description" content="Camazo Barbershop, Rua Conselheiro Luís de Magalhães, Aveiro. Cortes, barba, Black Mask e combos. Marca online em segundos.">
+<meta name="theme-color" content="#0d0d0e">
+<meta property="og:title" content="Camazo Barbershop · Aveiro">
+<meta property="og:description" content="Cortes, barba e combos no centro de Aveiro. Marca online.">
+<meta property="og:image" content="img/hero.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Yellowtail&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --preto: #0d0d0e;
+    --preto-2: #17171a;
+    --preto-3: #222226;
+    --branco: #f6f6f4;
+    --cinza: #a3a3a8;
+    --cinza-2: #6b6b72;
+    --linha: rgba(255,255,255,.1);
+    --vermelho: #d4202f;
+    --vermelho-2: #a8141f;
+    --azul: #1f4fb0;
+    --couro: #5a4237;
+    --raio: 14px;
+    --max: 1160px;
+    --tile: #e9e9e6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { font-family: Inter, system-ui, sans-serif; background: var(--preto); color: var(--branco); line-height: 1.6; overflow-x: hidden; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+  h1, h2, h3 { font-family: Anton, Impact, sans-serif; font-weight: 400; letter-spacing: .01em; line-height: 1; text-transform: uppercase; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+  section { padding: 96px 0; position: relative; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: .75rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--vermelho); margin-bottom: 14px; }
+  .eyebrow::before { content: ""; width: 26px; height: 6px; border-radius: 3px; background: repeating-linear-gradient(-45deg, var(--vermelho) 0 5px, #fff 5px 10px, var(--azul) 10px 15px, #fff 15px 20px); }
+  .titulo { font-size: clamp(2.4rem, 6vw, 4.2rem); margin-bottom: 18px; }
+  .lead { color: var(--cinza); max-width: 58ch; font-size: 1.05rem; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 26px; border-radius: 999px; font-weight: 700; font-size: .95rem; text-decoration: none; letter-spacing: .02em; transition: transform .15s, background .2s, border-color .2s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid var(--azul); outline-offset: 3px; }
+  .btn-vermelho { background: var(--vermelho); color: #fff; }
+  .btn-vermelho:hover { background: var(--vermelho-2); }
+  .btn-linha { border: 1.5px solid rgba(255,255,255,.35); color: #fff; }
+  .btn-linha:hover { border-color: #fff; }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+
+  /* chão em mosaico (como o da barbearia) */
+  .mosaico {
+    --t: 14px;
+    background-color: #2a2a2e;
+    background-image:
+      linear-gradient(45deg, var(--tile) 25%, transparent 25%, transparent 75%, var(--tile) 75%),
+      linear-gradient(45deg, var(--tile) 25%, transparent 25%, transparent 75%, var(--tile) 75%);
+    background-size: calc(var(--t) * 2) calc(var(--t) * 2);
+    background-position: 0 0, var(--t) var(--t);
+  }
+
+  /* NAV */
+  header { position: fixed; inset: 0 0 auto; z-index: 60; transition: background .3s, border-color .3s; border-bottom: 1px solid transparent; }
+  header.solido { background: rgba(13,13,14,.94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-color: var(--linha); }
+  .nav { height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .logo { display: flex; align-items: baseline; gap: 8px; text-decoration: none; }
+  .logo .script { font-family: Yellowtail, cursive; font-size: 2rem; line-height: 1; color: #fff; text-shadow: 0 0 18px rgba(255,255,255,.35); }
+  .logo small { font-size: .62rem; font-weight: 700; letter-spacing: .28em; text-transform: uppercase; color: var(--cinza); }
+  .menu { display: flex; align-items: center; gap: 28px; list-style: none; }
+  .menu a { text-decoration: none; font-size: .9rem; font-weight: 500; color: #d6d6d9; transition: color .2s; }
+  .menu a:hover { color: #fff; }
+  .menu .btn { padding: 10px 20px; color: #fff; }
+  .burger { display: none; width: 44px; height: 44px; align-items: center; justify-content: center; }
+  .burger span, .burger span::before, .burger span::after { display: block; width: 22px; height: 2px; background: #fff; position: relative; transition: transform .25s, background .25s; }
+  .burger span::before, .burger span::after { content: ""; position: absolute; left: 0; }
+  .burger span::before { top: -7px; } .burger span::after { top: 7px; }
+  .aberto .burger span { background: transparent; }
+  .aberto .burger span::before { transform: translateY(7px) rotate(45deg); }
+  .aberto .burger span::after { transform: translateY(-7px) rotate(-45deg); }
+
+  /* HERO */
+  .hero { min-height: 100vh; min-height: 100svh; padding: 120px 0 70px; display: flex; align-items: center; overflow: hidden; }
+  .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 75% 40%, rgba(31,79,176,.18), transparent 60%), radial-gradient(ellipse 50% 50% at 15% 80%, rgba(212,32,47,.14), transparent 60%); pointer-events: none; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; position: relative; }
+  .neon { font-family: Yellowtail, cursive; font-size: clamp(4.6rem, 13vw, 9.5rem); line-height: .9; color: #fff; text-shadow: 0 0 6px #fff, 0 0 22px rgba(255,255,255,.55), 0 0 60px rgba(120,160,255,.45); animation: zumbido 6s infinite; margin-left: -4px; }
+  @keyframes zumbido { 0%, 91%, 95%, 100% { opacity: 1; } 92% { opacity: .55; } 93% { opacity: 1; } 94% { opacity: .7; } }
+  .hero h1 { font-size: clamp(1.5rem, 3.4vw, 2.3rem); color: var(--cinza); letter-spacing: .14em; margin: 10px 0 22px; }
+  .hero h1 b { color: #fff; font-weight: 400; }
+  .hero p.lead { margin-bottom: 30px; }
+  .hero-acoes { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero-info { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 34px; font-size: .88rem; color: var(--cinza); }
+  .hero-info span { display: inline-flex; align-items: center; gap: 8px; }
+  .ponto { width: 9px; height: 9px; border-radius: 50%; background: #3ccf6a; box-shadow: 0 0 0 4px rgba(60,207,106,.18); }
+  .ponto.fechado { background: var(--vermelho); box-shadow: 0 0 0 4px rgba(212,32,47,.2); }
+  .hero-foto { position: relative; }
+  .hero-foto .moldura { border-radius: 22px; overflow: hidden; aspect-ratio: 4/4.3; box-shadow: 0 40px 80px rgba(0,0,0,.6); border: 1px solid var(--linha); }
+  .hero-foto .moldura img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-foto .poste { position: absolute; right: -18px; top: 8%; width: 22px; height: 46%; border-radius: 11px; overflow: hidden; border: 3px solid #111; box-shadow: 0 0 30px rgba(212,32,47,.35); }
+  .hero-foto .poste::before { content: ""; position: absolute; inset: -60px 0 0; background: repeating-linear-gradient(-45deg, var(--vermelho) 0 12px, #fff 12px 24px, var(--azul) 24px 36px, #fff 36px 48px); animation: girar 2.4s linear infinite; }
+  @keyframes girar { to { transform: translateY(68px); } }
+  .selo { position: absolute; left: -26px; bottom: 30px; background: var(--branco); color: var(--preto); border-radius: 16px; padding: 14px 18px; box-shadow: 0 20px 40px rgba(0,0,0,.45); display: flex; gap: 12px; align-items: center; }
+  .selo strong { font-family: Anton, sans-serif; font-size: 2rem; font-weight: 400; line-height: 1; }
+  .selo span { font-size: .78rem; line-height: 1.3; color: #444; }
+
+  /* FAIXA */
+  .faixa { border-block: 1px solid var(--linha); background: var(--preto-2); overflow: hidden; padding: 18px 0; }
+  .faixa-track { display: flex; gap: 46px; width: max-content; animation: correr 38s linear infinite; }
+  .faixa span { font-family: Anton, sans-serif; text-transform: uppercase; font-size: 1.35rem; letter-spacing: .06em; color: #cfcfd3; white-space: nowrap; display: inline-flex; align-items: center; gap: 46px; }
+  .faixa span::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--vermelho); }
+  @keyframes correr { to { transform: translateX(-50%); } }
+
+  /* SERVIÇOS */
+  .serv-topo { display: flex; justify-content: space-between; align-items: end; gap: 30px; flex-wrap: wrap; margin-bottom: 38px; }
+  .tabs { display: inline-flex; padding: 5px; background: var(--preto-2); border: 1px solid var(--linha); border-radius: 999px; }
+  .tabs button { padding: 10px 20px; border-radius: 999px; font-weight: 600; font-size: .9rem; color: var(--cinza); transition: background .2s, color .2s; }
+  .tabs button[aria-selected="true"] { background: #fff; color: var(--preto); }
+  .lista { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .serv { display: flex; align-items: center; gap: 18px; padding: 20px 22px; background: var(--preto-2); border: 1px solid var(--linha); border-radius: var(--raio); transition: border-color .2s, transform .2s, background .2s; }
+  .serv:hover { border-color: rgba(255,255,255,.28); transform: translateY(-2px); background: var(--preto-3); }
+  .serv-txt { flex: 1; min-width: 0; }
+  .serv h3 { font-family: Inter, sans-serif; text-transform: none; font-size: 1.05rem; font-weight: 600; letter-spacing: 0; line-height: 1.3; }
+  .serv .meta { font-size: .82rem; color: var(--cinza-2); margin-top: 3px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .serv .preco { font-family: Anton, sans-serif; font-size: 1.6rem; white-space: nowrap; }
+  .serv .preco small { font-family: Inter, sans-serif; font-size: .7rem; color: var(--cinza-2); display: block; text-align: right; letter-spacing: .04em; }
+  .serv .marcar { width: 42px; height: 42px; flex: none; border-radius: 50%; background: var(--vermelho); display: grid; place-items: center; transition: background .2s, transform .2s; }
+  .serv .marcar:hover { background: var(--vermelho-2); transform: rotate(90deg); }
+  .serv .marcar svg { width: 18px; height: 18px; }
+  .tag-poupa { display: inline-block; font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: rgba(60,207,106,.14); color: #6fe596; border-radius: 6px; padding: 2px 7px; }
+  .nota { margin-top: 22px; font-size: .85rem; color: var(--cinza-2); }
+
+  /* GALERIA */
+  #galeria { background: var(--branco); color: var(--preto); }
+  #galeria .lead { color: #55555c; }
+  .galeria { columns: 3 260px; column-gap: 14px; margin-top: 40px; }
+  .galeria figure { break-inside: avoid; margin-bottom: 14px; border-radius: var(--raio); overflow: hidden; position: relative; cursor: zoom-in; background: #ddd; }
+  .galeria img { width: 100%; height: auto; transition: transform .5s; }
+  .galeria figure:hover img { transform: scale(1.04); }
+  .galeria figcaption { position: absolute; left: 12px; bottom: 12px; background: rgba(13,13,14,.82); color: #fff; font-size: .78rem; font-weight: 600; padding: 6px 11px; border-radius: 999px; backdrop-filter: blur(6px); }
+  .galeria .card-ig { background: var(--preto); color: #fff; padding: 28px 24px; cursor: default; display: flex; flex-direction: column; gap: 14px; }
+  .card-ig .script { font-family: Yellowtail, cursive; font-size: 2.6rem; line-height: 1; }
+  .card-ig p { color: var(--cinza); font-size: .92rem; }
+  .lightbox { position: fixed; inset: 0; z-index: 100; background: rgba(5,5,6,.94); display: none; align-items: center; justify-content: center; padding: 60px 16px; }
+  .lightbox.on { display: flex; }
+  .lightbox img { max-height: 100%; max-width: 100%; border-radius: 12px; }
+  .lightbox button { position: absolute; width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,.12); color: #fff; font-size: 1.6rem; line-height: 1; display: grid; place-items: center; }
+  .lightbox button:hover { background: rgba(255,255,255,.22); }
+  .lb-fechar { top: 16px; right: 16px; } .lb-ant { left: 16px; top: 50%; transform: translateY(-50%); } .lb-seg { right: 16px; top: 50%; transform: translateY(-50%); }
+
+  /* ESPAÇO */
+  .espaco-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .espaco-fotos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .espaco-fotos img { border-radius: var(--raio); width: 100%; height: 100%; object-fit: cover; }
+  .espaco-fotos .alta { grid-row: span 2; }
+  .pontos { list-style: none; display: grid; gap: 18px; margin-top: 30px; }
+  .pontos li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; }
+  .pontos .ic { width: 44px; height: 44px; border-radius: 12px; background: var(--preto-2); border: 1px solid var(--linha); display: grid; place-items: center; font-size: 1.2rem; }
+  .pontos strong { display: block; font-size: 1rem; }
+  .pontos span { color: var(--cinza); font-size: .92rem; }
+
+  /* MARCAÇÃO */
+  #marcar { background: var(--preto-2); border-top: 1px solid var(--linha); }
+  #marcar::before { content: ""; position: absolute; inset: 0 0 auto; height: 8px; background: repeating-linear-gradient(-45deg, var(--vermelho) 0 14px, #fff 14px 28px, var(--azul) 28px 42px, #fff 42px 56px); }
+  .reserva { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 30px; margin-top: 40px; align-items: start; }
+  .passo { background: var(--preto); border: 1px solid var(--linha); border-radius: 18px; padding: 26px; margin-bottom: 16px; }
+  .passo-h { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .passo-h b { width: 30px; height: 30px; border-radius: 50%; background: #fff; color: var(--preto); display: grid; place-items: center; font-size: .85rem; font-weight: 700; flex: none; }
+  .passo-h h3 { font-size: 1.35rem; letter-spacing: .04em; }
+  .passo.inativo { opacity: .45; pointer-events: none; }
+  select, input { width: 100%; font: inherit; color: #fff; background: var(--preto-2); border: 1px solid rgba(255,255,255,.16); border-radius: 12px; padding: 14px 16px; transition: border-color .2s; }
+  select:focus, input:focus { outline: none; border-color: #fff; }
+  select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23fff' stroke-width='2'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
+  select option, select optgroup { background: var(--preto-2); color: #fff; }
+  label { display: block; font-size: .82rem; font-weight: 600; color: var(--cinza); margin-bottom: 7px; }
+  .campos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .dias { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+  .dia { flex: none; width: 64px; padding: 10px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,.14); text-align: center; scroll-snap-align: start; transition: background .2s, border-color .2s; }
+  .dia small { display: block; font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--cinza); }
+  .dia strong { display: block; font-size: 1.3rem; font-family: Anton, sans-serif; font-weight: 400; }
+  .dia:hover { border-color: #fff; }
+  .dia[aria-pressed="true"] { background: var(--vermelho); border-color: var(--vermelho); }
+  .dia[aria-pressed="true"] small { color: #fff; }
+  .horas { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 8px; margin-top: 16px; }
+  .hora { padding: 10px 0; border-radius: 10px; border: 1px solid rgba(255,255,255,.14); font-weight: 600; font-size: .9rem; font-variant-numeric: tabular-nums; transition: background .2s, border-color .2s; }
+  .hora:hover { border-color: #fff; }
+  .hora[aria-pressed="true"] { background: #fff; color: var(--preto); border-color: #fff; }
+  .vazio { color: var(--cinza-2); font-size: .9rem; margin-top: 14px; }
+  .resumo { position: sticky; top: 96px; background: var(--branco); color: var(--preto); border-radius: 18px; padding: 26px; }
+  .resumo h3 { font-size: 1.6rem; margin-bottom: 18px; }
+  .resumo dl { display: grid; gap: 12px; margin-bottom: 22px; }
+  .resumo dl div { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px dashed #ccc; padding-bottom: 10px; font-size: .92rem; }
+  .resumo dt { color: #66666d; }
+  .resumo dd { font-weight: 600; text-align: right; }
+  .resumo .total dd { font-family: Anton, sans-serif; font-weight: 400; font-size: 1.5rem; }
+  .resumo .btn { width: 100%; }
+  .resumo .btn[disabled] { opacity: .35; pointer-events: none; }
+  .resumo .alt { font-size: .82rem; color: #66666d; margin-top: 14px; text-align: center; }
+  .resumo .alt a { font-weight: 600; }
+  .ok { display: none; margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: #e6f8ec; color: #0f5b2a; font-size: .86rem; }
+  .ok.on { display: block; }
+
+  /* VISITA */
+  .visita-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; align-items: stretch; }
+  .horario { list-style: none; margin: 26px 0 30px; border-top: 1px solid var(--linha); }
+  .horario li { display: flex; justify-content: space-between; padding: 13px 4px; border-bottom: 1px solid var(--linha); font-variant-numeric: tabular-nums; }
+  .horario li.hoje { color: #fff; font-weight: 700; }
+  .horario li.hoje span:first-child::after { content: "hoje"; margin-left: 10px; font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; background: var(--vermelho); padding: 2px 8px; border-radius: 6px; vertical-align: 2px; }
+  .horario li:not(.hoje) { color: var(--cinza); }
+  .contactos { display: grid; gap: 12px; }
+  .contacto { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: var(--raio); background: var(--preto-2); border: 1px solid var(--linha); text-decoration: none; transition: border-color .2s; }
+  .contacto:hover { border-color: rgba(255,255,255,.35); }
+  .contacto .ic { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: var(--preto-3); flex: none; }
+  .contacto .ic svg { width: 20px; height: 20px; }
+  .contacto small { display: block; color: var(--cinza-2); font-size: .78rem; }
+  .mapa { border-radius: 18px; overflow: hidden; border: 1px solid var(--linha); min-height: 380px; position: relative; background: var(--preto-2); }
+  .mapa iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: grayscale(1) invert(.92) contrast(.9); }
+
+  footer { padding: 0 0 40px; }
+  footer .mosaico { height: 56px; --t: 10px; opacity: .9; mask-image: linear-gradient(to bottom, #000, transparent); -webkit-mask-image: linear-gradient(to bottom, #000, transparent); }
+  .rodape { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; padding-top: 20px; color: var(--cinza-2); font-size: .85rem; }
+
+  .fixo-mobile { display: none; }
+
+  .revelar { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s; }
+  .revelar.visivel { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .revelar { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 960px) {
+    .hero-grid, .espaco-grid, .visita-grid, .reserva { grid-template-columns: minmax(0, 1fr); }
+    .hero-foto { max-width: 520px; }
+    .resumo { position: static; }
+    .lista { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    section { padding: 72px 0; }
+    .burger { display: flex; }
+    .menu { position: fixed; inset: 72px 0 auto; flex-direction: column; align-items: stretch; gap: 0; padding: 10px 20px 24px; background: #0d0d0e; box-shadow: 0 30px 40px rgba(0,0,0,.6); border-bottom: 1px solid var(--linha); transform: translateY(-120%); visibility: hidden; transition: transform .3s, visibility .3s; z-index: -1; }
+    .aberto .menu { transform: none; visibility: visible; }
+    .menu li a { display: block; padding: 14px 0; font-size: 1.05rem; border-bottom: 1px solid var(--linha); }
+    .menu li:last-child a { margin-top: 16px; border: 0; text-align: center; }
+    header.aberto { background: #0d0d0e; }
+    body:has(header.aberto) .fixo-mobile { transform: translateY(140%); opacity: 0; }
+    .hero { padding-top: 100px; }
+    .selo { left: 10px; bottom: 14px; }
+    .hero-foto .poste { right: 8px; }
+    .campos { grid-template-columns: 1fr; }
+    .serv { padding: 16px; gap: 12px; }
+    .serv .preco { font-size: 1.35rem; }
+    .tabs { width: 100%; }
+    .tabs button { flex: 1; padding: 10px 8px; }
+    .passo { padding: 20px 16px; }
+    .fixo-mobile { display: flex; position: fixed; left: 16px; right: 16px; bottom: calc(14px + env(safe-area-inset-bottom)); z-index: 55; box-shadow: 0 12px 30px rgba(0,0,0,.5); transition: transform .3s, opacity .3s; }
+    .fixo-mobile.esconder { transform: translateY(140%); opacity: 0; }
+    footer { padding-bottom: 96px; }
+  }
+</style>
+</head>
+<body>
+
+<header id="topo">
+  <nav class="wrap nav" aria-label="Principal">
+    <a href="#inicio" class="logo" aria-label="Camazo Barbershop, início"><span class="script">Camazo</span><small>Barbershop</small></a>
+    <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span></button>
+    <ul class="menu" id="menu">
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#galeria">Galeria</a></li>
+      <li><a href="#espaco">O espaço</a></li>
+      <li><a href="#visita">Contactos</a></li>
+      <li><a href="#marcar" class="btn btn-vermelho">Marcar</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="neon" aria-hidden="true">Camazo</div>
+      <h1><b>Barbershop</b> · Aveiro</h1>
+      <p class="lead">Degradês, barba e Black Mask, mesmo no centro de Aveiro. Tem F1 na TV e cadeiras clássicas. Escolhe o serviço e a hora, e fica marcado.</p>
+      <div class="hero-acoes">
+        <a href="#marcar" class="btn btn-vermelho">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+          Marcar agora
+        </a>
+        <a href="#servicos" class="btn btn-linha">Ver preços</a>
+      </div>
+      <div class="hero-info">
+        <span><i class="ponto" id="estado-ponto"></i><span id="estado-txt">Aberto</span></span>
+        <span>R. Conselheiro Luís de Magalhães</span>
+        <span>Corte desde 13€</span>
+      </div>
+    </div>
+    <div class="hero-foto">
+      <div class="moldura"><img src="img/hero.jpg" alt="Interior da Camazo Barbershop, com cadeira de barbeiro clássica em pele castanha, chão em mosaico preto e branco e bancada vermelha" width="1270" height="1310" fetchpriority="high"></div>
+      <div class="poste" aria-hidden="true"></div>
+      <div class="selo"><strong>7/7</strong><span>Aberto todos<br>os dias</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="faixa" aria-hidden="true">
+  <div class="faixa-track" id="faixa"></div>
+</div>
+
+<section id="servicos">
+  <div class="wrap">
+    <div class="serv-topo">
+      <div>
+        <div class="eyebrow">Serviços &amp; preços</div>
+        <h2 class="titulo">O menu</h2>
+        <p class="lead">Preços fixos e sem surpresas. Carrega em <b>+</b> para marcar logo esse serviço.</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Categorias">
+        <button role="tab" aria-selected="true" data-cat="cortes">Cortes</button>
+        <button role="tab" aria-selected="false" data-cat="combos">Combos</button>
+        <button role="tab" aria-selected="false" data-cat="cor">Cor</button>
+      </div>
+    </div>
+    <div class="lista" id="lista" role="tabpanel"></div>
+    <p class="nota">Pagamento no local. Nos serviços de cor, o preço final depende do comprimento e do tipo de cabelo.</p>
+  </div>
+</section>
+
+<section id="galeria">
+  <div class="wrap">
+    <div class="eyebrow">Galeria</div>
+    <h2 class="titulo">Cá dentro</h2>
+    <p class="lead">Chão em mosaico, tecto preto, poste a girar e um Padrinho a vigiar a sala. Assim é o Camazo.</p>
+    <div class="galeria" id="galeria-grid"></div>
+  </div>
+</section>
+
+<section id="espaco">
+  <div class="wrap espaco-grid">
+    <div class="espaco-fotos revelar">
+      <img class="alta" src="img/barbeiro.jpg" alt="Barbeiro a trabalhar na estação com ring light" width="680" height="1230" loading="lazy">
+      <img src="img/poste.jpg" alt="Poste de barbeiro iluminado, vermelho, branco e azul" width="348" height="444" loading="lazy">
+      <img src="img/bancada.jpg" alt="Bancada vermelha de ferramentas com produtos de barbearia" width="287" height="666" loading="lazy">
+    </div>
+    <div class="revelar">
+      <div class="eyebrow">O espaço</div>
+      <h2 class="titulo">Barbearia à antiga, com estilo de agora</h2>
+      <p class="lead">A sala é luminosa, com uma montra para a rua, e foi pensada ao pormenor. Aqui não vens só cortar o cabelo, vens passar um bom bocado.</p>
+      <ul class="pontos">
+        <li><span class="ic">💺</span><div><strong>Cadeiras clássicas</strong><span>Cadeiras de barbeiro em pele, reclináveis e com descanso de pés.</span></div></li>
+        <li><span class="ic">🏁</span><div><strong>Desporto na TV</strong><span>Corridas e jogos na sala de espera, para o tempo passar a voar.</span></div></li>
+        <li><span class="ic">🧴</span><div><strong>Lavatório &amp; produtos</strong><span>Lavagem, ceras e pomadas para levares o estilo para casa.</span></div></li>
+        <li><span class="ic">🧒</span><div><strong>Miúdos também</strong><span>Corte de criança, social ou degradê.</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="marcar">
+  <div class="wrap">
+    <div class="eyebrow">Marcação</div>
+    <h2 class="titulo">Marca em 30 segundos</h2>
+    <p class="lead">Sem apps nem contas. Escolhe o serviço, o dia e a hora. O pedido segue por WhatsApp e o Camazo confirma.</p>
+
+    <div class="reserva">
+      <div>
+        <div class="passo" id="p1">
+          <div class="passo-h"><b>1</b><h3>Serviço</h3></div>
+          <label for="servico">O que vais fazer?</label>
+          <select id="servico"><option value="">Escolhe um serviço…</option></select>
+        </div>
+        <div class="passo inativo" id="p2">
+          <div class="passo-h"><b>2</b><h3>Dia &amp; hora</h3></div>
+          <div class="dias" id="dias" role="group" aria-label="Dia"></div>
+          <div class="horas" id="horas" role="group" aria-label="Hora"></div>
+        </div>
+        <div class="passo inativo" id="p3">
+          <div class="passo-h"><b>3</b><h3>Os teus dados</h3></div>
+          <div class="campos">
+            <div><label for="nome">Nome</label><input id="nome" autocomplete="name" placeholder="O teu nome"></div>
+            <div><label for="tel">Telemóvel</label><input id="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="9xx xxx xxx"></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="resumo" aria-live="polite">
+        <h3>Resumo</h3>
+        <dl>
+          <div><dt>Serviço</dt><dd id="r-serv">—</dd></div>
+          <div><dt>Duração</dt><dd id="r-dur">—</dd></div>
+          <div><dt>Quando</dt><dd id="r-quando">—</dd></div>
+          <div class="total"><dt>Total</dt><dd id="r-preco">—</dd></div>
+        </dl>
+        <button class="btn btn-vermelho" id="enviar" disabled>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
+          Pedir marcação
+        </button>
+        <div class="ok" id="ok">Abrimos o WhatsApp com o teu pedido. É só carregar em enviar. A marcação fica feita quando o Camazo responder ✂️</div>
+        <p class="alt">Preferes ligar? <a href="tel:+351924711734">924 711 734</a></p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="visita">
+  <div class="wrap visita-grid">
+    <div>
+      <div class="eyebrow">Visita-nos</div>
+      <h2 class="titulo">Onde &amp; quando</h2>
+      <p class="lead">No centro de Aveiro, na Rua Conselheiro Luís de Magalhães, mesmo em frente ao Santander.</p>
+      <ul class="horario" id="horario"></ul>
+      <div class="contactos">
+        <a class="contacto" href="tel:+351924711734">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></span>
+          <div><small>Telefone</small>924 711 734</div>
+        </a>
+        <a class="contacto" href="https://wa.me/351924711734" target="_blank" rel="noopener">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg></span>
+          <div><small>WhatsApp</small>Envia mensagem</div>
+        </a>
+        <a class="contacto" href="https://www.google.com/maps/search/?api=1&amp;query=Camazo%20Barbershop%20Aveiro&amp;query_place_id=ChIJ1xXAHAWYIw0Rntf464ppmww" target="_blank" rel="noopener">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-6.6-8-12a8 8 0 1 1 16 0c0 5.4-8 12-8 12Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <div><small>Direcções</small>Abrir no Google Maps</div>
+        </a>
+      </div>
+    </div>
+    <div class="mapa">
+      <iframe title="Mapa: Camazo Barbershop, Aveiro" loading="lazy" referrerpolicy="no-referrer"
+        src="https://www.openstreetmap.org/export/embed.html?bbox=-8.6560%2C40.6400%2C-8.6470%2C40.6450&amp;layer=mapnik&amp;marker=40.6425133%2C-8.6514471"></iframe>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="mosaico" aria-hidden="true"></div>
+  <div class="wrap rodape">
+    <a href="#inicio" class="logo"><span class="script">Camazo</span><small>Barbershop · Aveiro</small></a>
+    <span>R. Conselheiro Luís de Magalhães, Aveiro · <a href="tel:+351924711734">924 711 734</a></span>
+  </div>
+</footer>
+
+<a href="#marcar" class="btn btn-vermelho fixo-mobile" id="fixo">Marcar corte</a>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Fotografia ampliada">
+  <button class="lb-fechar" aria-label="Fechar">×</button>
+  <button class="lb-ant" aria-label="Anterior">‹</button>
+  <img alt="">
+  <button class="lb-seg" aria-label="Seguinte">›</button>
+</div>
+
+<script>
+/* ============================================================
+   DADOS: editar aqui preços, serviços e horário
+   ============================================================ */
+const TELEFONE = "351924711734";
+
+const SERVICOS = [
+  { id: "corte",        cat: "cortes", nome: "Corte",                                         min: 30, preco: 15 },
+  { id: "barba",        cat: "cortes", nome: "Barba",                                         min: 15, preco: 10 },
+  { id: "crianca-deg",  cat: "cortes", nome: "Corte criança · degradê",                       min: 30, preco: 15 },
+  { id: "crianca-soc",  cat: "cortes", nome: "Corte criança · social",                        min: 30, preco: 13 },
+  { id: "blackmask",    cat: "cortes", nome: "Black Mask · máscara de pontos negros",         min: 20, preco: 12 },
+  { id: "sobrancelhas", cat: "cortes", nome: "Sobrancelhas",                                  min: 10, preco: 5 },
+  { id: "cera",         cat: "cortes", nome: "Cera no nariz",                                 min: 10, preco: 5 },
+
+  { id: "c-sob",        cat: "combos", nome: "Corte + sobrancelhas",                          min: 30, preco: 17, avulso: 20 },
+  { id: "c-barba",      cat: "combos", nome: "Corte + barba",                                 min: 60, preco: 20, avulso: 25 },
+  { id: "c-barba-sob",  cat: "combos", nome: "Corte + barba + sobrancelhas",                  min: 60, preco: 22, avulso: 30 },
+  { id: "c-full",       cat: "combos", nome: "Corte + barba + sobrancelhas + cera no nariz",  min: 60, preco: 25, avulso: 35 },
+  { id: "c-bm",         cat: "combos", nome: "Corte + Black Mask",                            min: 50, preco: 25, avulso: 27 },
+  { id: "c-barba-bm",   cat: "combos", nome: "Corte + barba + Black Mask",                    min: 80, preco: 30, avulso: 37 },
+  { id: "c-top",        cat: "combos", nome: "Corte + barba + cera no nariz + Black Mask",    min: 85, preco: 35, avulso: 42 },
+
+  { id: "pintar",       cat: "cor",    nome: "Pintar cabelo",                                 min: 30, preco: 55, ate: 70 },
+  { id: "madeixas",     cat: "cor",    nome: "Madeixas",                                      min: 45, preco: 45, ate: 70 },
+];
+
+/* 0 = domingo … 6 = sábado  ·  null = fechado */
+const HORARIO = {
+  1: ["09:00", "20:00"], 2: ["09:00", "20:00"], 3: ["09:00", "20:00"],
+  4: ["09:00", "20:00"], 5: ["09:00", "20:00"], 6: ["09:00", "20:00"],
+  0: ["09:00", "15:00"],
+};
+const INTERVALO_MIN = 30;   // espaçamento entre horários disponíveis
+const DIAS_A_MOSTRAR = 14;
+
+const GALERIA = [
+  { src: "img/hero.jpg",      w: 1270, h: 1310, txt: "A cadeira" },
+  { src: "img/poster.jpg",    w: 1100, h: 1092, txt: "O Padrinho" },
+  { src: "img/poste.jpg",     w: 348,  h: 444,  txt: "Barber pole" },
+  { src: "img/sala.jpg",      w: 968,  h: 726,  txt: "Sala de espera" },
+  { src: "img/barbeiro.jpg",  w: 680,  h: 1230, txt: "Mãos à obra" },
+  { src: "img/cadeira.jpg",   w: 483,  h: 766,  txt: "Pele vintage" },
+  { src: "img/chao.jpg",      w: 544,  h: 524,  txt: "Mosaico" },
+  { src: "img/bancada.jpg",   w: 287,  h: 666,  txt: "A bancada" },
+  { src: "img/lavatorio.jpg", w: 204,  h: 665,  txt: "Lavatório" },
+];
+
+/* ============================================================ */
+const $ = (s, el = document) => el.querySelector(s);
+const DIAS_SEM = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+const DIAS_LONGO = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+const euro = (s) => s.ate ? `${s.preco}–${s.ate}€` : `${s.preco}€`;
+const dur = (m) => m >= 60 ? `${Math.floor(m / 60)}h${m % 60 ? String(m % 60).padStart(2, "0") : ""}` : `${m} min`;
+const paraMin = (t) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+const paraHora = (m) => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+/* Hora de Lisboa, para o estado aberto/fechado e para os horários de hoje */
+function agoraLisboa() {
+  const p = Object.fromEntries(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Lisbon", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit" })
+    .formatToParts(new Date()).map((x) => [x.type, x.value]));
+  const wd = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(p.weekday);
+  return { wd, min: Number(p.hour) * 60 + Number(p.minute), data: new Date(Number(p.year), Number(p.month) - 1, Number(p.day)) };
+}
+const AGORA = agoraLisboa();
+
+/* --- menu mobile e cabeçalho --- */
+const header = $("#topo"), burger = $("#burger");
+burger.addEventListener("click", () => {
+  const ab = header.classList.toggle("aberto");
+  burger.setAttribute("aria-expanded", ab);
+});
+document.querySelectorAll(".menu a").forEach((a) => a.addEventListener("click", () => { header.classList.remove("aberto"); burger.setAttribute("aria-expanded", false); }));
+const aoRolar = () => header.classList.toggle("solido", scrollY > 40);
+addEventListener("scroll", aoRolar, { passive: true }); aoRolar();
+
+/* --- estado aberto/fechado --- */
+(function () {
+  const h = HORARIO[AGORA.wd];
+  const aberto = h && AGORA.min >= paraMin(h[0]) && AGORA.min < paraMin(h[1]);
+  $("#estado-ponto").classList.toggle("fechado", !aberto);
+  if (aberto) { $("#estado-txt").textContent = `Aberto até às ${h[1].replace(":00", "h")}`; return; }
+  let txt = "Fechado agora";
+  if (h && AGORA.min < paraMin(h[0])) txt = `Abre hoje às ${h[0].replace(":00", "h")}`;
+  else { const am = HORARIO[(AGORA.wd + 1) % 7]; if (am) txt = `Fechado · abre amanhã às ${am[0].replace(":00", "h")}`; }
+  $("#estado-txt").textContent = txt;
+})();
+
+/* --- faixa --- */
+(function () {
+  const itens = ["Degradê", "Barba", "Black Mask", "Sobrancelhas", "Corte criança", "Madeixas", "Combos", "Aveiro"];
+  const html = itens.map((t) => `<span>${t}</span>`).join("");
+  $("#faixa").innerHTML = html + html;
+})();
+
+/* --- serviços --- */
+function mostrarCat(cat) {
+  document.querySelectorAll(".tabs button").forEach((b) => b.setAttribute("aria-selected", b.dataset.cat === cat));
+  $("#lista").innerHTML = SERVICOS.filter((s) => s.cat === cat).map((s) => `
+    <article class="serv">
+      <div class="serv-txt">
+        <h3>${esc(s.nome)}</h3>
+        <div class="meta"><span>${dur(s.min)}</span>${s.avulso ? `<span class="tag-poupa">Poupas ${s.avulso - s.preco}€</span>` : ""}</div>
+      </div>
+      <div class="preco">${s.ate ? `<small>desde</small>${s.preco}€` : euro(s)}</div>
+      <button class="marcar" data-id="${s.id}" aria-label="Marcar ${esc(s.nome)}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+    </article>`).join("");
+}
+document.querySelectorAll(".tabs button").forEach((b) => b.addEventListener("click", () => mostrarCat(b.dataset.cat)));
+$("#lista").addEventListener("click", (e) => {
+  const b = e.target.closest(".marcar"); if (!b) return;
+  escolherServico(b.dataset.id);
+  $("#marcar").scrollIntoView({ behavior: "smooth" });
+});
+mostrarCat("cortes");
+
+/* --- galeria + lightbox --- */
+(function () {
+  const g = $("#galeria-grid");
+  g.innerHTML = GALERIA.map((f, i) => `
+    <figure data-i="${i}" tabindex="0" role="button" aria-label="Ampliar: ${esc(f.txt)}">
+      <img src="${f.src}" alt="${esc(f.txt)}" width="${f.w}" height="${f.h}" loading="lazy">
+      <figcaption>${esc(f.txt)}</figcaption>
+    </figure>`).join("") + `
+    <figure class="card-ig">
+      <span class="script">Os teus cortes aqui</span>
+      <p>Esta galeria vai ser actualizada com os melhores degradês e barbas feitos na casa.</p>
+      <a href="#marcar" class="btn btn-vermelho" style="align-self:flex-start">Marcar o meu</a>
+    </figure>`;
+  const lb = $("#lightbox"), img = $("img", lb);
+  let atual = 0, ultimoFoco = null;
+  const abrir = (i) => { atual = (i + GALERIA.length) % GALERIA.length; img.src = GALERIA[atual].src; img.alt = GALERIA[atual].txt; };
+  g.addEventListener("click", (e) => { const f = e.target.closest("figure[data-i]"); if (!f) return; ultimoFoco = f; abrir(+f.dataset.i); lb.classList.add("on"); $(".lb-fechar", lb).focus(); });
+  g.addEventListener("keydown", (e) => { if ((e.key === "Enter" || e.key === " ") && e.target.matches("figure[data-i]")) { e.preventDefault(); e.target.click(); } });
+  const fechar = () => { lb.classList.remove("on"); ultimoFoco && ultimoFoco.focus(); };
+  $(".lb-fechar", lb).onclick = fechar;
+  $(".lb-ant", lb).onclick = () => abrir(atual - 1);
+  $(".lb-seg", lb).onclick = () => abrir(atual + 1);
+  lb.addEventListener("click", (e) => { if (e.target === lb) fechar(); });
+  addEventListener("keydown", (e) => {
+    if (!lb.classList.contains("on")) return;
+    if (e.key === "Escape") fechar();
+    if (e.key === "ArrowLeft") abrir(atual - 1);
+    if (e.key === "ArrowRight") abrir(atual + 1);
+  });
+})();
+
+/* --- horário --- */
+(function () {
+  const ordem = [1, 2, 3, 4, 5, 6, 0];
+  $("#horario").innerHTML = ordem.map((d) => {
+    const h = HORARIO[d];
+    return `<li class="${d === AGORA.wd ? "hoje" : ""}"><span>${DIAS_LONGO[d]}</span><span>${h ? `${h[0]} – ${h[1]}` : "Fechado"}</span></li>`;
+  }).join("");
+})();
+
+/* --- marcação --- */
+const estado = { serv: null, dia: null, hora: null };
+const sel = $("#servico");
+const cats = { cortes: "Cortes", combos: "Combos", cor: "Cor" };
+sel.innerHTML += Object.entries(cats).map(([c, n]) =>
+  `<optgroup label="${n}">${SERVICOS.filter((s) => s.cat === c).map((s) => `<option value="${s.id}">${esc(s.nome)} · ${euro(s)}</option>`).join("")}</optgroup>`).join("");
+
+function escolherServico(id) {
+  sel.value = id;
+  estado.serv = SERVICOS.find((s) => s.id === id) || null;
+  estado.hora = null;
+  $("#p2").classList.toggle("inativo", !estado.serv);
+  desenharDias();
+  atualizar();
+}
+sel.addEventListener("change", () => escolherServico(sel.value));
+
+function diasDisponiveis() {
+  const out = [];
+  for (let i = 0; i < DIAS_A_MOSTRAR; i++) {
+    const d = new Date(AGORA.data); d.setDate(d.getDate() + i);
+    if (HORARIO[d.getDay()]) out.push({ d, hoje: i === 0 });
+  }
+  return out;
+}
+function horasPara(dia) {
+  const h = HORARIO[dia.d.getDay()];
+  const dur = estado.serv ? estado.serv.min : 30;
+  const res = [];
+  for (let m = paraMin(h[0]); m + dur <= paraMin(h[1]); m += INTERVALO_MIN) {
+    if (dia.hoje && m <= AGORA.min + 30) continue; // pelo menos 30 min de antecedência
+    res.push(m);
+  }
+  return res;
+}
+function desenharDias() {
+  const dias = diasDisponiveis().filter((d) => horasPara(d).length);
+  if (!estado.dia || !dias.some((d) => +d.d === +estado.dia.d)) estado.dia = dias[0] || null;
+  $("#dias").innerHTML = dias.map((d, i) => `
+    <button class="dia" data-i="${i}" aria-pressed="${estado.dia && +d.d === +estado.dia.d}">
+      <small>${d.hoje ? "Hoje" : DIAS_SEM[d.d.getDay()]}</small><strong>${d.d.getDate()}</strong><small>${MESES[d.d.getMonth()]}</small>
+    </button>`).join("");
+  $("#dias").onclick = (e) => { const b = e.target.closest(".dia"); if (!b) return; estado.dia = dias[+b.dataset.i]; estado.hora = null; desenharDias(); atualizar(); };
+  desenharHoras();
+}
+function desenharHoras() {
+  const box = $("#horas");
+  if (!estado.dia) { box.innerHTML = `<p class="vazio">Sem horários nos próximos dias. Liga-nos!</p>`; return; }
+  const hs = horasPara(estado.dia);
+  box.innerHTML = hs.map((m) => `<button class="hora" data-m="${m}" aria-pressed="${estado.hora === m}">${paraHora(m)}</button>`).join("");
+  box.onclick = (e) => { const b = e.target.closest(".hora"); if (!b) return; estado.hora = +b.dataset.m; desenharHoras(); atualizar(); $("#p3").classList.remove("inativo"); };
+}
+function quandoTxt() {
+  if (!estado.dia || estado.hora == null) return null;
+  const d = estado.dia.d;
+  return `${DIAS_LONGO[d.getDay()]}, ${d.getDate()} ${MESES[d.getMonth()]} · ${paraHora(estado.hora)}`;
+}
+function atualizar() {
+  const s = estado.serv;
+  $("#r-serv").textContent = s ? s.nome : "—";
+  $("#r-dur").textContent = s ? dur(s.min) : "—";
+  $("#r-preco").textContent = s ? euro(s) : "—";
+  $("#r-quando").textContent = quandoTxt() || "—";
+  $("#p3").classList.toggle("inativo", !(s && estado.hora != null));
+  const nome = $("#nome").value.trim(), tel = $("#tel").value.replace(/\D/g, "");
+  $("#enviar").disabled = !(s && estado.hora != null && nome.length > 1 && tel.length >= 9);
+}
+["#nome", "#tel"].forEach((id) => $(id).addEventListener("input", atualizar));
+
+$("#enviar").addEventListener("click", () => {
+  const s = estado.serv;
+  const msg = [
+    "Olá Camazo! Gostava de marcar:",
+    `✂️ ${s.nome} (${euro(s)})`,
+    `📅 ${quandoTxt()}`,
+    `👤 ${$("#nome").value.trim()}`,
+    `📱 ${$("#tel").value.trim()}`,
+    "",
+    "Pode confirmar? Obrigado!",
+  ].join("\n");
+  window.open(`https://wa.me/${TELEFONE}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+  $("#ok").classList.add("on");
+});
+
+desenharDias(); atualizar();
+
+/* --- botão fixo mobile: aparece depois do topo e some na secção de marcação --- */
+(function () {
+  const fixo = $("#fixo"), alvo = $("#marcar");
+  let naMarcacao = false;
+  const aplicar = () => fixo.classList.toggle("esconder", naMarcacao || scrollY < innerHeight * 0.7);
+  new IntersectionObserver(([e]) => { naMarcacao = e.isIntersecting; aplicar(); }, { threshold: 0.05 }).observe(alvo);
+  addEventListener("scroll", aplicar, { passive: true }); aplicar();
+})();
+
+/* --- revelar ao rolar --- */
+(function () {
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visivel"); io.unobserve(e.target); } }), { threshold: 0.15 });
+  document.querySelectorAll(".revelar").forEach((el) => io.observe(el));
+})();
+</script>
+</body>
+</html>
