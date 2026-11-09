@@ -88,7 +88,7 @@
   @keyframes ligar { 0% { opacity: .15; } 12% { opacity: 1; } 18% { opacity: .2; } 30% { opacity: 1; } 36% { opacity: .35; } 48%, 100% { opacity: 1; } }
 
   /* ---------- PAREDE: hero ---------- */
-  .parede { position: relative; color: #f2f2f0; padding: 130px 0 90px; overflow: hidden;
+  .parede { position: relative; color: #f2f2f0; padding: 130px 0 90px; min-height: 100vh; min-height: 100svh; display: flex; align-items: center; overflow: hidden;
     background:
       radial-gradient(ellipse 14% 40% at 15% 0%, rgba(240,246,255,.28), transparent 70%),
       radial-gradient(ellipse 14% 40% at 50% 0%, rgba(240,246,255,.28), transparent 70%),
@@ -104,6 +104,8 @@
   .hero .lead { color: #d4d4d8; max-width: 50ch; font-size: 1.05rem; margin-bottom: 28px; text-shadow: 0 1px 8px rgba(0,0,0,.9); }
   .hero-acoes { display: flex; flex-wrap: wrap; gap: 14px; }
   .estado { display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 8px 14px 8px 10px; background: #111; color: #e8e8e8; border-radius: 8px; font-size: .78rem; }
+  .estado { cursor: pointer; border: 0; font: inherit; font-size: .78rem; } .estado:hover { background: #1b1b1d; }
+  .estado-seta { font-size: 1.1em; opacity: .7; margin-left: -2px; }
   .estado .luz { width: 10px; height: 10px; border-radius: 50%; background: #39d26b; box-shadow: 0 0 8px #39d26b, 0 0 2px #fff inset; }
   .estado.fechado .luz { background: var(--vermelho); box-shadow: 0 0 8px var(--vermelho); }
   /* o armário vermelho (SVG) */
@@ -138,31 +140,8 @@
   .poste .base { height: 22px; background: linear-gradient(90deg, #111, #555 40%, #111); border-radius: 3px 3px 14px 14px; }
   @keyframes girar { to { transform: translateY(68px); } }
 
-  /* rodapé da parede + chão em perspectiva */
 
-  /* ---------- CHÃO: base do resto do site ---------- */
-  .chao { position: relative; background: var(--chao); background-size: 264px 264px; }
-  .chao::before { content: ""; position: absolute; inset: 0; pointer-events: none;
-    background:
-      radial-gradient(ellipse 9% 30% at 20% 0%, rgba(235,242,255,.22), transparent 70%),
-      radial-gradient(ellipse 9% 30% at 50% 0%, rgba(235,242,255,.22), transparent 70%),
-      radial-gradient(ellipse 9% 30% at 80% 0%, rgba(235,242,255,.22), transparent 70%),
-      radial-gradient(ellipse 70% 40% at 50% 0%, rgba(230,238,255,.12), transparent 70%),
-      linear-gradient(rgba(12,12,14,.5), rgba(12,12,14,.66) 30%, rgba(12,12,14,.74)); }
-  .oficina-topo h2, .oficina-topo p { text-shadow: 0 2px 12px rgba(0,0,0,.9), 0 0 2px rgba(0,0,0,.8); }
-  .chao > * { position: relative; }
-
-  .faixa { background: #0f0f10; border-block: 1px solid #000; overflow: hidden; padding: 14px 0; }
-  .faixa-track { display: flex; width: max-content; animation: correr 40s linear infinite; }
-  .faixa span { font-family: Anton, sans-serif; text-transform: uppercase; font-size: 1.2rem; letter-spacing: .08em; color: #cfcfd3; white-space: nowrap; display: inline-flex; align-items: center; gap: 28px; padding-right: 28px; }
-  .faixa span::after { content: ""; width: 26px; height: 8px; border-radius: 2px; background: repeating-linear-gradient(-45deg, var(--vermelho) 0 5px, #fff 5px 10px, var(--azul) 10px 15px, #fff 15px 20px); }
-  @keyframes correr { to { transform: translateX(-50%); } }
-
-  .oficina { padding: 80px 0 110px; }
-  .oficina-topo { text-align: center; margin-bottom: 40px; }
   .fita { display: inline-block; font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: #fff; background: #111; padding: 5px 12px; border-radius: 3px; box-shadow: 0 1px 0 rgba(255,255,255,.12) inset, 0 2px 6px rgba(0,0,0,.5); margin-bottom: 16px; }
-  .oficina-topo h2 { font-size: clamp(2.4rem, 6vw, 4rem); margin-bottom: 10px; }
-  .oficina-topo p { color: var(--cinza); max-width: 52ch; margin: 0 auto; }
 
   /* ---------- A BANCADA (caixa de ferramentas) ---------- */
   .bancada { max-width: 980px; margin: 0 auto; position: relative; filter: drop-shadow(0 40px 50px rgba(0,0,0,.55)); }
@@ -336,10 +315,7 @@
   .mapa { position: relative; min-height: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 6px #0a0a0b; background: #19191c; }
   .mapa iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: grayscale(1) invert(.9) contrast(.9); }
 
-  footer { background: #0b0b0c; border-top: 1px solid #000; padding: 26px 0 30px; }
-  .rodape { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; color: var(--cinza-2); font-size: .82rem; }
 
-  .fixo-mobile { display: none; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -376,9 +352,6 @@
     .ferramentas { grid-template-columns: 1fr; }
     .campos { grid-template-columns: 1fr; }
     .fotos { grid-auto-rows: 110px; }
-    .fixo-mobile { display: flex; position: fixed; left: 16px; right: 16px; bottom: calc(14px + env(safe-area-inset-bottom)); z-index: 55; transition: transform .3s, opacity .3s; }
-    .fixo-mobile.esconder, body:has(header.aberto) .fixo-mobile { transform: translateY(160%); opacity: 0; }
-    footer { padding-bottom: 96px; }
   }
 </style>
 </head>
@@ -389,10 +362,10 @@
     <a href="#inicio" class="logo" aria-label="Camazo Barbershop, início"><span class="script">Camazo</span><small>Barbershop</small></a>
     <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span></button>
     <ul class="menu" id="menu">
-      <li><a href="#oficina" data-gaveta="cortes">Serviços</a></li>
-      <li><a href="#oficina" data-gaveta="galeria">Galeria</a></li>
-      <li><a href="#oficina" data-gaveta="visita">Contactos</a></li>
-      <li><a href="#oficina" data-gaveta="marcar" class="btn btn-vermelho">Marcar</a></li>
+      <li><a href="#inicio" data-gaveta="cortes">Serviços</a></li>
+      <li><a href="#inicio" data-gaveta="galeria">Galeria</a></li>
+      <li><a href="#inicio" data-gaveta="visita">Contactos</a></li>
+      <li><a href="#inicio" data-gaveta="marcar" class="btn btn-vermelho">Marcar</a></li>
     </ul>
   </nav>
   <div class="leds" aria-hidden="true"><i class="led"></i><i class="led"></i><i class="led"></i></div>
@@ -408,13 +381,13 @@
       <h1><b>Barbershop</b> · Aveiro</h1>
       <p class="lead">Isto é uma oficina, mas de cortes. Degradês, barba e Black Mask feitos com ferramenta afinada, com F1 na TV. Abre as gavetas e vê o que temos.</p>
       <div class="hero-acoes">
-        <a href="#oficina" class="btn btn-vermelho" data-gaveta="marcar">
+        <a href="#inicio" class="btn btn-vermelho" data-gaveta="marcar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
           Marcar corte
         </a>
-        <a href="#oficina" class="btn btn-cromado" data-gaveta="cortes">Abrir gavetas</a>
+        <a href="#inicio" class="btn btn-cromado" data-gaveta="visita">Horário &amp; onde</a>
       </div>
-      <div class="estado mono" id="estado"><i class="luz"></i><span id="estado-txt">Aberto</span></div>
+      <button type="button" class="estado mono" id="estado" data-gaveta="visita" aria-label="Ver horário e localização"><i class="luz"></i><span id="estado-txt">Aberto</span><span class="estado-seta" aria-hidden="true">›</span></button>
     </div>
     <div class="armario">
       <div id="armario" role="group" aria-label="Bancada vermelha: carrega numa gaveta para a abrir"></div>
@@ -423,39 +396,11 @@
   </div>
 </section>
 
-<!-- CHÃO -->
-<div class="chao">
-  <div class="faixa" aria-hidden="true"><div class="faixa-track" id="faixa"></div></div>
-
-  <section class="oficina" id="oficina">
-    <div class="wrap">
-      <div class="oficina-topo">
-        <span class="fita">Bancada nº 1</span>
-        <h2>Abre uma gaveta</h2>
-        <p>Tudo arrumado no sítio certo: serviços, preços, fotos e marcação. Puxa uma gaveta.</p>
-      </div>
-
-      <div class="bancada" id="bancada">
-        <div class="bancada-topo">
-          <span class="parafusos" aria-hidden="true"><i></i><i></i></span>
-          <span class="placa">CMZ · AVEIRO · 7/7</span>
-          <span class="parafusos" aria-hidden="true"><i></i><i></i></span>
-        </div>
-        <div class="bancada-corpo" id="gavetas"></div>
-      </div>
-    </div>
-  </section>
-</div>
+<!-- conteúdo das gavetas (só aparece dentro do mergulho) -->
+<div id="gavetas" hidden></div>
 </main>
 
-<footer>
-  <div class="wrap rodape">
-    <a href="#inicio" class="logo"><span class="script">Camazo</span><small>Barbershop · Aveiro</small></a>
-    <span>R. Conselheiro Luís de Magalhães, Aveiro · <a href="tel:+351924711734">924 711 734</a></span>
-  </div>
-</footer>
 
-<a href="#oficina" class="btn btn-vermelho fixo-mobile" id="fixo" data-gaveta="marcar">Marcar corte</a>
 
 <div class="mg-escuro" id="mg-escuro" aria-hidden="true"></div>
 <div class="mergulho" id="mergulho" role="dialog" aria-modal="true" aria-labelledby="mg-etq" hidden>
@@ -652,12 +597,6 @@ const AGORA = agoraLisboa();
   $("#estado-txt").textContent = txt;
 })();
 
-/* --- faixa --- */
-(function () {
-  const itens = ["Degradê", "Barba", "Black Mask", "Sobrancelhas", "Corte criança", "Madeixas", "Combos", "Aveiro"];
-  const html = itens.map((t) => `<span>${t}</span>`).join("");
-  $("#faixa").innerHTML = html + html;
-})();
 
 /* --- ícones de ferramenta --- */
 const IC = {
@@ -768,11 +707,10 @@ const semMovimento = () => matchMedia("(prefers-reduced-motion: reduce)").matche
 const espera = (ms) => new Promise((r) => setTimeout(r, ms));
 const visivel = (el) => { if (!el) return false; const r = el.getBoundingClientRect(); return r.width > 0 && r.bottom > 0 && r.top < innerHeight; };
 function origemPara(id, preferida) {
-  if (visivel(preferida)) return preferida;
+  if (preferida?.classList?.contains("bv-g") && visivel(preferida)) return preferida;
   const doTopo = document.querySelector(`#armario .bv-g[data-gaveta="${id}"]`);
   if (visivel(doTopo)) return doTopo;
-  const deBaixo = document.querySelector(`#g-${id} .frente`);
-  return visivel(deBaixo) ? deBaixo : null;
+  return null;  // ex.: "Horário & onde" não tem gaveta na bancada: abre sem a viagem de câmara
 }
 function encherMergulho(id) {
   if (mg.atual) $(`#i-${mg.atual} > div`).appendChild(mg.corpo.firstElementChild);
@@ -984,7 +922,7 @@ $("#gavetas").addEventListener("click", (e) => {
   const f = e.target.closest(".frente");
   if (f) mergulhar(f.dataset.id, f);
 });
-document.querySelectorAll("a[data-gaveta]").forEach((a) => a.addEventListener("click", (e) => {
+document.querySelectorAll("a[data-gaveta], button[data-gaveta]").forEach((a) => a.addEventListener("click", (e) => {
   e.preventDefault();
   mergulhar(a.dataset.gaveta);
 }));
@@ -1098,14 +1036,6 @@ $("#enviar").addEventListener("click", () => {
 });
 desenharDias(); atualizar();
 
-/* --- botão fixo mobile --- */
-(function () {
-  const fixo = $("#fixo");
-  let dentro = false;
-  const aplicar = () => fixo.classList.toggle("esconder", dentro || scrollY < innerHeight * 0.6);
-  new IntersectionObserver(([e]) => { dentro = e.isIntersecting; aplicar(); }, { threshold: 0.02 }).observe($("#g-marcar"));
-  addEventListener("scroll", aplicar, { passive: true }); aplicar();
-})();
 </script>
 </body>
 </html>
