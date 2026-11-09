@@ -222,7 +222,46 @@
   .fotos img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
   .fotos figure:hover img { transform: scale(1.05); }
   .fotos figcaption { position: absolute; left: 8px; bottom: 8px; font-family: "JetBrains Mono", monospace; font-size: .66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: #111; color: #fff; padding: 3px 7px; border-radius: 3px; }
-  .lightbox { position: fixed; inset: 0; z-index: 100; background: rgba(5,5,6,.95); display: none; align-items: center; justify-content: center; padding: 60px 16px; }
+  /* ---------- MERGULHO: entrar dentro da gaveta ---------- */
+  .mg-escuro { position: fixed; inset: 0; z-index: 88; background: #050506; opacity: 0; pointer-events: none; }
+  .mg-clone { position: fixed !important; z-index: 89; margin: 0 !important; transform-origin: 50% 50%; pointer-events: none; transition: none !important; filter: none !important; box-shadow: 0 30px 60px rgba(0,0,0,.7) !important; }
+  .mg-clone::before, .mg-clone::after { display: none !important; }
+  .mergulho { position: fixed; inset: 0; z-index: 90; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,.07), transparent 60%),
+      radial-gradient(rgba(255,255,255,.035) 1px, transparent 1.3px) 0 0 / 7px 7px,
+      radial-gradient(ellipse 120% 90% at 50% 40%, #19191c, #08080a 75%); }
+  .mergulho[hidden] { display: none; }
+  .mergulho::before, .mergulho::after { /* calhas laterais da gaveta */
+    content: ""; position: fixed; top: 0; bottom: 0; width: 14px; z-index: 1; pointer-events: none;
+    background: linear-gradient(90deg, #5f6268, #c3c6cb 40%, #7b7e84 70%, #3d3f43); box-shadow: 0 0 24px rgba(0,0,0,.8); }
+  .mergulho::before { left: 0; } .mergulho::after { right: 0; transform: scaleX(-1); }
+  .mg-borda { position: sticky; top: 0; z-index: 3; height: 18px; background: linear-gradient(#ee3442, #c3172a 60%, #8f0f1c); box-shadow: 0 8px 18px rgba(0,0,0,.8), inset 0 -2px 0 rgba(0,0,0,.35); }
+  .mg-topo { position: sticky; top: 18px; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 16px 30px; background: linear-gradient(rgba(8,8,10,.96), rgba(8,8,10,.82)); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .mg-titulo { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .mg-titulo .etiqueta { font-size: .95rem; }
+  .mg-titulo small { color: var(--cinza); font-size: .82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mg-fechar { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; font-size: .78rem; flex: none; }
+  .mg-corpo { max-width: var(--max); margin: 0 auto; padding: 10px 30px 60px; position: relative; z-index: 2; }
+  .mg-corpo .caixa { margin: 0; padding: 0; background: none; box-shadow: none; border-radius: 0; }
+  .mg-corpo .caixa::before { display: none; }
+  .mergulho.entrar .mg-corpo, .mergulho.entrar .mg-topo { animation: chegar .55s cubic-bezier(.2,.8,.2,1) both; }
+  .mergulho.entrar .mg-corpo { animation-delay: .08s; }
+  @keyframes chegar { from { opacity: 0; transform: scale(1.08) translateY(18px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+  .mg-corpo .recorte { animation: encaixar .5s cubic-bezier(.2,.9,.3,1.2) both; }
+  .mergulho.entrar .mg-corpo .recorte:nth-child(1) { animation-delay: .15s; } .mergulho.entrar .mg-corpo .recorte:nth-child(2) { animation-delay: .2s; }
+  .mergulho.entrar .mg-corpo .recorte:nth-child(3) { animation-delay: .25s; } .mergulho.entrar .mg-corpo .recorte:nth-child(4) { animation-delay: .3s; }
+  .mergulho.entrar .mg-corpo .recorte:nth-child(5) { animation-delay: .35s; } .mergulho.entrar .mg-corpo .recorte:nth-child(6) { animation-delay: .4s; }
+  .mergulho.entrar .mg-corpo .recorte:nth-child(n+7) { animation-delay: .45s; }
+  @keyframes encaixar { from { opacity: 0; transform: translateY(-14px) scale(.96); } to { opacity: 1; transform: none; } }
+  html.mergulhado { overflow: hidden; }
+  @media (max-width: 760px) {
+    .mergulho::before, .mergulho::after { width: 8px; }
+    .mg-topo { padding: 12px 16px; }
+    .mg-titulo small { display: none; }
+    .mg-corpo { padding: 8px 16px 40px; }
+  }
+  .lightbox { position: fixed; inset: 0; z-index: 120; background: rgba(5,5,6,.95); display: none; align-items: center; justify-content: center; padding: 60px 16px; }
   .lightbox.on { display: flex; }
   .lightbox img { max-height: 100%; max-width: 100%; border-radius: 8px; }
   .lightbox button { position: absolute; width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,.12); color: #fff; font-size: 1.6rem; line-height: 1; display: grid; place-items: center; }
@@ -404,6 +443,18 @@
 
 <a href="#oficina" class="btn btn-vermelho fixo-mobile" id="fixo" data-gaveta="marcar">Marcar corte</a>
 
+<div class="mg-escuro" id="mg-escuro" aria-hidden="true"></div>
+<div class="mergulho" id="mergulho" role="dialog" aria-modal="true" aria-labelledby="mg-etq" hidden>
+  <div class="mg-borda" aria-hidden="true"></div>
+  <div class="mg-topo">
+    <div class="mg-titulo"><span class="etiqueta" id="mg-etq">Gaveta</span><small id="mg-desc"></small></div>
+    <button class="btn btn-cromado mg-fechar" id="mg-fechar" aria-label="Fechar gaveta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 15l-6-6-6 6"/></svg>Fechar
+    </button>
+  </div>
+  <div class="mg-corpo" id="mg-corpo"></div>
+</div>
+
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Fotografia ampliada">
   <button class="lb-fechar" aria-label="Fechar">×</button>
   <button class="lb-ant" aria-label="Anterior">‹</button>
@@ -545,8 +596,8 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
         ${g.id === "marcar" ? `<span class="bv-placa marca" style="left:${pct((pg.x - g5.x) / g5.w)};top:${pct((pg.y - g5.y) / g5.h)};width:${pct(pg.w / g5.w)};height:${pct(pg.h / g5.h)};">Camazo</span>` : ""}
         <span class="bv-fita" style="top:${pct(g.ty)}">${g.etq}</span>
       </div>`).join("")}`;
-  alvo.addEventListener("click", (e) => { const g = e.target.closest(".bv-g"); if (g) abrirGaveta(g.dataset.gaveta, true); });
-  alvo.addEventListener("keydown", (e) => { const g = e.target.closest(".bv-g"); if (g && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); abrirGaveta(g.dataset.gaveta, true); } });
+  alvo.addEventListener("click", (e) => { const g = e.target.closest(".bv-g"); if (g) mergulhar(g.dataset.gaveta, g); });
+  alvo.addEventListener("keydown", (e) => { const g = e.target.closest(".bv-g"); if (g && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); mergulhar(g.dataset.gaveta, g); } });
   // depois das luzes acenderem, a primeira gaveta sai e volta para mostrar que mexe
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
     const g1 = alvo.querySelector(".bv-g");
@@ -694,26 +745,111 @@ $("#gavetas").innerHTML = GAVETAS.map((g, i) => `
     <div class="interior" id="i-${g.id}" role="region" aria-label="${esc(g.etq)}"><div><div class="caixa">${CONTEUDO[g.id]()}</div></div></div>
   </div>`).join("") + `<div class="bancada-fundo"><span class="placa">Camazo</span></div>`;
 
-function abrirGaveta(id, rolar) {
-  document.querySelectorAll(".gaveta").forEach((g) => {
-    const abrir = g.id === `g-${id}` && !(g.classList.contains("aberta") && !rolar);
-    g.classList.toggle("aberta", abrir);
-    $(".frente", g).setAttribute("aria-expanded", abrir);
-    $(".interior", g).inert = !abrir;
-  });
-  if (rolar) setTimeout(() => $(`#g-${id}`).scrollIntoView({ behavior: "smooth", block: "start" }), 60);
+/* --- MERGULHO: a gaveta sai, somos puxados para dentro e ela abre-se no ecrã ---
+   O conteúdo de cada gaveta (a "caixa") é movido para o ecrã do mergulho e
+   devolvido ao fechar, por isso o estado da marcação mantém-se. */
+const mg = { el: $("#mergulho"), corpo: $("#mg-corpo"), escuro: $("#mg-escuro"), atual: null, origem: null, ocupado: false };
+const semMovimento = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+const espera = (ms) => new Promise((r) => setTimeout(r, ms));
+const visivel = (el) => { if (!el) return false; const r = el.getBoundingClientRect(); return r.width > 0 && r.bottom > 0 && r.top < innerHeight; };
+function origemPara(id, preferida) {
+  if (visivel(preferida)) return preferida;
+  const doTopo = document.querySelector(`#armario .bv-g[data-gaveta="${id}"]`);
+  if (visivel(doTopo)) return doTopo;
+  const deBaixo = document.querySelector(`#g-${id} .frente`);
+  return visivel(deBaixo) ? deBaixo : null;
 }
+function encherMergulho(id) {
+  if (mg.atual) $(`#i-${mg.atual} > div`).appendChild(mg.corpo.firstElementChild);
+  const g = GAVETAS.find((x) => x.id === id);
+  $("#mg-etq").textContent = g.etq;
+  $("#mg-desc").textContent = g.desc;
+  mg.corpo.appendChild($(`#i-${id} .caixa`));
+  mg.atual = id;
+  mg.el.scrollTop = 0;
+}
+async function zoom(origem, entrar) {
+  const r = origem.getBoundingClientRect();
+  const clone = origem.cloneNode(true);
+  clone.removeAttribute("id"); clone.removeAttribute("tabindex"); clone.setAttribute("aria-hidden", "true");
+  clone.classList.remove("puxa"); clone.classList.add("mg-clone");
+  Object.assign(clone.style, { left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px" });
+  document.body.appendChild(clone);
+  const dx = innerWidth / 2 - (r.left + r.width / 2), dy = innerHeight / 2 - (r.top + r.height / 2);
+  const esc = Math.max(innerWidth / r.width, innerHeight / r.height) * 2.2;
+  const longe = `translate(${dx}px, ${dy}px) scale(${esc})`, perto = "translate(0,0) scale(1)";
+  const dur = 720;
+  const a = clone.animate([{ transform: entrar ? perto : longe }, { transform: entrar ? longe : perto }],
+    { duration: dur, easing: entrar ? "cubic-bezier(.55,0,.85,.35)" : "cubic-bezier(.15,.65,.45,1)", fill: "forwards" });
+  mg.escuro.animate(entrar ? [{ opacity: 0 }, { opacity: 0, offset: .3 }, { opacity: 1 }] : [{ opacity: 1 }, { opacity: 0 }],
+    { duration: dur, easing: "ease-in", fill: "forwards" });
+  await a.finished.catch(() => {});
+  return clone;
+}
+async function mergulhar(id, preferida) {
+  if (mg.ocupado) return;
+  if (!mg.el.hidden) { encherMergulho(id); mg.el.classList.remove("entrar"); void mg.el.offsetWidth; mg.el.classList.add("entrar"); return; }
+  mg.ocupado = true;
+  header.classList.remove("aberto"); burger.setAttribute("aria-expanded", false);
+  const origem = origemPara(id, preferida);
+  mg.origem = origem;
+  mg.foco = document.activeElement;
+  encherMergulho(id);
+  let clone = null;
+  if (origem && !semMovimento()) {
+    if (origem.classList.contains("bv-g")) { origem.classList.add("puxa"); await espera(320); }
+    clone = await zoom(origem, true);
+  }
+  document.documentElement.classList.add("mergulhado");
+  mg.el.hidden = false;
+  mg.el.classList.remove("entrar"); void mg.el.offsetWidth; mg.el.classList.add("entrar");
+  if (clone) clone.remove();
+  mg.escuro.getAnimations().forEach((x) => x.cancel());
+  if (history.state?.gaveta == null) history.pushState({ gaveta: id }, "");
+  $("#mg-fechar").focus({ preventScroll: true });
+  mg.ocupado = false;
+}
+async function emergir(viaHistorico) {
+  if (mg.el.hidden || mg.ocupado) return;
+  mg.ocupado = true;
+  const origem = mg.origem;
+  if (!semMovimento()) {
+    mg.el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, easing: "ease-out" });
+    await espera(200);
+  }
+  mg.el.hidden = true;
+  document.documentElement.classList.remove("mergulhado");
+  $(`#i-${mg.atual} > div`).appendChild(mg.corpo.firstElementChild);
+  mg.atual = null;
+  if (origem && visivel(origem) && !semMovimento()) {
+    mg.escuro.style.opacity = 1;
+    const clone = await zoom(origem, false);
+    mg.escuro.style.opacity = 0; mg.escuro.getAnimations().forEach((x) => x.cancel());
+    clone.remove();
+    setTimeout(() => origem.classList.remove("puxa"), 250);
+  } else if (origem) origem.classList.remove("puxa");
+  if (!viaHistorico && history.state?.gaveta != null) history.back();
+  (mg.foco && document.contains(mg.foco) ? mg.foco : origem)?.focus?.({ preventScroll: true });
+  mg.ocupado = false;
+}
+$("#mg-fechar").addEventListener("click", () => emergir(false));
+addEventListener("popstate", () => { if (!mg.el.hidden) emergir(true); });
+addEventListener("keydown", (e) => { if (e.key === "Escape" && !mg.el.hidden && !$("#lightbox").classList.contains("on")) emergir(false); });
+// botão "Marcar" dentro de uma gaveta de serviços: muda para a gaveta da marcação
+mg.el.addEventListener("click", (e) => {
+  const m = e.target.closest("[data-marcar]");
+  if (m) { escolherServico(m.dataset.marcar); mergulhar("marcar"); }
+});
+// compatibilidade: quem chamava abrirGaveta passa a mergulhar
+function abrirGaveta(id, _rolar, origem) { mergulhar(id, origem); }
 document.querySelectorAll(".interior").forEach((el) => (el.inert = true));
 $("#gavetas").addEventListener("click", (e) => {
   const f = e.target.closest(".frente");
-  if (f) { abrirGaveta(f.dataset.id, false); return; }
-  const m = e.target.closest("[data-marcar]");
-  if (m) { escolherServico(m.dataset.marcar); abrirGaveta("marcar", true); }
+  if (f) mergulhar(f.dataset.id, f);
 });
-document.querySelectorAll("[data-gaveta]").forEach((a) => a.addEventListener("click", (e) => {
+document.querySelectorAll("a[data-gaveta]").forEach((a) => a.addEventListener("click", (e) => {
   e.preventDefault();
-  header.classList.remove("aberto"); burger.setAttribute("aria-expanded", false);
-  abrirGaveta(a.dataset.gaveta, true);
+  mergulhar(a.dataset.gaveta);
 }));
 
 /* --- menu mobile --- */
@@ -725,7 +861,7 @@ burger.addEventListener("click", () => burger.setAttribute("aria-expanded", head
   const lb = $("#lightbox"), img = $("img", lb);
   let atual = 0, ultimo = null;
   const mostrar = (i) => { atual = (i + GALERIA.length) % GALERIA.length; img.src = GALERIA[atual].src; img.alt = GALERIA[atual].txt; };
-  const g = $("#i-galeria");
+  const g = document;
   g.addEventListener("click", (e) => { const f = e.target.closest("figure[data-i]"); if (!f) return; ultimo = f; mostrar(+f.dataset.i); lb.classList.add("on"); $(".lb-fechar", lb).focus(); });
   g.addEventListener("keydown", (e) => { if ((e.key === "Enter" || e.key === " ") && e.target.matches("figure[data-i]")) { e.preventDefault(); e.target.click(); } });
   const fechar = () => { lb.classList.remove("on"); ultimo && ultimo.focus(); };
