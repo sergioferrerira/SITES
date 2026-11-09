@@ -224,6 +224,17 @@
   .fotos figcaption { position: absolute; left: 8px; bottom: 8px; font-family: "JetBrains Mono", monospace; font-size: .66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: #111; color: #fff; padding: 3px 7px; border-radius: 3px; }
   /* ---------- MERGULHO: entrar dentro da gaveta ---------- */
   .mg-escuro { position: fixed; inset: 0; z-index: 88; background: #050506; opacity: 0; pointer-events: none; }
+  /* cena 3D: a câmara entra na gaveta */
+  .c3-cena { position: fixed; inset: 0; z-index: 89; pointer-events: none; overflow: hidden; perspective-origin: 50% 50%; background: rgba(5,5,6,0); }
+  .c3-mundo, .c3-gaveta { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-style: preserve-3d; }
+  .c3-face { position: absolute; left: 0; top: 0; backface-visibility: visible; transform-origin: 50% 50%; }
+  .c3-frente { margin: 0 !important; transition: none !important; filter: none !important; box-shadow: none !important; }
+  .c3-frente::before, .c3-frente::after { display: none !important; }
+  .c3-fundo { background: radial-gradient(ellipse 80% 70% at 50% 45%, transparent 45%, rgba(0,0,0,.6)), url(img/espuma.webp) 0 0 / 420px 420px repeat, #111113; }
+  .c3-lado { background: linear-gradient(#2a2b2e, #5c5f64 18%, #c6c9ce 34%, #8c9096 42%, #3e4044 50%, #6f7277 70%, #2a2b2e); }
+  .c3-lado::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.55), transparent 30%, transparent 70%, rgba(0,0,0,.35)); }
+  .c3-vermelho { background: linear-gradient(#5a0710, #a3101d 40%, #c8172a 75%, #e12a3a); }
+  .c3-vermelho.fora { background: linear-gradient(#e12a3a, #b5131f 60%, #8f0f1c); }
   .mg-clone { position: fixed !important; z-index: 89; margin: 0 !important; transform-origin: 50% 50%; pointer-events: none; transition: none !important; filter: none !important; box-shadow: 0 30px 60px rgba(0,0,0,.7) !important; }
   .mg-clone::before, .mg-clone::after { display: none !important; }
   .mergulho { position: fixed; inset: 0; z-index: 90; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
@@ -766,23 +777,86 @@ function encherMergulho(id) {
   mg.atual = id;
   mg.el.scrollTop = 0;
 }
-async function zoom(origem, entrar) {
+/* Cena 3D: a gaveta é montada já no tamanho final do ecrã (para nada ficar
+   esticado) e começa lá ao fundo, onde aparece exatamente do tamanho da
+   gaveta na bancada. A câmara puxa-a, inclina-se para olhar lá para dentro e
+   desce até pousar sobre a espuma, vista de cima. */
+function montarCena(origem) {
   const r = origem.getBoundingClientRect();
-  const clone = origem.cloneNode(true);
-  clone.removeAttribute("id"); clone.removeAttribute("tabindex"); clone.setAttribute("aria-hidden", "true");
-  clone.classList.remove("puxa"); clone.classList.add("mg-clone");
-  Object.assign(clone.style, { left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px" });
-  document.body.appendChild(clone);
-  const dx = innerWidth / 2 - (r.left + r.width / 2), dy = innerHeight / 2 - (r.top + r.height / 2);
-  const esc = Math.max(innerWidth / r.width, innerHeight / r.height) * 2.2;
-  const longe = `translate(${dx}px, ${dy}px) scale(${esc})`, perto = "translate(0,0) scale(1)";
-  const dur = 720;
-  const a = clone.animate([{ transform: entrar ? perto : longe }, { transform: entrar ? longe : perto }],
-    { duration: dur, easing: entrar ? "cubic-bezier(.55,0,.85,.35)" : "cubic-bezier(.15,.65,.45,1)", fill: "forwards" });
-  mg.escuro.animate(entrar ? [{ opacity: 0 }, { opacity: 0, offset: .3 }, { opacity: 1 }] : [{ opacity: 1 }, { opacity: 0 }],
-    { duration: dur, easing: "ease-in", fill: "forwards" });
-  await a.finished.catch(() => {});
-  return clone;
+  const vw = innerWidth, vh = innerHeight, movel = vw <= 760;
+  const bx = movel ? 35 : 64, bt = movel ? 24 : 44, bb = movel ? 38 : 70;   // margens da moldura final
+  const P = Math.max(vw, vh) * 1.25;                                         // distância da câmara
+  const k = (vw - 2 * bx) / r.width;                                         // escala do modelo
+  const W = r.width * k, H = Math.max(r.height * k, 60), D = vh - bt - bb;   // largura, altura e fundo da gaveta
+  const z0 = P * (1 - k);                                                    // lá ao fundo, do tamanho da gaveta real
+  // lá ao fundo, a perspetiva encolhe as distâncias ao centro do ecrã por 1/k:
+  // o ponto de partida tem de estar k vezes mais afastado do centro
+  let cx = vw / 2 + (r.left + r.width / 2 - vw / 2) * k, cy = vh / 2 + (r.top + r.height / 2 - vh / 2) * k;
+
+  const cena = document.createElement("div");
+  cena.className = "c3-cena"; cena.style.perspective = P + "px"; cena.setAttribute("aria-hidden", "true");
+  const mundo = document.createElement("div");
+  mundo.className = "c3-mundo"; mundo.style.left = cx + "px"; mundo.style.top = cy + "px";
+  const gav = document.createElement("div"); gav.className = "c3-gaveta";
+  const face = (cls, w, h, t) => { const f = document.createElement("div"); f.className = "c3-face " + cls; Object.assign(f.style, { width: w + "px", height: h + "px", marginLeft: -w / 2 + "px", marginTop: -h / 2 + "px", transform: t }); gav.appendChild(f); return f; };
+  // caixa da gaveta
+  const caixaFaces = [
+    face("c3-fundo", W, D, `translate3d(0, ${H / 2}px, ${-D / 2}px) rotateX(90deg)`),
+    face("c3-lado", D, H, `translate3d(${-W / 2}px, 0, ${-D / 2}px) rotateY(90deg)`),
+    face("c3-lado", D, H, `translate3d(${W / 2}px, 0, ${-D / 2}px) rotateY(-90deg)`),
+    face("c3-vermelho", W, H, `translate3d(0, 0, ${-D}px)`),
+    face("c3-vermelho", W, H, `translate3d(0, 0, -2px) rotateY(180deg)`),
+  ];
+  caixaFaces.forEach((f) => (f.style.opacity = 0));
+  // frente: a própria gaveta da bancada, em grande
+  const frente = origem.cloneNode(true);
+  frente.removeAttribute("id"); frente.removeAttribute("tabindex"); frente.removeAttribute("style");
+  frente.classList.remove("puxa"); frente.classList.add("c3-face", "c3-frente");
+  if (origem.classList.contains("bv-g")) {
+    const st = origem.style;
+    Object.assign(frente.style, { backgroundImage: st.backgroundImage || getComputedStyle(origem).backgroundImage, backgroundSize: st.backgroundSize, backgroundPosition: st.backgroundPosition, backgroundRepeat: "no-repeat" });
+    frente.querySelectorAll(".bv-fita, .bv-placa").forEach((el) => { el.style.fontSize = (parseFloat(getComputedStyle(origem.querySelector(".bv-fita") || origem).fontSize) * k) + "px"; });
+  }
+  Object.assign(frente.style, { width: W + "px", height: H + "px", marginLeft: -W / 2 + "px", marginTop: -H / 2 + "px", transform: "translateZ(1px)", borderRadius: (6 * k) + "px" });
+  if (!origem.classList.contains("bv-g")) frente.style.fontSize = (parseFloat(getComputedStyle(origem).fontSize) * k) + "px";
+  gav.appendChild(frente);
+  mundo.appendChild(gav); cena.appendChild(mundo); document.body.appendChild(cena);
+
+  // pivot no centro do fundo da gaveta
+  const pv = `translate3d(0, ${-H / 2}px, ${D / 2}px)`;
+  const T = (x, y, z, a) => `translate3d(${x}px, ${y + H / 2}px, ${z - D / 2}px) rotateX(${a}deg) ${pv}`;
+  // acerto fino: mede onde a frente aparece no início e corrige para bater
+  // certo com a gaveta da bancada
+  gav.style.transform = T(0, 0, z0, 0);
+  for (let i = 0; i < 2; i++) {
+    const f = frente.getBoundingClientRect();
+    cx -= (f.left + f.width / 2 - (r.left + r.width / 2)) * k;
+    cy -= (f.top + f.height / 2 - (r.top + r.height / 2)) * k;
+    mundo.style.left = cx + "px"; mundo.style.top = cy + "px";
+  }
+  gav.style.transform = "";
+  const dx = vw / 2 - cx, dy = (bt + (vh - bt - bb) / 2) - cy;
+  const puxar = Math.min(D, W) * .55;
+  const fotos = [
+    { transform: T(0, 0, z0, 0), offset: 0 },
+    { transform: T(0, 0, z0 + puxar, 0), offset: .28, easing: "cubic-bezier(.4,0,.2,1)" },
+    { transform: T(dx * .35, dy * .35 - H * .6, z0 * .55 + puxar * .6, -38), offset: .58, easing: "cubic-bezier(.45,0,.55,1)" },
+    { transform: T(dx, dy, 0, -90), offset: 1 },
+  ];
+  fotos[0].easing = "cubic-bezier(.3,0,.2,1)";
+  return { cena, gav, fotos, caixaFaces };
+}
+function correrCena(c, entrar, dur) {
+  const fotos = entrar ? c.fotos : c.fotos.slice().reverse().map((f) => ({ ...f, offset: 1 - f.offset }));
+  const a = c.gav.animate(fotos, { duration: dur, fill: "forwards" });
+  // a caixa da gaveta só aparece depois de a gaveta sair da bancada
+  const op = [{ opacity: 0 }, { opacity: 0, offset: .2 }, { opacity: 1, offset: .32 }, { opacity: 1 }];
+  c.caixaFaces.forEach((f) => f.animate(entrar ? op : op.slice().reverse().map((x, i, arr) => ({ ...x, offset: x.offset == null ? (i === 0 ? 0 : 1) : 1 - x.offset })), { duration: dur, fill: "forwards" }));
+  c.cena.animate(entrar
+    ? [{ background: "rgba(5,5,6,0)" }, { background: "rgba(5,5,6,0)", offset: .2 }, { background: "rgba(5,5,6,1)", offset: .6 }, { background: "rgba(5,5,6,1)" }]
+    : [{ background: "rgba(5,5,6,1)" }, { background: "rgba(5,5,6,1)", offset: .4 }, { background: "rgba(5,5,6,0)", offset: .8 }, { background: "rgba(5,5,6,0)" }],
+    { duration: dur, fill: "forwards" });
+  return a.finished.catch(() => {});
 }
 async function mergulhar(id, preferida) {
   if (mg.ocupado) return;
@@ -793,16 +867,16 @@ async function mergulhar(id, preferida) {
   mg.origem = origem;
   mg.foco = document.activeElement;
   encherMergulho(id);
-  let clone = null;
+  let cena = null;
   if (origem && !semMovimento()) {
-    if (origem.classList.contains("bv-g")) { origem.classList.add("puxa"); await espera(320); }
-    clone = await zoom(origem, true);
+    cena = montarCena(origem);
+    origem.style.visibility = "hidden";
+    await correrCena(cena, true, 1250);
   }
   document.documentElement.classList.add("mergulhado");
   mg.el.hidden = false;
   mg.el.classList.remove("entrar"); void mg.el.offsetWidth; mg.el.classList.add("entrar");
-  if (clone) clone.remove();
-  mg.escuro.getAnimations().forEach((x) => x.cancel());
+  if (cena) { await mg.el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 260, easing: "ease-out" }).finished.catch(() => {}); cena.cena.remove(); }
   if (history.state?.gaveta == null) history.pushState({ gaveta: id }, "");
   $("#mg-fechar").focus({ preventScroll: true });
   mg.ocupado = false;
@@ -811,21 +885,21 @@ async function emergir(viaHistorico) {
   if (mg.el.hidden || mg.ocupado) return;
   mg.ocupado = true;
   const origem = mg.origem;
-  if (!semMovimento()) {
-    mg.el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, easing: "ease-out" });
-    await espera(200);
+  const animar = origem && !semMovimento();
+  let cena = null;
+  if (animar) {
+    document.documentElement.classList.remove("mergulhado");
+    cena = montarCena(origem);
+    cena.gav.style.transform = cena.fotos[cena.fotos.length - 1].transform;
+    cena.cena.style.background = "rgba(5,5,6,1)";
+    await mg.el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, easing: "ease-in" }).finished.catch(() => {});
   }
   mg.el.hidden = true;
   document.documentElement.classList.remove("mergulhado");
   $(`#i-${mg.atual} > div`).appendChild(mg.corpo.firstElementChild);
   mg.atual = null;
-  if (origem && visivel(origem) && !semMovimento()) {
-    mg.escuro.style.opacity = 1;
-    const clone = await zoom(origem, false);
-    mg.escuro.style.opacity = 0; mg.escuro.getAnimations().forEach((x) => x.cancel());
-    clone.remove();
-    setTimeout(() => origem.classList.remove("puxa"), 250);
-  } else if (origem) origem.classList.remove("puxa");
+  if (cena) { await correrCena(cena, false, 1000); cena.cena.remove(); }
+  if (origem) origem.style.visibility = "";
   if (!viaHistorico && history.state?.gaveta != null) history.back();
   (mg.foco && document.contains(mg.foco) ? mg.foco : origem)?.focus?.({ preventScroll: true });
   mg.ocupado = false;
