@@ -227,22 +227,18 @@
   .mg-clone { position: fixed !important; z-index: 89; margin: 0 !important; transform-origin: 50% 50%; pointer-events: none; transition: none !important; filter: none !important; box-shadow: 0 30px 60px rgba(0,0,0,.7) !important; }
   .mg-clone::before, .mg-clone::after { display: none !important; }
   .mergulho { position: fixed; inset: 0; z-index: 90; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,.07), transparent 60%),
-      radial-gradient(rgba(255,255,255,.035) 1px, transparent 1.3px) 0 0 / 7px 7px,
-      radial-gradient(ellipse 120% 90% at 50% 40%, #19191c, #08080a 75%); }
+    background: radial-gradient(ellipse 90% 70% at 50% 35%, transparent 40%, rgba(0,0,0,.55)), url(img/espuma.webp) 0 0 / 420px 420px repeat, #111113;
+    background-attachment: fixed, local, local; }
   .mergulho[hidden] { display: none; }
-  .mergulho::before, .mergulho::after { /* calhas laterais da gaveta */
-    content: ""; position: fixed; top: 0; bottom: 0; width: 14px; z-index: 1; pointer-events: none;
-    background: linear-gradient(90deg, #5f6268, #c3c6cb 40%, #7b7e84 70%, #3d3f43); box-shadow: 0 0 24px rgba(0,0,0,.8); }
-  .mergulho::before { left: 0; } .mergulho::after { right: 0; transform: scaleX(-1); }
-  .mg-borda { position: sticky; top: 0; z-index: 3; height: 18px; background: linear-gradient(#ee3442, #c3172a 60%, #8f0f1c); box-shadow: 0 8px 18px rgba(0,0,0,.8), inset 0 -2px 0 rgba(0,0,0,.35); }
-  .mg-topo { position: sticky; top: 18px; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 16px 30px; background: linear-gradient(rgba(8,8,10,.96), rgba(8,8,10,.82)); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  /* moldura real da gaveta (borda vermelha e calhas), presa ao ecrã */
+  .mg-moldura { position: fixed; inset: 0; z-index: 4; pointer-events: none; border-style: solid; border-width: 44px 64px 70px 65px;
+    border-image: url(img/gaveta-moldura.webp) 44 64 70 65 stretch; box-shadow: inset 0 22px 30px -8px rgba(0,0,0,.85), inset 0 -16px 24px -8px rgba(0,0,0,.7), inset 18px 0 24px -10px rgba(0,0,0,.7), inset -18px 0 24px -10px rgba(0,0,0,.7); }
+  .mg-topo { position: sticky; top: 44px; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 90px 14px; background: linear-gradient(rgba(10,10,12,.92), rgba(10,10,12,.6) 75%, transparent); }
   .mg-titulo { display: flex; align-items: center; gap: 12px; min-width: 0; }
   .mg-titulo .etiqueta { font-size: .95rem; }
   .mg-titulo small { color: var(--cinza); font-size: .82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .mg-fechar { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; font-size: .78rem; flex: none; }
-  .mg-corpo { max-width: var(--max); margin: 0 auto; padding: 10px 30px 60px; position: relative; z-index: 2; }
+  .mg-corpo { max-width: calc(var(--max) + 120px); margin: 0 auto; padding: 22px 90px 120px; position: relative; z-index: 2; }
   .mg-corpo .caixa { margin: 0; padding: 0; background: none; box-shadow: none; border-radius: 0; }
   .mg-corpo .caixa::before { display: none; }
   .mergulho.entrar .mg-corpo, .mergulho.entrar .mg-topo { animation: chegar .55s cubic-bezier(.2,.8,.2,1) both; }
@@ -256,10 +252,12 @@
   @keyframes encaixar { from { opacity: 0; transform: translateY(-14px) scale(.96); } to { opacity: 1; transform: none; } }
   html.mergulhado { overflow: hidden; }
   @media (max-width: 760px) {
-    .mergulho::before, .mergulho::after { width: 8px; }
-    .mg-topo { padding: 12px 16px; }
+    .mg-moldura { border-width: 24px 35px 38px 36px; }
+    .mg-topo { top: 24px; padding: 12px 46px 10px; }
+    .mg-titulo .etiqueta { font-size: .72rem; white-space: nowrap; padding: 6px 9px; }
+    .mg-fechar { padding: 9px 12px; }
     .mg-titulo small { display: none; }
-    .mg-corpo { padding: 8px 16px 40px; }
+    .mg-corpo { padding: 8px 46px 70px; }
   }
   .lightbox { position: fixed; inset: 0; z-index: 120; background: rgba(5,5,6,.95); display: none; align-items: center; justify-content: center; padding: 60px 16px; }
   .lightbox.on { display: flex; }
@@ -445,7 +443,7 @@
 
 <div class="mg-escuro" id="mg-escuro" aria-hidden="true"></div>
 <div class="mergulho" id="mergulho" role="dialog" aria-modal="true" aria-labelledby="mg-etq" hidden>
-  <div class="mg-borda" aria-hidden="true"></div>
+  <div class="mg-moldura" aria-hidden="true"></div>
   <div class="mg-topo">
     <div class="mg-titulo"><span class="etiqueta" id="mg-etq">Gaveta</span><small id="mg-desc"></small></div>
     <button class="btn btn-cromado mg-fechar" id="mg-fechar" aria-label="Fechar gaveta">
