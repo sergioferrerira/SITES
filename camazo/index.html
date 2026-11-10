@@ -129,13 +129,14 @@
   .bv-placa { position: absolute; display: grid; place-items: center; pointer-events: none; color: #ededed; }
   .bv-placa.topo { font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: clamp(6px, 1.9cqw, 10px); letter-spacing: .14em; }
   .bv-placa.marca { font-family: Yellowtail, cursive; font-size: clamp(10px, 3.3cqw, 18px); }
-  .poste { position: absolute; z-index: 3; right: max(16px, calc(50% - 600px)); top: 120px; width: 46px; }
-  .poste .tampa { height: 16px; background: linear-gradient(90deg, #111, #555 40%, #111); border-radius: 8px 8px 3px 3px; }
-  .poste .vidro { height: 170px; margin: 0 5px; border-radius: 4px; position: relative; overflow: hidden; box-shadow: inset 0 0 0 2px rgba(0,0,0,.25), 0 0 28px rgba(208,28,44,.35); }
-  .poste .vidro::before { content: ""; position: absolute; inset: -80px 0 0; background: repeating-linear-gradient(-45deg, var(--vermelho) 0 12px, #fff 12px 24px, var(--azul) 24px 36px, #fff 36px 48px); animation: girar 2.2s linear infinite; }
-  .poste .vidro::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.25), rgba(255,255,255,.45) 35%, transparent 60%, rgba(0,0,0,.3)); }
-  .poste .base { height: 22px; background: linear-gradient(90deg, #111, #555 40%, #111); border-radius: 3px 3px 14px 14px; }
-  @keyframes girar { to { transform: translateY(68px); } }
+  /* poste de barbeiro de parede, desenhado a partir do poste real da barbearia (img/poste.jpg) */
+  .poste { position: absolute; z-index: 3; left: calc(100% + 4%); top: -2%; width: 19%; max-width: 92px; pointer-events: none; }
+  .poste svg { display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(-10px 14px 10px rgba(0,0,0,.55)); }
+  .poste::before { /* luz do poste a bater na parede */
+    content: ""; position: absolute; left: -70%; right: -40%; top: 8%; bottom: 14%; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(255,240,235,.22), rgba(220,60,70,.10) 55%, transparent); }
+  .poste .riscas { animation: girar 3.2s linear infinite; }
+  @keyframes girar { to { transform: translateY(-120px); } }
 
 
   /* rodapé: faixa a correr com as riscas da barbearia, sempre no fundo do ecrã */
@@ -332,13 +333,12 @@
   @media (min-width: 761px) {
     .parede { height: 100vh; height: 100svh; min-height: 520px; padding: 78px 0 58px; }
     .hero-grid { width: 100%; gap: clamp(20px, 4vw, 50px); grid-template-columns: minmax(0, 1fr) auto; }
-    .armario { width: min(600px, 42vw, calc((100svh - 190px) * .881)); }
+    .armario { width: min(600px, 40vw, calc((100svh - 190px) * .881)); margin-right: calc(min(92px, 7.6vw) + 2.4vw); }  /* espaço para o poste */
     .armario .legenda { margin-top: 8px; }
     .script-grande { font-size: clamp(3.4rem, min(9vw, 14svh), 8.6rem); }
     .hero h1 { margin: 6px 0 clamp(8px, 2.4svh, 20px); }
     .hero .lead { margin-bottom: clamp(12px, 3svh, 28px); }
     .estado { margin-top: clamp(12px, 3svh, 28px); }
-    .poste { top: 96px; }
   }
   @media (min-width: 761px) and (max-height: 620px) { .hero .lead { display: none; } }
   @media (max-width: 900px) {
@@ -393,7 +393,6 @@
 <main>
 <!-- PAREDE -->
 <section class="parede hero" id="inicio">
-  <div class="poste" aria-hidden="true"><div class="tampa"></div><div class="vidro"></div><div class="base"></div></div>
   <div class="wrap hero-grid">
     <div>
       <div class="script-grande" aria-hidden="true">Camazo</div>
@@ -409,6 +408,7 @@
       <button type="button" class="estado mono" id="estado" data-gaveta="visita" aria-label="Ver horário e localização"><i class="luz"></i><span id="estado-txt">Aberto</span><span class="estado-seta" aria-hidden="true">›</span></button>
     </div>
     <div class="armario">
+      <div class="poste" id="poste" aria-hidden="true"></div>
       <div id="armario" role="group" aria-label="Bancada vermelha: carrega numa gaveta para a abrir"></div>
       <p class="legenda">↑ Carrega numa gaveta</p>
     </div>
@@ -603,6 +603,58 @@ function agoraLisboa() {
   return { wd, min: Number(p.hour) * 60 + Number(p.minute), data: new Date(Number(p.year), Number(p.month) - 1, Number(p.day)) };
 }
 const AGORA = agoraLisboa();
+
+/* --- poste de barbeiro ---
+   As riscas são desenhadas como numa hélice à volta de um cilindro: vistas de frente,
+   as bordas seguem y = y0 + passo * asin(x / r) / 2π, por isso curvam nas pontas. */
+(function () {
+  const cx = 46, r = 22, top = 66, bot = 226, passo = 120, banda = passo / 4;
+  const cores = ["#d0182b", "#f4f4f2", "#1d3f9e", "#f4f4f2"];
+  const borda = (y0, inv) => { const pts = []; for (let i = 0; i <= 24; i++) { const t = inv ? 24 - i : i; const x = -r + (2 * r * t) / 24; pts.push(`${(cx + x).toFixed(2)},${(y0 + passo * Math.asin(Math.max(-1, Math.min(1, x / r))) / (2 * Math.PI)).toFixed(2)}`); } return pts; };
+  let riscas = "";
+  for (let y = top - passo * 1.5, n = 0; y < bot + passo * 1.5; y += banda, n++) {
+    riscas += `<polygon fill="${cores[n % 4]}" points="${borda(y, false).join(" ")} ${borda(y + banda, true).join(" ")}"/>`;
+  }
+  const preto = "url(#pp-preto)";
+  document.getElementById("poste").innerHTML = `
+<svg viewBox="0 0 120 300" role="presentation">
+  <defs>
+    <linearGradient id="pp-preto" x1="0" x2="1"><stop offset="0" stop-color="#050506"/><stop offset=".28" stop-color="#3a3b40"/><stop offset=".4" stop-color="#7d7f86"/><stop offset=".5" stop-color="#2a2b2f"/><stop offset=".85" stop-color="#0b0b0d"/><stop offset="1" stop-color="#1c1c20"/></linearGradient>
+    <linearGradient id="pp-sombra" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset=".22" stop-color="#000" stop-opacity=".08"/><stop offset=".38" stop-color="#fff" stop-opacity=".28"/><stop offset=".48" stop-color="#fff" stop-opacity="0"/><stop offset=".8" stop-color="#000" stop-opacity=".18"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></linearGradient>
+    <linearGradient id="pp-vidro" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".1" stop-color="#fff" stop-opacity=".02"/><stop offset=".9" stop-color="#fff" stop-opacity=".02"/><stop offset="1" stop-color="#fff" stop-opacity=".18"/></linearGradient>
+    <radialGradient id="pp-cupula" cx=".35" cy=".25" r=".9"><stop offset="0" stop-color="#8a8c93"/><stop offset=".25" stop-color="#2c2d31"/><stop offset="1" stop-color="#050506"/></radialGradient>
+    <clipPath id="pp-tubo"><rect x="${cx - r}" y="${top}" width="${2 * r}" height="${bot - top}"/></clipPath>
+  </defs>
+  <!-- suporte de parede -->
+  <rect x="104" y="34" width="9" height="222" rx="2" fill="${preto}"/>
+  <rect x="106" y="34" width="2" height="222" fill="#6d6f75" opacity=".5"/>
+  <path d="M78 52 Q92 50 104 46 L104 56 Q92 58 80 60 Z" fill="${preto}"/>
+  <path d="M78 238 Q92 240 104 244 L104 234 Q92 232 80 230 Z" fill="${preto}"/>
+  <circle cx="108.5" cy="44" r="2.2" fill="#9a9ca2"/><circle cx="108.5" cy="246" r="2.2" fill="#9a9ca2"/>
+  <!-- tampa de cima -->
+  <rect x="${cx - 3}" y="14" width="6" height="10" rx="2" fill="${preto}"/>
+  <ellipse cx="${cx}" cy="14" rx="4.5" ry="3" fill="url(#pp-cupula)"/>
+  <path d="M${cx - 30} 50 C${cx - 30} 30 ${cx - 14} 22 ${cx} 22 C${cx + 14} 22 ${cx + 30} 30 ${cx + 30} 50 Z" fill="url(#pp-cupula)"/>
+  <path d="M${cx - 22} 44 C${cx - 20} 32 ${cx - 10} 27 ${cx - 2} 26" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="2" stroke-linecap="round"/>
+  <rect x="${cx - 34}" y="48" width="68" height="9" rx="4" fill="${preto}"/>
+  <rect x="${cx - 30}" y="56" width="60" height="10" rx="2" fill="${preto}"/>
+  <!-- tubo: cilindro iluminado com as riscas, sombreado e vidro por fora -->
+  <rect x="${cx - r}" y="${top}" width="${2 * r}" height="${bot - top}" fill="#fff"/>
+  <g clip-path="url(#pp-tubo)"><g class="riscas">${riscas}</g></g>
+  <rect x="${cx - r}" y="${top}" width="${2 * r}" height="${bot - top}" fill="url(#pp-sombra)"/>
+  <rect x="${cx - r - 4}" y="${top}" width="${2 * r + 8}" height="${bot - top}" rx="3" fill="url(#pp-vidro)" stroke="#fff" stroke-opacity=".12"/>
+  <rect x="${cx - 13}" y="${top + 4}" width="3.5" height="${bot - top - 8}" rx="1.75" fill="#fff" opacity=".55"/>
+  <rect x="${cx - 7}" y="${top + 8}" width="1.2" height="${bot - top - 16}" fill="#fff" opacity=".35"/>
+  <rect x="${cx + 15}" y="${top + 6}" width="1.5" height="${bot - top - 12}" fill="#fff" opacity=".18"/>
+  <!-- base trabalhada com ponta -->
+  <rect x="${cx - 30}" y="${bot - 2}" width="60" height="10" rx="2" fill="${preto}"/>
+  <rect x="${cx - 34}" y="${bot + 7}" width="68" height="9" rx="4" fill="${preto}"/>
+  <path d="M${cx - 31} ${bot + 15} C${cx - 30} ${bot + 34} ${cx - 14} ${bot + 44} ${cx - 6} ${bot + 48} L${cx + 6} ${bot + 48} C${cx + 14} ${bot + 44} ${cx + 30} ${bot + 34} ${cx + 31} ${bot + 15} Z" fill="url(#pp-cupula)"/>
+  ${[-20, -12, -4, 4, 12, 20].map((d) => `<path d="M${cx + d} ${bot + 17} Q${cx + d * .7} ${bot + 34} ${cx + d * .25} ${bot + 46}" fill="none" stroke="#000" stroke-opacity=".7" stroke-width="1.6"/><path d="M${cx + d + 1.4} ${bot + 17} Q${cx + d * .7 + 1.2} ${bot + 34} ${cx + d * .25 + .6} ${bot + 46}" fill="none" stroke="#9a9ca3" stroke-opacity=".35" stroke-width=".8"/>`).join("")}
+  <ellipse cx="${cx}" cy="${bot + 52}" rx="6" ry="5" fill="url(#pp-cupula)"/>
+  <path d="M${cx - 3} ${bot + 56} L${cx} ${bot + 70} L${cx + 3} ${bot + 56} Z" fill="${preto}"/>
+</svg>`;
+})();
 
 /* --- faixa do rodapé --- */
 (function () {
