@@ -114,20 +114,17 @@
   #armario { position: relative; container-type: inline-size; }
   #armario > img { width: 100%; height: auto; display: block; filter: drop-shadow(-16px 30px 26px rgba(0,0,0,.6)) drop-shadow(0 4px 5px rgba(0,0,0,.45)); user-select: none; -webkit-user-drag: none; }
   .bv-cav { position: absolute; background: #160306; box-shadow: inset 0 1.2cqw 1.6cqw rgba(0,0,0,.95); border-radius: .5cqw; pointer-events: none; }
-  .bv-g { position: absolute; background-image: url(img/bancada-vermelha.webp); background-repeat: no-repeat; border-radius: .5cqw; cursor: pointer; outline: none;
-    transition: transform .5s cubic-bezier(.25,1.35,.5,1), box-shadow .5s, filter .3s; }
-  .bv-g::before { /* caixa da gaveta, vista por cima quando sai */
-    content: ""; position: absolute; left: 1.5%; right: 1.5%; bottom: 100%; height: 0; pointer-events: none;
-    background: linear-gradient(#070708, #1d1d20 60%, #2e2e33); border-radius: .4cqw .4cqw 0 0;
-    clip-path: polygon(2.5% 0, 97.5% 0, 100% 100%, 0 100%); transition: height .5s cubic-bezier(.25,1.35,.5,1); }
-  .bv-g::after { /* calhas laterais metálicas */
-    content: ""; position: absolute; inset: auto 0 100% 0; height: 0; pointer-events: none;
-    background: linear-gradient(90deg, #9da1a7 0 1.5%, transparent 1.5% 98.5%, #9da1a7 98.5%); transition: height .5s cubic-bezier(.25,1.35,.5,1); }
-  /* ao passar o rato a gaveta vem ligeiramente para a frente, sem sair do sítio
-     (antes descia e tapava a de baixo, o que parecia uma falha) */
-  .bv-g:hover, .bv-g:focus-visible, .bv-g.puxa { transform: scale(1.022); box-shadow: 0 1.4cqw 2.2cqw rgba(0,0,0,.55), 0 .3cqw .5cqw rgba(0,0,0,.35); filter: brightness(1.08); z-index: 3; }
-  .bv-g:active { transform: scale(1.03); }
-  .bv-g:focus-visible { box-shadow: 0 0 0 .6cqw #1f4fb0, 0 1.4cqw 2.2cqw rgba(0,0,0,.55); }
+  /* .bv-g é a zona do rato e nunca se mexe; quem se mexe é a frente (.bv-f) lá dentro.
+     Assim, com o rato na fronteira entre duas gavetas, a gaveta não "foge" do cursor
+     e não fica a abrir e fechar sem parar. */
+  .bv-g { position: absolute; border-radius: .5cqw; cursor: pointer; outline: none; }
+  .bv-f { position: absolute; inset: 0; background-image: url(img/bancada-vermelha.webp); background-repeat: no-repeat; border-radius: inherit; pointer-events: none;
+    transition: transform .35s cubic-bezier(.2,.8,.3,1), box-shadow .35s, filter .3s; }
+  @media (hover: hover) { .bv-g:hover { z-index: 3; } .bv-g:hover .bv-f { transform: scale(1.022); box-shadow: 0 1.4cqw 2.2cqw rgba(0,0,0,.55), 0 .3cqw .5cqw rgba(0,0,0,.35); filter: brightness(1.08); } }
+  .bv-g.puxa, .bv-g:focus-visible { z-index: 3; }
+  .bv-g.puxa .bv-f, .bv-g:focus-visible .bv-f { transform: scale(1.022); box-shadow: 0 1.4cqw 2.2cqw rgba(0,0,0,.55), 0 .3cqw .5cqw rgba(0,0,0,.35); filter: brightness(1.08); }
+  .bv-g:active .bv-f { transform: scale(1.03); }
+  .bv-g:focus-visible .bv-f { box-shadow: 0 0 0 .6cqw #1f4fb0, 0 1.4cqw 2.2cqw rgba(0,0,0,.55); }
   .bv-fita { position: absolute; left: 50%; transform: translateX(-50%) rotate(-.6deg); font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: clamp(6px, 1.85cqw, 10.5px); letter-spacing: .16em; line-height: 1.35; color: #f2f2f2; background: linear-gradient(#2a2a2d, #0d0d0f); padding: .15em .7em .1em; border-radius: 2px; white-space: nowrap; box-shadow: 0 1px 1px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.12); pointer-events: none; }
   .bv-placa { position: absolute; display: grid; place-items: center; pointer-events: none; color: #ededed; }
   .bv-placa.topo { font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: clamp(6px, 1.9cqw, 10px); letter-spacing: .14em; }
@@ -576,10 +573,10 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
     <span class="bv-placa topo" style="${caixa(GEO.placaTopo)}">CAMAZO</span>
     ${GEO.gavetas.map((g) => `<span class="bv-cav" style="${caixa(g)}"></span>`).join("")}
     ${GEO.gavetas.map((g) => `
-      <div class="bv-g" data-gaveta="${g.id}" tabindex="0" role="button" aria-label="Abrir gaveta: ${nomes[g.id]}" style="${caixa(g)}${recorte(g)}">
+      <div class="bv-g" data-gaveta="${g.id}" tabindex="0" role="button" aria-label="Abrir gaveta: ${nomes[g.id]}" style="${caixa(g)}"><div class="bv-f" style="${recorte(g)}">
         ${g.id === "marcar" ? `<span class="bv-placa marca" style="left:${pct((pg.x - g5.x) / g5.w)};top:${pct((pg.y - g5.y) / g5.h)};width:${pct(pg.w / g5.w)};height:${pct(pg.h / g5.h)};">Camazo</span>` : ""}
         <span class="bv-fita" style="top:${pct(g.ty)}">${g.etq}</span>
-      </div>`).join("")}`;
+      </div></div>`).join("")}`;
   alvo.addEventListener("click", (e) => { const g = e.target.closest(".bv-g"); if (g) mergulhar(g.dataset.gaveta, g); });
   alvo.addEventListener("keydown", (e) => { const g = e.target.closest(".bv-g"); if (g && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); mergulhar(g.dataset.gaveta, g); } });
   // depois das luzes acenderem, a primeira gaveta sai e volta para mostrar que mexe
