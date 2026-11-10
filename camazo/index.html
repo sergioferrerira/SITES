@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>Camazo Barbershop · Aveiro</title>
-<meta name="description" content="Camazo Barbershop, Rua Conselheiro Luís de Magalhães, Aveiro. Cortes, barba, Black Mask e combos. Marca online em segundos.">
+<meta name="description" content="Camazo Barbershop, Rua Conselheiro Luís de Magalhães, Aveiro. Cortes, barba, Máscara Black e combos. Marca online em segundos.">
 <meta name="theme-color" content="#0b0b0c">
 <meta property="og:title" content="Camazo Barbershop · Aveiro">
 <meta property="og:description" content="A oficina do corte, no centro de Aveiro. Marca online.">
@@ -397,7 +397,7 @@
     <div>
       <div class="script-grande" aria-hidden="true">Camazo</div>
       <h1><b>Barbershop</b> · Aveiro</h1>
-      <p class="lead">Isto é uma oficina, mas de cortes. Degradês, barba e Black Mask feitos com ferramenta afinada, com F1 na TV. Abre as gavetas e vê o que temos.</p>
+      <p class="lead">Isto é uma oficina, mas de cortes. Degradês, barba e Máscara Black feitos com ferramenta afinada, com F1 na TV. Abre as gavetas e vê o que temos.</p>
       <div class="hero-acoes">
         <a href="#inicio" class="btn btn-vermelho" data-gaveta="marcar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
@@ -454,7 +454,7 @@ const SERVICOS = [
   { id: "barba",        cat: "cortes", ic: "navalha", nome: "Barba",                                        min: 15, preco: 10 },
   { id: "crianca-deg",  cat: "cortes", ic: "maquina", nome: "Corte criança · degradê",                      min: 30, preco: 15 },
   { id: "crianca-soc",  cat: "cortes", ic: "pente",   nome: "Corte criança · social",                       min: 30, preco: 13 },
-  { id: "blackmask",    cat: "cortes", ic: "mascara", nome: "Black Mask · pontos negros",                   min: 20, preco: 12 },
+  { id: "blackmask",    cat: "cortes", ic: "mascara", nome: "Máscara Black · pontos negros",                   min: 20, preco: 12 },
   { id: "sobrancelhas", cat: "cortes", ic: "pinca",   nome: "Sobrancelhas",                                 min: 10, preco: 5 },
   { id: "cera",         cat: "cortes", ic: "cera",    nome: "Cera no nariz",                                min: 10, preco: 5 },
 
@@ -462,9 +462,9 @@ const SERVICOS = [
   { id: "c-barba",      cat: "combos", ic: "navalha", nome: "Corte + barba",                                min: 60, preco: 20, avulso: 25 },
   { id: "c-barba-sob",  cat: "combos", ic: "navalha", nome: "Corte + barba + sobrancelhas",                 min: 60, preco: 22, avulso: 30 },
   { id: "c-full",       cat: "combos", ic: "chave",   nome: "Corte + barba + sobrancelhas + cera no nariz", min: 60, preco: 25, avulso: 35 },
-  { id: "c-bm",         cat: "combos", ic: "mascara", nome: "Corte + Black Mask",                           min: 50, preco: 25, avulso: 27 },
-  { id: "c-barba-bm",   cat: "combos", ic: "mascara", nome: "Corte + barba + Black Mask",                   min: 80, preco: 30, avulso: 37 },
-  { id: "c-top",        cat: "combos", ic: "chave",   nome: "CAMAZOPACK · corte + barba + cera no nariz + Black Mask", min: 85, preco: 35, avulso: 42 },
+  { id: "c-bm",         cat: "combos", ic: "mascara", nome: "Corte + Máscara Black",                           min: 50, preco: 25, avulso: 27 },
+  { id: "c-barba-bm",   cat: "combos", ic: "mascara", nome: "Corte + barba + Máscara Black",                   min: 80, preco: 30, avulso: 37 },
+  { id: "c-top",        cat: "combos", ic: "chave",   nome: "CAMAZOPACK · corte + barba + cera no nariz + Máscara Black", min: 85, preco: 35, avulso: 42 },
 
   { id: "pintar",       cat: "cor",    ic: "pincel",  nome: "Pintar cabelo",                                min: 30, preco: 55, ate: 70 },
   { id: "madeixas",     cat: "cor",    ic: "pincel",  nome: "Madeixas",                                     min: 45, preco: 45, ate: 70 },
@@ -666,7 +666,7 @@ const AGORA = agoraLisboa();
 
 /* --- faixa do rodapé --- */
 (function () {
-  const itens = ["Degradê", "Barba", "Black Mask", "Sobrancelhas", "Corte criança", "Madeixas", "Combos", "Aveiro"];
+  const itens = ["Degradê", "Barba", "Máscara Black", "Sobrancelhas", "Corte criança", "Madeixas", "Combos", "Aveiro"];
   const html = itens.map((t) => `<span>${t}</span>`).join("");
   $("#faixa").innerHTML = html + html;
 })();
