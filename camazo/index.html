@@ -115,11 +115,11 @@
   #armario > img { width: 100%; height: auto; display: block; filter: drop-shadow(-16px 30px 26px rgba(0,0,0,.6)) drop-shadow(0 4px 5px rgba(0,0,0,.45)); user-select: none; -webkit-user-drag: none; }
   /* em cima da bancada: as máquinas JRL x Lamborghini e o espanador da barbearia.
      O espaço por cima da bancada é reservado pelo ::before (30% da largura). */
-  .armario::before { content: ""; display: block; aspect-ratio: 1 / .3; }
+  .armario::before { content: ""; display: block; aspect-ratio: 1 / .26; }
   #armario > .bv-topo { position: absolute; bottom: 98.2%; height: auto; pointer-events: none; user-select: none; -webkit-user-drag: none;
     filter: drop-shadow(-.6cqw .5cqw .5cqw rgba(0,0,0,.55)) drop-shadow(0 .2cqw .15cqw rgba(0,0,0,.6)); }
-  #armario > .bv-maquinas { left: 7%; width: 23.1cqw; }
-  #armario > .bv-espanador { left: 66%; width: 11.9cqw; }
+  #armario > .bv-maquinas { left: 8%; width: 19.6%; }
+  #armario > .bv-espanador { left: 67%; width: 10.1%; }
   .bv-cav { position: absolute; background: #160306; box-shadow: inset 0 1.2cqw 1.6cqw rgba(0,0,0,.95); border-radius: .5cqw; pointer-events: none; }
   /* .bv-g é a zona do rato e nunca se mexe; quem se mexe é a frente (.bv-f) lá dentro.
      Assim, com o rato na fronteira entre duas gavetas, a gaveta não "foge" do cursor
@@ -340,7 +340,7 @@
   @media (min-width: 761px) {
     .parede { height: 100vh; height: 100svh; min-height: 520px; padding: 78px 0 58px; }
     .hero-grid { width: 100%; gap: clamp(20px, 4vw, 50px); grid-template-columns: minmax(0, 1fr) auto; }
-    .armario { width: min(600px, 40vw, calc((100svh - 190px) * .696)); margin-right: calc(min(92px, 7.6vw) + 2.4vw); }  /* espaço para o poste */
+    .armario { width: min(600px, 40vw, calc((100svh - 190px) * .717)); margin-right: calc(min(92px, 7.6vw) + 2.4vw); }  /* espaço para o poste */
     .armario .legenda { margin-top: 8px; }
     .script-grande { font-size: clamp(3.4rem, min(9vw, 14svh), 8.6rem); }
     .hero h1 { margin: 6px 0 clamp(8px, 2.4svh, 20px); }
@@ -366,7 +366,7 @@
     .script-grande { font-size: 3.6rem; }
     .hero h1 { font-size: 1.15rem; margin: 6px 0 0; }
     .estado { margin-top: 12px; }
-    .armario { width: min(100%, 420px, calc((100svh - 350px) * .697)); min-width: 200px; }
+    .armario { width: min(100%, 420px, calc((100svh - 350px) * .717)); min-width: 200px; }
     .poste { display: none; }
     .bancada-topo { padding: 0 12px; } .bancada-topo .parafusos { display: none; }
     .bancada-corpo { padding: 8px 8px 14px; }
@@ -861,6 +861,19 @@ function montarCena(origem) {
   Object.assign(palco.style, { left: rs.left + "px", top: rs.top + "px", width: rs.width + "px", height: rs.height + "px", zoom: zk });
   mundo.appendChild(palco); camA.appendChild(mundo); camB.appendChild(mundoG); camC.appendChild(mundoF); document.body.appendChild(cena);
 
+  // tamanhos em "cqw" (relativos à bancada) passam a px fixos na cópia: com o zoom do
+  // palco, alguns Chrome calculavam-nos a dobrar e as máquinas/etiquetas cresciam de repente
+  const oa = sec.querySelector("#armario");
+  if (oa) {
+    const ca = seguir(palco, caminho(sec, oa));
+    const os = [oa, ...oa.querySelectorAll("*")], cl = [ca, ...ca.querySelectorAll("*")];
+    os.forEach((e, i) => {
+      const st = getComputedStyle(e), t = cl[i] && cl[i].style; if (!t) return;
+      Object.assign(t, { fontSize: st.fontSize, borderRadius: st.borderRadius, boxShadow: st.boxShadow, filter: st.filter, transition: "none" });
+      if (e !== oa) Object.assign(t, { width: st.width, height: st.height });
+    });
+    ca.style.containerType = "normal";
+  }
   // no palco (plano, em z = 0) a gaveta escolhida passa a ser o buraco escuro da bancada
   const gp = seguir(palco, caminho(sec, origem));
   gp.classList.remove("puxa");
