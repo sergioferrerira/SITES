@@ -123,11 +123,11 @@
   .bv-g::after { /* calhas laterais metálicas */
     content: ""; position: absolute; inset: auto 0 100% 0; height: 0; pointer-events: none;
     background: linear-gradient(90deg, #9da1a7 0 1.5%, transparent 1.5% 98.5%, #9da1a7 98.5%); transition: height .5s cubic-bezier(.25,1.35,.5,1); }
-  .bv-g:hover, .bv-g:focus-visible, .bv-g.puxa { transform: translateY(2.4cqw) scale(1.03); box-shadow: 0 2.6cqw 3.4cqw rgba(0,0,0,.6), 0 .6cqw .8cqw rgba(0,0,0,.4); filter: brightness(1.06); z-index: 3; }
-  .bv-g:hover::before, .bv-g:focus-visible::before, .bv-g.puxa::before,
-  .bv-g:hover::after, .bv-g:focus-visible::after, .bv-g.puxa::after { height: 2.6cqw; }
-  .bv-g:active { transform: translateY(3.6cqw) scale(1.045); }
-  .bv-g:focus-visible { box-shadow: 0 0 0 .6cqw #1f4fb0, 0 2.6cqw 3.4cqw rgba(0,0,0,.6); }
+  /* ao passar o rato a gaveta vem ligeiramente para a frente, sem sair do sítio
+     (antes descia e tapava a de baixo, o que parecia uma falha) */
+  .bv-g:hover, .bv-g:focus-visible, .bv-g.puxa { transform: scale(1.022); box-shadow: 0 1.4cqw 2.2cqw rgba(0,0,0,.55), 0 .3cqw .5cqw rgba(0,0,0,.35); filter: brightness(1.08); z-index: 3; }
+  .bv-g:active { transform: scale(1.03); }
+  .bv-g:focus-visible { box-shadow: 0 0 0 .6cqw #1f4fb0, 0 1.4cqw 2.2cqw rgba(0,0,0,.55); }
   .bv-fita { position: absolute; left: 50%; transform: translateX(-50%) rotate(-.6deg); font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: clamp(6px, 1.85cqw, 10.5px); letter-spacing: .16em; line-height: 1.35; color: #f2f2f2; background: linear-gradient(#2a2a2d, #0d0d0f); padding: .15em .7em .1em; border-radius: 2px; white-space: nowrap; box-shadow: 0 1px 1px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.12); pointer-events: none; }
   .bv-placa { position: absolute; display: grid; place-items: center; pointer-events: none; color: #ededed; }
   .bv-placa.topo { font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: clamp(6px, 1.9cqw, 10px); letter-spacing: .14em; }
