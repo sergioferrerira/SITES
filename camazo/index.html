@@ -353,13 +353,13 @@
     .menu li a { display: block; padding: 14px 0; font-size: 1rem; border-bottom: 1px solid #222; }
     .menu li:last-child a { margin-top: 16px; border: 0; text-align: center; }
     .parede { padding: 92px 0 76px; }
-    .hero-grid { gap: 18px; }
+    .hero-grid { width: 100%; gap: 18px; grid-template-columns: minmax(0, 1fr); }
     /* no telemóvel o principal é a bancada: sem botões nem texto longo */
     .hero .lead, .hero-acoes { display: none; }
     .script-grande { font-size: 3.6rem; }
     .hero h1 { font-size: 1.15rem; margin: 6px 0 0; }
     .estado { margin-top: 12px; }
-    .armario { width: 100%; }
+    .armario { width: min(100%, 420px, calc((100svh - 350px) * .881)); min-width: 200px; }
     .poste { display: none; }
     .bancada-topo { padding: 0 12px; } .bancada-topo .parafusos { display: none; }
     .bancada-corpo { padding: 8px 8px 14px; }
@@ -552,11 +552,11 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
   const IMG = "img/bancada-vermelha.webp";
   const GEO = {
     gavetas: [
-      { id: "cortes",  x: .03324, y: .11297, w: .93447, h: .10126, etq: "CORTES",   ty: .62 },
-      { id: "combos",  x: .03324, y: .22008, w: .93447, h: .10126, etq: "COMBOS",   ty: .62 },
-      { id: "cor",     x: .03324, y: .32887, w: .93447, h: .10209, etq: "COR",      ty: .62 },
-      { id: "galeria", x: .03324, y: .43849, w: .93447, h: .10209, etq: "GALERIA",  ty: .62 },
-      { id: "marcar",  x: .03324, y: .54895, w: .93447, h: .44519, etq: "MARCAR ✂", ty: .42 },
+      { id: "marcar",  x: .03324, y: .11297, w: .93447, h: .10126, etq: "MARCAR ✂", ty: .62 },
+      { id: "cortes",  x: .03324, y: .22008, w: .93447, h: .10126, etq: "CORTES",   ty: .62 },
+      { id: "combos",  x: .03324, y: .32887, w: .93447, h: .10209, etq: "COMBOS",   ty: .62 },
+      { id: "cor",     x: .03324, y: .43849, w: .93447, h: .10209, etq: "COR",      ty: .62 },
+      { id: "galeria", x: .03324, y: .54895, w: .93447, h: .44519, etq: "GALERIA",  ty: .42 },
     ],
     placaTopo:   { x: .04748, y: .04268, w: .12536, h: .04519 },
     placaGaveta: { x: .4321,  y: .64937, w: .1358,  h: .03682 },
@@ -574,7 +574,7 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
     ${GEO.gavetas.map((g) => `<span class="bv-cav" style="${caixa(g)}"></span>`).join("")}
     ${GEO.gavetas.map((g) => `
       <div class="bv-g" data-gaveta="${g.id}" tabindex="0" role="button" aria-label="Abrir gaveta: ${nomes[g.id]}" style="${caixa(g)}"><div class="bv-f" style="${recorte(g)}">
-        ${g.id === "marcar" ? `<span class="bv-placa marca" style="left:${pct((pg.x - g5.x) / g5.w)};top:${pct((pg.y - g5.y) / g5.h)};width:${pct(pg.w / g5.w)};height:${pct(pg.h / g5.h)};">Camazo</span>` : ""}
+        ${g === g5 ? `<span class="bv-placa marca" style="left:${pct((pg.x - g5.x) / g5.w)};top:${pct((pg.y - g5.y) / g5.h)};width:${pct(pg.w / g5.w)};height:${pct(pg.h / g5.h)};">Camazo</span>` : ""}
         <span class="bv-fita" style="top:${pct(g.ty)}">${g.etq}</span>
       </div></div>`).join("")}`;
   alvo.addEventListener("click", (e) => { const g = e.target.closest(".bv-g"); if (g) mergulhar(g.dataset.gaveta, g); });
