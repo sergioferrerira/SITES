@@ -213,7 +213,7 @@
   .mg-escuro { position: fixed; inset: 0; z-index: 88; background: #050506; opacity: 0; pointer-events: none; }
   /* cena 3D: a câmara entra na gaveta */
   .c3-cena { position: fixed; inset: 0; z-index: 58; pointer-events: none; perspective-origin: 50% 50%; background: rgba(5,5,6,0); }
-  .c3-mundo { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-style: preserve-3d; transform-origin: 0 0; }
+  .c3-mundo { will-change: transform; position: absolute; left: 0; top: 0; width: 0; height: 0; transform-style: preserve-3d; transform-origin: 0 0; }
   .c3-palco { position: absolute; margin: 0 !important; transform-style: preserve-3d; overflow: visible !important; filter: none !important; transition: none !important; animation: none !important; }
   .c3-palco * { animation-play-state: paused !important; }
   .c3-cav { background: #160306; box-shadow: inset 0 10px 14px rgba(0,0,0,.95); border-radius: 4px; }
@@ -230,8 +230,9 @@
   .mg-clone { position: fixed !important; z-index: 89; margin: 0 !important; transform-origin: 50% 50%; pointer-events: none; transition: none !important; filter: none !important; box-shadow: 0 30px 60px rgba(0,0,0,.7) !important; }
   .mg-clone::before, .mg-clone::after { display: none !important; }
   .mergulho { position: fixed; inset: 0; z-index: 90; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
-    background: radial-gradient(ellipse 90% 70% at 50% 35%, transparent 40%, rgba(0,0,0,.55)), url(img/espuma.webp) 0 0 / 420px 420px repeat, #111113;
-    background-attachment: fixed, local, local; }
+    background: url(img/espuma.webp) 0 0 / 420px 420px repeat, #111113; }
+  /* vinheta fixa numa camada própria (não obriga a repintar a espuma ao fazer scroll) */
+  .mergulho::before { content: ""; position: fixed; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 90% 70% at 50% 35%, transparent 40%, rgba(0,0,0,.55)); }
   .mergulho[hidden] { display: none; }
   /* moldura real da gaveta (borda vermelha e calhas), presa ao ecrã */
   .mg-moldura { display: none; position: fixed; inset: 0; z-index: 4; pointer-events: none; border-style: solid; border-width: 44px 64px 70px 65px;
@@ -246,7 +247,7 @@
   .mg-corpo .caixa::before { display: none; }
   .mergulho.entrar .mg-corpo, .mergulho.entrar .mg-topo { animation: chegar .55s cubic-bezier(.2,.8,.2,1) both; }
   .mergulho.entrar .mg-corpo { animation-delay: .08s; }
-  @keyframes chegar { from { opacity: 0; transform: scale(1.08) translateY(18px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+  @keyframes chegar { from { opacity: 0; transform: scale(1.06) translateY(18px); } to { opacity: 1; transform: none; } }
   .mg-corpo .recorte { animation: encaixar .5s cubic-bezier(.2,.9,.3,1.2) both; }
   .mergulho.entrar .mg-corpo .recorte:nth-child(1) { animation-delay: .15s; } .mergulho.entrar .mg-corpo .recorte:nth-child(2) { animation-delay: .2s; }
   .mergulho.entrar .mg-corpo .recorte:nth-child(3) { animation-delay: .25s; } .mergulho.entrar .mg-corpo .recorte:nth-child(4) { animation-delay: .3s; }
@@ -771,13 +772,17 @@ function montarCena(origem) {
   const w = origem.offsetWidth, h = origem.offsetHeight;         // medidas sem zoom
   const D = w * .8;                                               // fundo da gaveta
   const k = Math.max(vw / w, vh / D) * 1.04;                      // ampliação total até a espuma encher o ecrã
-  const zk = Math.min(k, devicePixelRatio >= 2 ? 1.5 : 2.4);       // zoom do palco (nitidez sem estourar a memória)
+  const zk = Math.min(k, devicePixelRatio >= 2 ? 1.5 : 1.5);       // zoom do palco (nitidez sem estourar a memória)
   const P = Math.max(vw, vh) * 1.15;                              // distância da câmara
 
   // duas câmaras iguais em camadas separadas: a parede/bancada atrás e a gaveta à frente.
   // A gaveta está sempre à frente da parede, por isso não há planos a ordenar entre as duas.
   const cena = document.createElement("div");
   cena.className = "c3-cena"; cena.setAttribute("aria-hidden", "true");
+  // escurecer o resto da página com opacidade (feito pela placa gráfica, sem repintar o ecrã)
+  const escuro = document.createElement("div");
+  escuro.style.cssText = "position:absolute;inset:0;background:#050506;opacity:0;will-change:opacity";
+  cena.appendChild(escuro);
   const camada = () => { const c = document.createElement("div"); Object.assign(c.style, { position: "absolute", inset: 0, perspective: P + "px", perspectiveOrigin: "50% 50%" }); cena.appendChild(c); return c; };
   const camA = camada(), camB = camada(), camC = camada();
   const mundo = document.createElement("div"); mundo.className = "c3-mundo";
@@ -859,7 +864,7 @@ function montarCena(origem) {
   meio.X = (alvoX - cxv) / sM + cxv - fW.x + F.x;
   meio.Y = (alvoY - cyv) / sM + cyv - fW.y + F.y;
   const fim = { X: cxv, Y: cyv, Z: P * (1 - zk / k), a: -89.2 };
-  return { cena, palco, gav, g, cam, gv, aplicar, ini, meio, fim, puxar: puxar * zk / zk, k };
+  return { cena, escuro, palco, gav, g, cam, gv, aplicar, ini, meio, fim, puxar: puxar * zk / zk, k };
 }
 
 function linhaTempo(c) {
@@ -872,7 +877,7 @@ function linhaTempo(c) {
   tl.to(c.cam, { X: c.fim.X, Y: c.fim.Y, Z: c.fim.Z, duration: .85, ease: "power2.out" }, .7);
   tl.to(c.cam, { a: c.fim.a, duration: .85, ease: "power2.inOut" }, .62);
   // o resto da página escurece e o menu desaparece
-  tl.to(c.cena, { backgroundColor: "rgba(5,5,6,1)", duration: .5, ease: "power1.in" }, .15);
+  tl.to(c.escuro, { opacity: 1, duration: .5, ease: "power1.in" }, .15);
   tl.to("#topo", { autoAlpha: 0, duration: .35, ease: "power1.out" }, 0);
   // já a olhar de cima: a parede e a bancada saem de cena, fica só a gaveta
   tl.set(c.palco, { visibility: "hidden" }, 1.12);
@@ -895,13 +900,20 @@ async function mergulhar(id, preferida) {
     c = montarCena(origem);
     origem.style.visibility = "hidden";
     c.tl = linhaTempo(c);
+    // já a descer para a espuma: o ecrã da gaveta passa a existir (quase invisível)
+    // para o browser o preparar antes de ser preciso, em vez de encravar no fim
+    c.tl.call(() => { mg.el.style.opacity = "0.002"; mg.el.hidden = false; }, null, .95);
+    // a cena começa igual à página: deixa o browser desenhá-la antes de arrancar,
+    // para os primeiros fotogramas não saltarem
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(r))));
     await new Promise((r) => { c.tl.eventCallback("onComplete", r); c.tl.play(0); });
   }
   document.documentElement.classList.add("mergulhado");
   mg.el.hidden = false;
   mg.el.classList.remove("entrar"); void mg.el.offsetWidth; mg.el.classList.add("entrar");
   if (c) {
-    await mg.el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, easing: "ease-out" }).finished.catch(() => {});
+    await mg.el.animate([{ opacity: 0.002 }, { opacity: 1 }], { duration: 240, easing: "ease-out" }).finished.catch(() => {});
+    mg.el.style.opacity = "";
     c.cena.remove();
   }
   if (history.state?.gaveta == null) history.pushState({ gaveta: id }, "");
