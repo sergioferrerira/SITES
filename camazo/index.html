@@ -479,16 +479,12 @@ const HORARIO = {
 const INTERVALO_MIN = 30;
 const DIAS_A_MOSTRAR = 14;
 
-const GALERIA = [
-  { src: "img/hero.jpg",      txt: "A cadeira",      cls: "g2 l2" },
-  { src: "img/poste.jpg",     txt: "Barber pole",    cls: "g2" },
-  { src: "img/bancada.jpg",   txt: "A bancada",      cls: "g2" },
-  { src: "img/poster.jpg",    txt: "O Padrinho",     cls: "l2" },
-  { src: "img/barbeiro.jpg",  txt: "Mãos à obra",    cls: "g2" },
-  { src: "img/cadeira.jpg",   txt: "Pele vintage",   cls: "g2" },
-  { src: "img/sala.jpg",      txt: "Sala de espera", cls: "l2" },
-  { src: "img/chao.jpg",      txt: "Mosaico",        cls: "" },
-  { src: "img/lavatorio.jpg", txt: "Lavatório",      cls: "" },
+const GALERIA = [  // cortes feitos no Camazo (do Instagram @camazobarbershp)
+  { src: "img/cortes/corte-1.jpg", txt: "Mid fade",          cls: "g2 l2", pos: "40% 40%" },
+  { src: "img/cortes/corte-2.jpg", txt: "Waves",             cls: "g2",    pos: "50% 62%" },
+  { src: "img/cortes/corte-3.jpg", txt: "Fade + barba",      cls: "g2",    pos: "58% 72%" },
+  { src: "img/cortes/corte-4.jpg", txt: "High fade · risco", cls: "g2 l2", pos: "50% 45%" },
+  { src: "img/cortes/corte-5.jpg", txt: "Low taper",         cls: "g2 l2", pos: "55% 55%" },
 ];
 
 /* ============================================================ */
@@ -709,7 +705,7 @@ const GAVETAS = [
   { id: "cortes",  etq: "Cortes & barba", desc: "O essencial, da tesoura à navalha" },
   { id: "combos",  etq: "Combos",         desc: "Pacotes completos, mais baratos" },
   { id: "cor",     etq: "Cor",            desc: "Pintar cabelo e madeixas" },
-  { id: "galeria", etq: "Galeria",        desc: "Fotos da oficina por dentro" },
+  { id: "galeria", etq: "Galeria",        desc: "Cortes feitos cá" },
   { id: "marcar",  etq: "Marcar",         desc: "Escolhe dia e hora, segue por WhatsApp", alta: true },
   { id: "visita",  etq: "Horário & onde", desc: "Horas, telefone e mapa" },
 ];
@@ -728,7 +724,7 @@ function conteudoServicos(cat) {
 function conteudoGaleria() {
   return `<div class="fotos">${GALERIA.map((f, i) => `
     <figure class="${f.cls}" data-i="${i}" tabindex="0" role="button" aria-label="Ampliar: ${esc(f.txt)}">
-      <img src="${f.src}" alt="${esc(f.txt)}" loading="lazy"><figcaption>${esc(f.txt)}</figcaption>
+      <img src="${f.src}" alt="${esc(f.txt)}" loading="lazy"${f.pos ? ` style="object-position:${f.pos}"` : ""}><figcaption>${esc(f.txt)}</figcaption>
     </figure>`).join("")}</div>`;
 }
 function conteudoMarcar() {
