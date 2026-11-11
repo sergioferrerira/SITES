@@ -52,7 +52,9 @@
   .nav h2 { font-family: Anton, sans-serif; font-weight: 400; letter-spacing: .04em; font-size: 1.5rem; flex: 1; }
   .resumo { display: flex; gap: 10px; flex-wrap: wrap; margin: 6px 0 14px; }
   .chip { background: var(--painel); border: 1px solid var(--linha); border-radius: 8px; padding: 8px 12px; font-size: .8rem; color: var(--cinza); }
-  .chip b { color: var(--texto); font-size: 1rem; margin-right: 4px; }
+  .chip { padding: 10px 16px; }
+  .chip b { color: var(--texto); font-family: Anton, sans-serif; font-weight: 400; font-size: 1.45rem; letter-spacing: .02em; margin-right: 6px; vertical-align: -2px; }
+  .chip.verde b { color: #75e69a; }
   .acoes-dia { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
 
   .agenda { display: grid; gap: 6px; }
@@ -65,6 +67,10 @@
   .linha.cont { padding-block: 6px; opacity: .55; }
   .linha.cont .txt { font-size: .8rem; color: var(--cinza); }
   .linha.marc { border-color: #5a4a12; background: linear-gradient(90deg, rgba(241,211,74,.13), var(--painel) 40%); }
+  .linha.marc.passou { opacity: .5; border-color: var(--linha); background: var(--painel); }
+  .linha.marc.seguir { border-color: var(--amarelo); box-shadow: 0 0 0 1px var(--amarelo), 0 6px 18px rgba(241,211,74,.12); }
+  .badge { display: inline-block; margin-left: 8px; font: 700 .62rem/1 "JetBrains Mono", monospace; letter-spacing: .1em; text-transform: uppercase; padding: 4px 6px 3px; border-radius: 4px; vertical-align: 2px; }
+  .badge.seguir { background: var(--amarelo); color: #111; } .badge.agora { background: var(--verde); color: #04210f; } .badge.passou { background: #2a2a2e; color: #aaa; }
   .linha.marc .nome { font-weight: 700; font-size: 1rem; }
   .linha.marc .serv { color: #cfcfd4; font-size: .85rem; }
   .linha.marc .det { color: var(--cinza); font-size: .8rem; display: flex; gap: 12px; flex-wrap: wrap; margin-top: 2px; }
@@ -181,6 +187,7 @@ if (!C.ativo) {
       if ("Notification" in window && Notification.permission === "granted") { try { new Notification("Camazo · nova marcação", { body: txt, tag: m.id }); } catch (e) {} }
     });
     mudarDia(est.dia);
+    setInterval(() => desenhar(), 60000); // "a seguir" / "já passou" acompanham a hora
   }
 
   function mudarDia(dia) {
@@ -212,7 +219,7 @@ if (!C.ativo) {
     const d = deId(est.dia), h = HORARIO[d.getDay()];
     $("#titulo").textContent = `${DIAS_L[d.getDay()]}, ${d.getDate()} ${MESES[d.getMonth()]}`;
     const total = est.marc.reduce((s, m) => s + (Number(m.preco) || 0), 0);
-    $("#resumo").innerHTML = `<span class="chip"><b>${est.marc.length}</b>marcaç${est.marc.length === 1 ? "ão" : "ões"}</span><span class="chip"><b>${euro(total)}</b>previsto</span>`;
+    $("#resumo").innerHTML = `<span class="chip"><b>${est.marc.length}</b>marcaç${est.marc.length === 1 ? "ão" : "ões"}</span><span class="chip verde"><b>${euro(total)}</b>previsto</span>`;
     const ag = $("#agenda"), ac = $("#acoes");
     if (!h) { ac.innerHTML = ""; ag.innerHTML = `<p class="vazio">Fechado neste dia.</p>`; return; }
     const ini = paraMin(h[0]), fim = paraMin(h[1]);
@@ -241,10 +248,20 @@ if (!C.ativo) {
       if (b.dataset.cancelar) { const m = est.marc.find((x) => x.id === b.dataset.cancelar); confirmar(`Cancelar a marcação de ${m.nome} (${m.servNome}, ${m.hora})? A hora volta a ficar livre no site.`, () => C.cancelar(m)); }
     };
   }
+  function estadoMarc(m) {
+    if (est.dia !== diaId(hojeLisboa())) return "";
+    const p = Object.fromEntries(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Lisbon", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date()).map((x) => [x.type, x.value]));
+    const agora = +p.hour * 60 + +p.minute, ini = paraMin(m.hora), fim = ini + (m.min || 30);
+    if (fim <= agora) return "passou";
+    if (ini <= agora) return "agora";
+    const prox = est.marc.find((x) => paraMin(x.hora) > agora);
+    return prox && prox.id === m.id ? "seguir" : "";
+  }
   function linhaMarc(m) {
     const fim = hh(paraMin(m.hora) + (m.min || 30)), tel = String(m.tel || "").replace(/[^\d+]/g, "");
-    return `<div class="linha marc${est.novas.has(m.id) ? " nova" : ""}"><span class="h">${esc(m.hora)}</span>
-      <div><div class="nome">${esc(m.nome)}</div><div class="serv">${esc(m.servNome)}</div>
+    const e = estadoMarc(m), txt = { passou: "Já passou", agora: "A decorrer", seguir: "A seguir" }[e];
+    return `<div class="linha marc${est.novas.has(m.id) ? " nova" : ""}${e === "passou" ? " passou" : e ? " seguir" : ""}"><span class="h">${esc(m.hora)}</span>
+      <div><div class="nome">${esc(m.nome)}${txt ? `<span class="badge ${e}">${txt}</span>` : ""}</div><div class="serv">${esc(m.servNome)}</div>
       <div class="det"><span>${esc(m.hora)}–${fim}</span>${m.origem === "gestao" ? "<span>marcado por ti</span>" : ""}<span>${euro(m.preco)}</span>${tel ? `<a href="tel:${esc(tel)}">📞 ${esc(m.tel)}</a>` : ""}</div></div>
       <button class="btn btn-linha mini" data-cancelar="${esc(m.id)}">Cancelar</button></div>`;
   }

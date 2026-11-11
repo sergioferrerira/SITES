@@ -110,7 +110,9 @@
   .estado.fechado .luz { background: var(--vermelho); box-shadow: 0 0 8px var(--vermelho); }
   /* o armário vermelho (SVG) */
   .armario { position: relative; justify-self: center; width: min(100%, 440px); }
-  .armario .legenda { font-family: "JetBrains Mono", monospace; font-size: .68rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #b0b0b6; text-shadow: 0 1px 6px #000; text-align: center; margin-top: 14px; }
+  .armario .legenda { display: table; margin: 14px auto 0; padding: 6px 14px 5px; border-radius: 999px; background: rgba(10,10,12,.78); box-shadow: 0 2px 8px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.08); font-family: "JetBrains Mono", monospace; font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #ececf0; }
+  .armario .legenda .seta { display: inline-block; color: #f1d34a; animation: subir 1.6s ease-in-out infinite; }
+  @keyframes subir { 0%, 100% { transform: translateY(1px); } 50% { transform: translateY(-3px); } }
   #armario { position: relative; container-type: inline-size; }
   #armario > img { width: 100%; height: auto; display: block; filter: drop-shadow(-16px 30px 26px rgba(0,0,0,.6)) drop-shadow(0 4px 5px rgba(0,0,0,.45)); user-select: none; -webkit-user-drag: none; }
   /* em cima da bancada: as máquinas JRL x Lamborghini e o espanador da barbearia.
@@ -132,7 +134,7 @@
   .bv-g.puxa .bv-f, .bv-g:focus-visible .bv-f { transform: scale(1.022); box-shadow: 0 1.4cqw 2.2cqw rgba(0,0,0,.55), 0 .3cqw .5cqw rgba(0,0,0,.35); filter: brightness(1.08); }
   .bv-g:active .bv-f { transform: scale(1.03); }
   .bv-g:focus-visible .bv-f { box-shadow: 0 0 0 .6cqw #1f4fb0, 0 1.4cqw 2.2cqw rgba(0,0,0,.55); }
-  .bv-fita { position: absolute; left: 50%; transform: translateX(-50%) rotate(-.6deg); font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: clamp(6px, 1.85cqw, 10.5px); letter-spacing: .16em; line-height: 1.35; color: #f2f2f2; background: linear-gradient(#2a2a2d, #0d0d0f); padding: .15em .7em .1em; border-radius: 2px; white-space: nowrap; box-shadow: 0 1px 1px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.12); pointer-events: none; }
+  .bv-fita { position: absolute; left: 50%; transform: translateX(-50%) rotate(-.6deg); font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: clamp(7px, 2.3cqw, 13px); letter-spacing: .16em; line-height: 1.35; color: #f2f2f2; background: linear-gradient(#2a2a2d, #0d0d0f); padding: .15em .7em .1em; border-radius: 2px; white-space: nowrap; box-shadow: 0 1px 1px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.12); pointer-events: none; }
   .bv-placa { position: absolute; display: grid; place-items: center; pointer-events: none; color: #ededed; }
   .bv-placa.topo { font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: clamp(6px, 1.9cqw, 10px); letter-spacing: .14em; }
   .bv-placa.marca { font-family: Yellowtail, cursive; font-size: clamp(10px, 3.3cqw, 18px); }
@@ -308,7 +310,7 @@
   select option, select optgroup { background: #19191c; color: #fff; }
   label { display: block; font-size: .76rem; font-weight: 700; color: var(--cinza); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .06em; }
   .campos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .dias { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory; }
+  .dias { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory; -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); padding-right: 30px; }
   .dia { flex: none; width: 62px; padding: 8px 0; border-radius: 8px; background: #19191c; border: 1px solid #333338; text-align: center; scroll-snap-align: start; }
   .dia small { display: block; font-size: .64rem; text-transform: uppercase; letter-spacing: .08em; color: var(--cinza); }
   .dia strong { display: block; font-family: Anton, sans-serif; font-weight: 400; font-size: 1.25rem; }
@@ -336,10 +338,25 @@
   .ok.erro { background: #fde4e4; color: #8a1018; }
   .ok a { color: inherit; font-weight: 700; }
   .ordem .nova { width: 100%; margin-top: 10px; justify-content: center; }
+  .ordem.marcada dl { position: relative; }
+  .ordem.marcada dl::after { content: "MARCADO ✂"; position: absolute; left: -4px; bottom: -6px; transform: rotate(-12deg); font-family: Anton, sans-serif; font-size: 1.55rem; letter-spacing: .06em; color: #c8172a; border: 4px double #c8172a; border-radius: 6px; padding: 2px 12px 0; opacity: .82; mix-blend-mode: multiply; animation: carimbar .35s cubic-bezier(.2,1.6,.4,1) both; pointer-events: none; }
+  @keyframes carimbar { from { transform: rotate(-12deg) scale(2.2); opacity: 0; } }
+  .ordem.marcada .total dt { visibility: hidden; }
+  .ok.sucesso { background: none; color: #1a1a1a; padding: 12px 0 0; border-top: 1px dashed #bbb; border-radius: 0; font-size: .8rem; line-height: 1.5; }
   .hora:disabled { opacity: .3; text-decoration: line-through; cursor: not-allowed; border-style: dashed; }
   .hora:disabled:hover { border-color: #333338; }
   .passo.feito { opacity: .5; pointer-events: none; }
-  .ordem [hidden] { display: none !important; }
+  .ordem [hidden], .barra-marcar[hidden] { display: none !important; }
+  .barra-marcar { display: none; }
+  @media (max-width: 760px) {
+    .barra-marcar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; align-items: center; gap: 12px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(14,14,16,.96); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-top: 1px solid rgba(255,255,255,.08); box-shadow: 0 -8px 24px rgba(0,0,0,.5); }
+    .barra-marcar .b-txt { flex: 1; min-width: 0; line-height: 1.25; }
+    .barra-marcar b { display: block; font-size: .86rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .barra-marcar small { display: block; font-size: .74rem; color: #a5a5ad; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .barra-marcar .b-preco { font-family: Anton, sans-serif; font-size: 1.25rem; color: #f1d34a; }
+    .barra-marcar .btn { padding: 11px 14px; font-size: .74rem; white-space: nowrap; }
+    .marcar-grid { padding-bottom: 70px; }
+  }
   .consent { text-transform: none; letter-spacing: normal; font-weight: 500; display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; font-size: .78rem; color: #b9b9bf; line-height: 1.45; cursor: pointer; }
   .consent input { width: 18px; height: 18px; margin-top: 1px; flex: none; accent-color: #f1d34a; }
   .consent[hidden], .campo-email[hidden] { display: none; }
@@ -351,7 +368,10 @@
   .horario { list-style: none; background: #0a0a0b; border-radius: 12px; padding: 8px 16px; box-shadow: inset 0 3px 8px rgba(0,0,0,.95); font-family: "JetBrains Mono", monospace; font-size: .86rem; }
   .horario li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #222; color: var(--cinza); }
   .horario li:last-child { border: 0; }
-  .horario li.hoje { color: #fff; font-weight: 700; }
+  .horario li.hoje { color: #fff; font-weight: 700; background: rgba(241,211,74,.09); margin: 0 -16px; padding: 10px 16px 10px 13px; border-left: 3px solid #f1d34a; }
+  .agora { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 12px; padding: 8px 14px 8px 11px; border-radius: 8px; background: #0a0a0b; box-shadow: inset 0 3px 8px rgba(0,0,0,.95); font-family: "JetBrains Mono", monospace; font-size: .8rem; font-weight: 700; color: #ececf0; }
+  .agora i { width: 10px; height: 10px; border-radius: 50%; background: #39d26b; box-shadow: 0 0 8px #39d26b; }
+  .agora.fechado i { background: var(--vermelho); box-shadow: 0 0 8px var(--vermelho); }
   .horario li.hoje span:first-child::after { content: "HOJE"; margin-left: 8px; font-size: .62rem; background: var(--vermelho); color: #fff; padding: 2px 6px; border-radius: 3px; vertical-align: 1px; }
   .contactos { display: grid; gap: 10px; margin-top: 14px; }
   .contacto { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 12px; background: #0a0a0b; box-shadow: inset 0 3px 8px rgba(0,0,0,.95); text-decoration: none; }
@@ -359,8 +379,11 @@
   .contacto .ic { width: 38px; height: 38px; border-radius: 8px; display: grid; place-items: center; background: linear-gradient(#2a2a2e, #1b1b1e); flex: none; }
   .contacto .ic svg { width: 19px; height: 19px; }
   .contacto small { display: block; color: var(--cinza-2); font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; }
-  .mapa { position: relative; min-height: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 6px #0a0a0b; background: #19191c; }
-  .mapa iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: grayscale(1) invert(.9) contrast(.9); }
+  .mapa { position: relative; min-height: 320px; border-radius: 10px; overflow: hidden; background: #141416;
+    box-shadow: 0 0 0 1px #000, 0 0 0 3px #2c2c30, 0 10px 26px rgba(0,0,0,.6), inset 0 0 0 1px #000; }
+  .mapa::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
+    background: radial-gradient(circle at 5px 5px, #77797f 2px, transparent 2.6px), radial-gradient(circle at calc(100% - 5px) 5px, #77797f 2px, transparent 2.6px), radial-gradient(circle at 5px calc(100% - 5px), #77797f 2px, transparent 2.6px), radial-gradient(circle at calc(100% - 5px) calc(100% - 5px), #77797f 2px, transparent 2.6px); }
+  .mapa iframe { position: absolute; inset: 10px; width: calc(100% - 20px); height: calc(100% - 20px); border-radius: 4px; background: #1d1d20; border: 0; filter: grayscale(1) invert(.9) contrast(.9); }
 
 
 
@@ -390,8 +413,9 @@
     .burger { display: flex; }
     .menu { position: fixed; inset: 70px 0 auto; flex-direction: column; align-items: stretch; gap: 0; padding: 10px 16px 22px; background: var(--tecto); border-bottom: 1px solid #222; box-shadow: 0 30px 40px rgba(0,0,0,.6); transform: translateY(-120%); visibility: hidden; transition: transform .3s, visibility .3s; z-index: -1; }
     .aberto .menu { transform: none; visibility: visible; }
-    .menu li a { display: block; padding: 14px 0; font-size: 1rem; border-bottom: 1px solid #222; }
-    .menu li:last-child a { margin-top: 16px; border: 0; text-align: center; }
+    .menu li a { display: block; margin-bottom: 9px; padding: 15px 18px 14px 30px; border-radius: 8px; font-family: "JetBrains Mono", monospace; font-size: .86rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #ececf0;
+      background: radial-gradient(circle at 13px 50%, #6a6c72 2px, transparent 2.6px), linear-gradient(#2b2b2f, #141416); box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 2px 5px rgba(0,0,0,.6), inset 0 0 0 1px #000; }
+    .menu li:last-child a { margin-top: 8px; padding-left: 18px; text-align: center; background: linear-gradient(#e0283a, #b5131f); box-shadow: 0 2px 0 #6c0912; }
     .parede { padding: 92px 0 76px; }
     .hero-grid { width: 100%; gap: 18px; grid-template-columns: minmax(0, 1fr); }
     /* no telemóvel o principal é a bancada: sem botões nem texto longo */
@@ -452,7 +476,7 @@
     <div class="armario">
       <div class="poste" id="poste" aria-hidden="true"></div>
       <div id="armario" role="group" aria-label="Bancada vermelha: carrega numa gaveta para a abrir"></div>
-      <p class="legenda">↑ Carrega numa gaveta</p>
+      <p class="legenda"><span class="seta" aria-hidden="true">↑</span> Carrega numa gaveta</p>
     </div>
   </div>
 </section>
@@ -781,6 +805,7 @@ function conteudoMarcar() {
       <button class="btn btn-cromado nova" id="nova" hidden>Fazer outra marcação</button>
       <p class="alt">Preferes ligar? <a href="tel:+351924711734">924 711 734</a></p>
     </aside>
+    <div class="barra-marcar" id="barra" hidden><div class="b-txt"><b id="b-serv"></b><small id="b-quando"></small></div><span class="b-preco" id="b-preco"></span><button class="btn btn-vermelho" id="b-ir">Confirmar</button></div>
   </div>`;
 }
 function conteudoVisita() {
@@ -788,6 +813,7 @@ function conteudoVisita() {
   return `
   <div class="visita-grid">
     <div>
+      <p class="agora ${document.getElementById("estado")?.classList.contains("fechado") ? "fechado" : ""}"><i></i>${esc(document.getElementById("estado-txt")?.textContent || "")}</p>
       <ul class="horario">${ordem.map((d) => { const h = HORARIO[d]; return `<li class="${d === AGORA.wd ? "hoje" : ""}"><span>${DIAS_LONGO[d]}</span><span>${h ? `${h[0]}–${h[1]}` : "Fechado"}</span></li>`; }).join("")}</ul>
       <div class="contactos">
         <a class="contacto" href="tel:+351924711734"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></span><div><small>Telefone</small>924 711 734</div></a>
@@ -832,6 +858,7 @@ function encherMergulho(id) {
   mg.corpo.appendChild($(`#i-${id} .caixa`));
   mg.atual = id;
   mg.el.scrollTop = 0;
+  if (typeof atualizarBarra === "function") atualizarBarra();
 }
 /* ---------------------------------------------------------------------
    TRANSIÇÃO CINEMATOGRÁFICA PARA DENTRO DA GAVETA
@@ -1179,8 +1206,30 @@ function atualizar() {
   const online = !!window.CMZ?.ativo;
   $(".consent").hidden = !online;
   $("#enviar").disabled = enviando || !(s && estado.hora != null && nome.length > 1 && tel.length >= 9 && (!online || $("#aceito").checked));
+  if (typeof atualizarBarra === "function") atualizarBarra();
 }
 let enviando = false;
+function atualizarBarra() {
+  const barra = $("#barra"); if (!barra) return;
+  const s = estado.serv;
+  barra.hidden = !s || marcado || barraEscondida || mg.atual !== "marcar";
+  if (!s) return;
+  $("#b-serv").textContent = s.nome; $("#b-preco").textContent = s.ate ? `${s.preco}€+` : euro(s);
+  $("#b-quando").textContent = quandoTxt() || "Escolhe o dia e a hora";
+  const pronto = !$("#enviar").disabled;
+  $("#b-ir").textContent = pronto ? "Confirmar" : estado.hora == null ? "Hora ↓" : "Dados ↓";
+}
+let barraEscondida = false;
+// a barra vive diretamente no ecrã da gaveta (fora do conteúdo animado), para ficar presa ao fundo
+mg.el.appendChild($("#barra"));
+$("#b-ir").addEventListener("click", () => {
+  if (!$("#enviar").disabled) { $("#enviar").click(); return; }
+  const alvo = estado.hora == null ? $("#p2") : $("#p3");
+  alvo.scrollIntoView({ behavior: "smooth", block: "center" });
+  if (estado.hora != null) setTimeout(() => (!$("#nome").value.trim() ? $("#nome") : !$("#tel").value.trim() ? $("#tel") : $("#aceito")).focus({ preventScroll: true }), 450);
+});
+// quando a própria ordem de serviço está à vista, a barra não é precisa
+new IntersectionObserver(([e]) => { barraEscondida = e.isIntersecting; atualizarBarra(); }, { threshold: .35 }).observe($(".ordem"));
 ["#nome", "#tel"].forEach((id) => $(id).addEventListener("input", atualizar));
 $("#aceito").addEventListener("change", atualizar);
 addEventListener("cmz-pronto", () => {
@@ -1190,9 +1239,9 @@ addEventListener("cmz-pronto", () => {
   if (window.CMZ?.falhou) okMsg(`Não conseguimos ligar à agenda online (sem internet ou bloqueada pelo browser). Podes pedir por WhatsApp ou ligar para <a href="tel:+351924711734">924 711 734</a>.`, true);
   desenharHoras(); atualizar();
 });
-const okMsg = (html, erro) => { const ok = $("#ok"); ok.innerHTML = html; ok.classList.toggle("erro", !!erro); ok.classList.add("on"); };
+const okMsg = (html, erro, sucesso) => { const ok = $("#ok"); ok.innerHTML = html; ok.classList.toggle("erro", !!erro); ok.classList.toggle("sucesso", !!sucesso); ok.classList.add("on"); };
 $("#nova").addEventListener("click", () => {
-  $("#nova").hidden = true; $("#ok").classList.remove("on");
+  $("#nova").hidden = true; $("#ok").classList.remove("on"); $(".ordem").classList.remove("marcada");
   document.querySelectorAll("#p1, #p2, #p3").forEach((p) => p.classList.remove("feito"));
   $("#enviar").hidden = false; marcado = false; estado.hora = null; desenharHoras(); atualizar();
 });
@@ -1204,7 +1253,8 @@ $("#enviar").addEventListener("click", async () => {
     try {
       await cmz.marcar({ servId: s.id, servNome: s.nome, min: s.min, preco: s.preco, dia: diaId(estado.dia.d), inicio: estado.hora, nome: $("#nome").value, tel: $("#tel").value });
       cmz.avisar({ quando, servNome: s.nome, durTxt: dur(s.min), precoTxt: euro(s), nome: $("#nome").value.trim(), tel: $("#tel").value.trim(), email: $("#email").value.trim() });
-      okMsg(`<b>Marcação feita ✂️</b><br>${esc(s.nome)}<br>${esc(quando)}<br>Até já! Se não puderes vir, liga para <a href="tel:+351924711734">924 711 734</a>.`);
+      okMsg(`<b>Até já, ${esc($("#nome").value.trim().split(" ")[0])}!</b><br>Se não puderes vir, avisa-nos: <a href="tel:+351924711734">924 711 734</a>.`, false, true);
+      $(".ordem").classList.add("marcada"); atualizarBarra();
       marcado = true; $("#enviar").hidden = true; $("#nova").hidden = false;
       document.querySelectorAll("#p1, #p2, #p3").forEach((p) => p.classList.add("feito"));
     } catch (e) {
