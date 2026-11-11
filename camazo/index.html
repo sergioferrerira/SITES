@@ -321,7 +321,9 @@
   .ordem [hidden] { display: none !important; }
   .consent { text-transform: none; letter-spacing: normal; font-weight: 500; display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; font-size: .78rem; color: #b9b9bf; line-height: 1.45; cursor: pointer; }
   .consent input { width: 18px; height: 18px; margin-top: 1px; flex: none; accent-color: #f1d34a; }
-  .consent[hidden] { display: none; }
+  .consent[hidden], .campo-email[hidden] { display: none; }
+  .campo-email { grid-column: 1 / -1; }
+  .campo-email label small { text-transform: none; letter-spacing: 0; font-weight: 500; color: #8a8a90; }
 
   /* horário na gaveta */
   .visita-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 20px; }
@@ -729,8 +731,9 @@ function conteudoMarcar() {
         <div class="campos">
           <div><label for="nome">Nome</label><input id="nome" autocomplete="name" placeholder="O teu nome"></div>
           <div><label for="tel">Telemóvel</label><input id="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="9xx xxx xxx"></div>
+          <div class="campo-email" hidden><label for="email">Email <small>(opcional, para receberes a confirmação)</small></label><input id="email" type="email" autocomplete="email" inputmode="email" placeholder="o.teu@email.com"></div>
         </div>
-        <label class="consent"><input type="checkbox" id="aceito"> <span>Aceito que o meu nome e telemóvel sejam guardados pela Camazo Barbershop só para gerir esta marcação.</span></label>
+        <label class="consent"><input type="checkbox" id="aceito"> <span>Aceito que os meus dados (nome, telemóvel e, se o puser, email) sejam usados pela Camazo Barbershop só para gerir esta marcação.</span></label>
       </div>
     </div>
     <aside class="ordem" aria-live="polite">
@@ -1155,6 +1158,7 @@ $("#aceito").addEventListener("change", atualizar);
 addEventListener("cmz-pronto", () => {
   // sem Firebase configurado, fica o pedido por WhatsApp
   if (!window.CMZ?.ativo) $("#enviar-txt").textContent = "Pedir marcação por WhatsApp";
+  if (window.CMZ?.ativo && window.CMZ.emailAtivo) $(".campo-email").hidden = false;
   if (window.CMZ?.falhou) okMsg(`Não conseguimos ligar à agenda online (sem internet ou bloqueada pelo browser). Podes pedir por WhatsApp ou ligar para <a href="tel:+351924711734">924 711 734</a>.`, true);
   desenharHoras(); atualizar();
 });
@@ -1171,6 +1175,7 @@ $("#enviar").addEventListener("click", async () => {
     enviando = true; marcado = true; atualizar(); $("#enviar-txt").textContent = "A marcar…";
     try {
       await cmz.marcar({ servId: s.id, servNome: s.nome, min: s.min, preco: s.preco, dia: diaId(estado.dia.d), inicio: estado.hora, nome: $("#nome").value, tel: $("#tel").value });
+      cmz.avisar({ quando, servNome: s.nome, durTxt: dur(s.min), precoTxt: euro(s), nome: $("#nome").value.trim(), tel: $("#tel").value.trim(), email: $("#email").value.trim() });
       okMsg(`<b>Marcação feita ✂️</b><br>${esc(s.nome)}<br>${esc(quando)}<br>Até já! Se não puderes vir, liga para <a href="tel:+351924711734">924 711 734</a>.`);
       marcado = true; $("#enviar").hidden = true; $("#nova").hidden = false;
       document.querySelectorAll("#p1, #p2, #p3").forEach((p) => p.classList.add("feito"));

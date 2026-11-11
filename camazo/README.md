@@ -35,6 +35,16 @@ Enquanto `firebaseConfig` for `null`, o site usa o pedido por WhatsApp.
 
 Nenhum email fica no código público.
 
+### Avisos de nova marcação (`avisos-config.js`)
+
+- **Notificação no telemóvel (ntfy):** já está ligada. O Camazo instala a app **ntfy**, carrega em `+` e subscreve o tópico que está em `NTFY_TOPICO` (servidor ntfy.sh). A mensagem só diz o dia, a hora e o serviço. O nome e o telefone do cliente não vão na mensagem.
+- **Emails (EmailJS, grátis até 200 por mês):** em https://www.emailjs.com
+  1. Email Services → Add service → Gmail, com a conta da barbearia → copiar o **Service ID**.
+  2. Email Templates → criar o modelo **para o Camazo**. Em "To Email" pôr o email dele (fica no EmailJS e não no código). Assunto: `Nova marcação: {{quando}}`. Corpo: `{{nome}} ({{telefone}}) marcou {{servico}} para {{quando}}. Preço: {{preco}}. Gestão: {{gestao}}`.
+  3. Criar o modelo **para o cliente**, com "To Email" = `{{to_email}}`. Assunto: `Marcação confirmada · Camazo Barbershop`. Corpo: `Olá {{nome}}, está marcado {{servico}} ({{duracao}}, {{preco}}) para {{quando}}. Morada: {{morada}}. Se não puderes vir, liga {{contacto}}.`
+  4. Account → copiar a **Public Key**. Em Account → Security → Allowed origins, pôr `https://sergioferrerira.github.io`.
+  5. Preencher `EMAILJS` em `avisos-config.js`. O campo de email no site só aparece depois disso.
+
 ### Testar sem tocar em dados reais
 
 Com o simulador do Firebase (`npx firebase emulators:start --only firestore,auth --project demo-camazo` dentro de `camazo/`), abrir `http://localhost:8766/camazo/?emu` e `http://localhost:8766/camazo/gestao.html?emu`.

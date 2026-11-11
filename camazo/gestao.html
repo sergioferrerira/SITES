@@ -77,9 +77,15 @@
   .aviso { position: fixed; left: 50%; bottom: 18px; transform: translate(-50%, 200%); visibility: hidden; z-index: 20; background: var(--amarelo); color: #111; padding: 12px 16px; border-radius: 10px; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,.6); transition: transform .35s, visibility .35s; max-width: calc(100% - 32px); }
   .aviso.on { transform: translate(-50%, 0); visibility: visible; }
   .erro { background: #3a1014; border: 1px solid #6c1820; color: #ffd0d4; padding: 12px; border-radius: 10px; margin-bottom: 12px; font-size: .85rem; }
-  dialog { background: var(--painel); color: var(--texto); border: 1px solid var(--linha); border-radius: 14px; padding: 20px; max-width: 360px; width: calc(100% - 32px); }
+  dialog { margin: auto; background: var(--painel); color: var(--texto); border: 1px solid var(--linha); border-radius: 14px; padding: 20px; max-width: 360px; width: calc(100% - 32px); }
   dialog::backdrop { background: rgba(0,0,0,.6); }
   dialog p { margin-bottom: 16px; }
+  dialog.form h3 { font-family: Anton, sans-serif; font-weight: 400; letter-spacing: .04em; font-size: 1.4rem; }
+  dialog.form .sub { color: var(--cinza); font-size: .85rem; margin-bottom: 12px; }
+  dialog.form label { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--cinza); margin-bottom: 10px; }
+  dialog.form label small { text-transform: none; letter-spacing: 0; font-weight: 500; }
+  dialog.form select, dialog.form input { display: block; width: 100%; margin-top: 4px; padding: 10px 12px; border-radius: 8px; border: 1px solid #333338; background: #1b1b1f; color: var(--texto); font: 500 .95rem Inter, sans-serif; text-transform: none; letter-spacing: 0; }
+  .erro-form { color: #ff9aa3; font-size: .85rem; }
   dialog .bts { display: flex; gap: 8px; justify-content: flex-end; }
   @media (max-width: 560px) {
     .linha { grid-template-columns: 52px 1fr; }
@@ -102,6 +108,16 @@
 </header>
 <main id="app"><div class="entrada"><p>A carregar…</p></div></main>
 <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+<dialog id="nova-dlg" class="form">
+  <h3>Nova marcação</h3>
+  <p class="sub" id="nova-dia"></p>
+  <label>Serviço<select id="nova-serv"></select></label>
+  <label>Hora<select id="nova-hora"></select></label>
+  <label>Nome<input id="nova-nome" placeholder="Nome do cliente" autocomplete="off"></label>
+  <label>Telemóvel <small>(opcional)</small><input id="nova-tel" type="tel" inputmode="tel" placeholder="9xx xxx xxx" autocomplete="off"></label>
+  <p class="erro-form" id="nova-erro" hidden></p>
+  <div class="bts"><button class="btn btn-linha" id="nova-voltar">Voltar</button><button class="btn btn-vermelho" id="nova-ok">Marcar</button></div>
+</dialog>
 <dialog id="confirmar"><p id="conf-txt"></p><div class="bts"><button class="btn btn-linha" value="nao" id="conf-nao">Voltar</button><button class="btn btn-vermelho" id="conf-sim">Sim</button></div></dialog>
 
 <script src="dados.js"></script>
@@ -213,9 +229,10 @@ if (!C.ativo) {
       else if (oc) linhas.push(`<div class="linha bloq"><span class="h">${hh(m)}</span><span class="txt">Ocupado</span><span></span></div>`);
       else { livres.push(m); linhas.push(`<div class="linha livre"><span class="h">${hh(m)}</span><span class="txt">Livre</span><button class="btn btn-linha mini" data-bl="${m}">Bloquear</button></div>`); }
     }
-    ac.innerHTML = `<button class="btn btn-linha mini" id="bl-dia" ${livres.length ? "" : "disabled"}>Bloquear o dia todo</button><button class="btn btn-linha mini" id="desbl-dia" ${bloqueados.length ? "" : "disabled"}>Desbloquear o dia</button>`;
+    ac.innerHTML = `<button class="btn btn-vermelho mini" id="nova" ${livres.length ? "" : "disabled"}>+ Nova marcação</button><button class="btn btn-linha mini" id="bl-dia" ${livres.length ? "" : "disabled"}>Bloquear o dia todo</button><button class="btn btn-linha mini" id="desbl-dia" ${bloqueados.length ? "" : "disabled"}>Desbloquear o dia</button>`;
     ag.innerHTML = linhas.join("");
     $("#bl-dia").onclick = () => confirmar(`Bloquear todas as horas livres de ${$("#titulo").textContent}? Ninguém vai conseguir marcar neste dia.`, () => C.bloquear(est.dia, livres));
+    $("#nova").onclick = () => abrirNova(ini, fim);
     $("#desbl-dia").onclick = () => C.desbloquear(est.dia, bloqueados).catch(falhou);
     ag.onclick = (e) => {
       const b = e.target.closest("button"); if (!b) return;
@@ -228,8 +245,37 @@ if (!C.ativo) {
     const fim = hh(paraMin(m.hora) + (m.min || 30)), tel = String(m.tel || "").replace(/[^\d+]/g, "");
     return `<div class="linha marc${est.novas.has(m.id) ? " nova" : ""}"><span class="h">${esc(m.hora)}</span>
       <div><div class="nome">${esc(m.nome)}</div><div class="serv">${esc(m.servNome)}</div>
-      <div class="det"><span>${esc(m.hora)}–${fim}</span><span>${euro(m.preco)}</span><a href="tel:${esc(tel)}">📞 ${esc(m.tel)}</a></div></div>
+      <div class="det"><span>${esc(m.hora)}–${fim}</span>${m.origem === "gestao" ? "<span>marcado por ti</span>" : ""}<span>${euro(m.preco)}</span>${tel ? `<a href="tel:${esc(tel)}">📞 ${esc(m.tel)}</a>` : ""}</div></div>
       <button class="btn btn-linha mini" data-cancelar="${esc(m.id)}">Cancelar</button></div>`;
+  }
+  // marcação feita pelo Camazo (cliente ao telefone ou ao balcão)
+  function abrirNova(ini, fim) {
+    const dlg = $("#nova-dlg"), sServ = $("#nova-serv"), sHora = $("#nova-hora");
+    $("#nova-dia").textContent = $("#titulo").textContent;
+    $("#nova-erro").hidden = true; $("#nova-nome").value = ""; $("#nova-tel").value = "";
+    const cats = { cortes: "Cortes & barba", combos: "Combos", cor: "Cor" };
+    sServ.innerHTML = Object.entries(cats).map(([c, n]) => `<optgroup label="${n}">${SERVICOS.filter((s) => s.cat === c).map((s) => `<option value="${s.id}">${esc(s.nome)} · ${s.min} min</option>`).join("")}</optgroup>`).join("");
+    const horas = () => {
+      const s = SERVICOS.find((x) => x.id === sServ.value), out = [];
+      for (let m = ini; m + s.min <= fim; m += 30) if (!C.slotsPara(est.dia, m, s.min).some((id) => est.ocup.has(id))) out.push(m);
+      sHora.innerHTML = out.length ? out.map((m) => `<option value="${m}">${hh(m)}</option>`).join("") : `<option value="">Sem horas livres para este serviço</option>`;
+      $("#nova-ok").disabled = !out.length;
+    };
+    sServ.onchange = horas; horas();
+    $("#nova-voltar").onclick = () => dlg.close();
+    $("#nova-ok").onclick = async () => {
+      const s = SERVICOS.find((x) => x.id === sServ.value), nome = $("#nova-nome").value.trim();
+      if (nome.length < 2) { $("#nova-erro").textContent = "Escreve o nome do cliente."; $("#nova-erro").hidden = false; return; }
+      $("#nova-ok").disabled = true;
+      try {
+        await C.marcar({ servId: s.id, servNome: s.nome, min: s.min, preco: s.preco, dia: est.dia, inicio: +sHora.value, nome, tel: $("#nova-tel").value, origem: "gestao" });
+        dlg.close(); aviso(`Marcado: ${nome} às ${hh(+sHora.value)}`);
+      } catch (e) {
+        $("#nova-erro").textContent = e.code === "hora-ocupada" ? "Essa hora acabou de ser ocupada. Escolhe outra." : "Não foi possível marcar (" + (e.code || e.message) + ").";
+        $("#nova-erro").hidden = false; $("#nova-ok").disabled = false; horas();
+      }
+    };
+    dlg.showModal();
   }
   const falhou = (e) => aviso("Não foi possível: " + (e.code || e.message));
   function confirmar(txt, fazer) {

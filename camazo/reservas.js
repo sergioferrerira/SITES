@@ -7,6 +7,7 @@
        Como o id é a própria hora, duas marcações nunca conseguem ficar com a
        mesma meia hora: a segunda falha (a criação é feita num só lote). */
 import { firebaseConfig } from "./firebase-config.js";
+import { NTFY_TOPICO, EMAILJS } from "./avisos-config.js";
 
 const PASSO = 30; // minutos por bloco de agenda (igual a INTERVALO_MIN em dados.js)
 
@@ -55,6 +56,7 @@ if (config && !falhou) {
 
 const api = {
   ativo: !!db,
+  emailAtivo: !!(EMAILJS && EMAILJS.templateCliente),
   falhou, // estava configurado mas a biblioteca não carregou
   slotsPara, lisboa, hhmm,
 
@@ -66,7 +68,7 @@ const api = {
   },
 
   /** Cria a marcação e ocupa as horas num só lote. Falha se alguma meia hora já estiver ocupada. */
-  async marcar({ servId, servNome, min, preco, dia, inicio, nome, tel }) {
+  async marcar({ servId, servNome, min, preco, dia, inicio, nome, tel, origem }) {
     if (!db) throw new Error("sem-ligacao");
     const ref = doc(collection(db, "marcacoes"));
     const slots = slotsPara(dia, inicio, min);
@@ -74,6 +76,7 @@ const api = {
     b.set(ref, {
       servId, servNome, min, preco, dia, hora: hhmm(inicio), inicio: Timestamp.fromDate(lisboa(dia, inicio)),
       nome: nome.trim().slice(0, 60), tel: tel.trim().slice(0, 20), slots, criado: serverTimestamp(),
+      ...(origem ? { origem } : {}), // "gestao" quando é o Camazo a marcar (só a conta de gestão o pode gravar)
     });
     for (const id of slots) b.set(doc(db, "ocupado", id), { dia, marcacao: ref.id });
     try { await b.commit(); }
@@ -87,7 +90,27 @@ const api = {
     return ref.id;
   },
 
-  /* ---------- gestão (só para as contas em ADMINS) ---------- */
+  /** Avisa o Camazo (ntfy, sem dados pessoais) e envia os emails (EmailJS). Nunca lança erro. */
+  async avisar({ quando, servNome, durTxt, precoTxt, nome, tel, email }) {
+    const tarefas = [];
+    if (NTFY_TOPICO) { // pedido "simples" (sem cabeçalhos extra), para não precisar de autorização CORS prévia
+      const q = new URLSearchParams({ title: "Nova marcação · Camazo", tags: "scissors", click: new URL("gestao.html", location.href).href });
+      tarefas.push(fetch(`https://ntfy.sh/${NTFY_TOPICO}?${q}`, { method: "POST", keepalive: true, body: `${quando} · ${servNome}` }));
+    }
+    if (EMAILJS) {
+      const envia = (template_id, params) => fetch("https://api.emailjs.com/api/v1.0/email/send", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ service_id: EMAILJS.serviceId, template_id, user_id: EMAILJS.publicKey, template_params: params }),
+      });
+      const params = { nome, telefone: tel, email: email || "", servico: servNome, quando, duracao: durTxt, preco: precoTxt,
+        morada: "R. Conselheiro Luís de Magalhães, Aveiro", contacto: "924 711 734", gestao: new URL("gestao.html", location.href).href };
+      if (EMAILJS.templateCamazo) tarefas.push(envia(EMAILJS.templateCamazo, params));
+      if (EMAILJS.templateCliente && email) tarefas.push(envia(EMAILJS.templateCliente, { ...params, to_email: email }));
+    }
+    await Promise.allSettled(tarefas);
+  },
+
+  /* ---------- gestão (só para as contas em admins/) ---------- */
   db, auth,
   /** É administrador se existir admins/{uid} na base de dados (só o próprio o pode ler). */
   eAdmin: async (u) => { if (!u) return false; try { return (await getDoc(doc(db, "admins", u.uid))).exists(); } catch (e) { return false; } },
