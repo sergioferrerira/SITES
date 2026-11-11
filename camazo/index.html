@@ -1009,7 +1009,7 @@ async function emergir(viaHistorico) {
     await new Promise((r) => { c.tl.eventCallback("onReverseComplete", r); c.tl.timeScale(1.15).reverse(); });
     c.cena.remove();
   }
-  gsap?.set?.("#topo", { clearProps: "opacity,visibility" });
+  window.gsap?.set("#topo", { clearProps: "opacity,visibility" });
   if (origem) origem.style.visibility = "";
   if (!viaHistorico && history.state?.gaveta != null) history.back();
   (mg.foco && document.contains(mg.foco) ? mg.foco : origem)?.focus?.({ preventScroll: true });
