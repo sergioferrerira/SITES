@@ -1,15 +1,20 @@
 rules_version = '2';
 // Regras de segurança das marcações do Camazo.
 // Colar em: Consola Firebase → Firestore Database → Regras → Publicar.
-// Em admin(), as contas Google que podem ver e gerir as marcações
-// (têm de ser as mesmas que ADMINS em firebase-config.js).
+// Quem gere: um documento admins/{uid} (criado à mão na consola, em Firestore → Dados).
+// O uid de cada conta aparece no ecrã "Sem acesso" de gestao.html.
 service cloud.firestore {
   match /databases/{db}/documents {
 
     function admin() {
       return request.auth != null
-        && request.auth.token.email_verified == true
-        && request.auth.token.email.lower() in ['camazo@example.com'];
+        && exists(/databases/$(db)/documents/admins/$(request.auth.uid));
+    }
+
+    // cada pessoa só consegue ver o seu próprio documento de administrador; ninguém o cria pelo site
+    match /admins/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
     }
 
     // meia hora n.º i da marcação: tem de ser deste dia e ficar ocupada no mesmo lote

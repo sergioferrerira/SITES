@@ -24,9 +24,16 @@ Enquanto `firebaseConfig` for `null`, o site usa o pedido por WhatsApp.
 2. Em Build → Firestore Database, criar a base de dados em modo de produção, na localização `eur3` (Europa).
 3. Em Build → Authentication, carregar em Get started e ativar o fornecedor **Google**.
 4. Em Authentication → Settings → Authorized domains, adicionar `sergioferrerira.github.io`.
-5. Em Definições do projeto → As tuas apps, adicionar uma app Web (`</>`) e copiar o `firebaseConfig` para `firebase-config.js`.
-6. Pôr o email Google do Camazo em `ADMINS` (`firebase-config.js`) e em `admin()` (`firestore.rules`).
-7. Colar o conteúdo de `firestore.rules` em Firestore → Regras e carregar em Publicar.
+5. Em Definições do projeto → As tuas apps, adicionar uma app Web (`</>`) e copiar o `firebaseConfig` para `firebase-config.js`. Já está feito, para o projeto `camazo`.
+6. Colar o conteúdo de `firestore.rules` em Firestore → Regras e carregar em Publicar.
+
+### Dar acesso à gestão
+
+1. A pessoa abre `gestao.html` e entra com a conta Google. Aparece "Sem acesso" com um código, que é o uid da conta.
+2. Na consola: Firestore Database → Dados → Iniciar coleção `admins`. Como ID do documento usar esse código e acrescentar um campo qualquer (por exemplo `nome`). Guardar.
+3. A pessoa recarrega a página e já vê a agenda. Para tirar o acesso, apaga-se o documento.
+
+Nenhum email fica no código público.
 
 ### Testar sem tocar em dados reais
 

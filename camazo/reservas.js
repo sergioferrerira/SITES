@@ -6,14 +6,13 @@
        Qualquer pessoa pode ler (para o site mostrar as horas livres).
        Como o id é a própria hora, duas marcações nunca conseguem ficar com a
        mesma meia hora: a segunda falha (a criação é feita num só lote). */
-import { firebaseConfig, ADMINS } from "./firebase-config.js";
+import { firebaseConfig } from "./firebase-config.js";
 
 const PASSO = 30; // minutos por bloco de agenda (igual a INTERVALO_MIN em dados.js)
 
 // Simulador local (só em localhost com ?emu): para testar sem tocar em dados reais
 const emu = ["localhost", "127.0.0.1"].includes(location.hostname) && new URLSearchParams(location.search).has("emu");
-const config = firebaseConfig || (emu ? { apiKey: "demo", authDomain: "localhost", projectId: "demo-camazo", appId: "demo" } : null);
-const admins = emu && !ADMINS.length ? ["camazo@example.com"] : ADMINS;
+const config = emu ? { apiKey: "demo", authDomain: "localhost", projectId: "demo-camazo", appId: "demo" } : firebaseConfig;
 
 const hhmm = (m) => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
 const slotId = (dia, m) => `${dia}_${hhmm(m).replace(":", "")}`;
@@ -86,8 +85,9 @@ const api = {
   },
 
   /* ---------- gestão (só para as contas em ADMINS) ---------- */
-  db, auth, admins,
-  eAdmin: (u) => !!u && u.emailVerified && admins.includes((u.email || "").toLowerCase()),
+  db, auth,
+  /** É administrador se existir admins/{uid} na base de dados (só o próprio o pode ler). */
+  eAdmin: async (u) => { if (!u) return false; try { return (await getDoc(doc(db, "admins", u.uid))).exists(); } catch (e) { return false; } },
   aoMudarConta: (cb) => (auth ? onAuthStateChanged(auth, cb) : cb(null)),
   async entrar() {
     const p = new GoogleAuthProvider(); p.setCustomParameters({ prompt: "select_account" });

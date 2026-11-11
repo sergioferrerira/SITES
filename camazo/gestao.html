@@ -12,6 +12,7 @@
 <style>
   :root { --fundo: #0b0b0c; --painel: #141416; --linha: #26262a; --texto: #ededed; --cinza: #9a9aa2; --vermelho: #d0182b; --amarelo: #f1d34a; --verde: #39d26b; }
   * { box-sizing: border-box; margin: 0; }
+  [hidden] { display: none !important; }
   html { -webkit-text-size-adjust: 100%; }
   body { background: var(--fundo); color: var(--texto); font: 15px/1.45 Inter, system-ui, sans-serif; min-height: 100vh; }
   button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
@@ -36,6 +37,7 @@
   .entrada { min-height: 70vh; display: grid; place-items: center; text-align: center; }
   .entrada h1 { font-family: Anton, sans-serif; font-weight: 400; letter-spacing: .06em; font-size: 2rem; margin-bottom: 8px; }
   .entrada p { color: var(--cinza); margin-bottom: 22px; max-width: 34ch; }
+  .codigo { background: #1b1b1f; border: 1px solid #333; border-radius: 8px; padding: 10px 12px; color: var(--amarelo); word-break: break-all; user-select: all; max-width: 36ch; margin: 0 auto 16px; }
   .google { background: #fff; color: #222; border-radius: 8px; padding: 12px 20px; font-weight: 600; display: inline-flex; gap: 10px; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,.4); }
 
   .dias { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 10px; scroll-snap-type: x mandatory; }
@@ -124,14 +126,17 @@ if (!C.ativo) {
   let pararDia = () => {}, pararOcup = () => {}, pararSemana = () => {}, pararNovas = () => {};
   const est = { dia: diaId(hojeLisboa()), inicio: hojeLisboa(), marc: [], ocup: new Map(), contagem: {}, novas: new Set() };
 
-  C.aoMudarConta((u) => {
+  C.aoMudarConta(async (u) => {
     pararDia(); pararOcup(); pararSemana(); pararNovas();
     $("#sair").hidden = $("#conta").hidden = !u; $("#avisos").hidden = true;
     if (!u) return ecraEntrar();
     $("#email").textContent = u.email;
-    if (!C.eAdmin(u)) {
-      app.innerHTML = `<div class="entrada"><div><h1>Sem acesso</h1><p>A conta ${esc(u.email)} não tem acesso à gestão do Camazo.</p><button class="btn btn-cromado" id="outra">Usar outra conta</button></div></div>`;
+    app.innerHTML = `<div class="entrada"><p>A verificar acesso…</p></div>`;
+    if (!(await C.eAdmin(u))) {
+      app.innerHTML = `<div class="entrada"><div><h1>Sem acesso</h1><p>A conta ${esc(u.email)} ainda não tem acesso à gestão do Camazo. Para a autorizar, envia este código a quem gere o site:</p>
+        <p class="mono codigo" id="uid">${esc(u.uid)}</p><p><button class="btn btn-linha mini" id="copiar">Copiar código</button> <button class="btn btn-cromado mini" id="outra">Usar outra conta</button></p></div></div>`;
       $("#outra").onclick = () => C.sair();
+      $("#copiar").onclick = () => navigator.clipboard?.writeText(u.uid).then(() => aviso("Código copiado"));
       return;
     }
     $("#avisos").hidden = !("Notification" in window) || Notification.permission === "granted";
