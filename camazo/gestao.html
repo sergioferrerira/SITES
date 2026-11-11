@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0b0b0c">
+<title>Camazo · Gestão de marcações</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Yellowtail&display=swap" rel="stylesheet">
+<style>
+  :root { --fundo: #0b0b0c; --painel: #141416; --linha: #26262a; --texto: #ededed; --cinza: #9a9aa2; --vermelho: #d0182b; --amarelo: #f1d34a; --verde: #39d26b; }
+  * { box-sizing: border-box; margin: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { background: var(--fundo); color: var(--texto); font: 15px/1.45 Inter, system-ui, sans-serif; min-height: 100vh; }
+  button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+  a { color: inherit; }
+  .mono { font-family: "JetBrains Mono", monospace; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px; border-radius: 8px; font-weight: 700; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; }
+  .btn-vermelho { background: linear-gradient(#e0283a, #b5131f); color: #fff; box-shadow: 0 2px 0 #6c0912; }
+  .btn-cromado { background: linear-gradient(#f4f4f6, #b9bcc2); color: #151515; box-shadow: 0 2px 0 #6a6c70; }
+  .btn-linha { border: 1px solid #3a3a40; color: #d8d8dc; }
+  .btn-linha:hover { border-color: #777; }
+  .btn:disabled { opacity: .4; cursor: default; }
+
+  header { position: sticky; top: 0; z-index: 5; background: rgba(11,11,12,.94); backdrop-filter: blur(6px); border-bottom: 1px solid #000; }
+  .topo { max-width: 980px; margin: 0 auto; display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
+  .logo { display: flex; align-items: baseline; gap: 8px; text-decoration: none; }
+  .logo b { font-family: Yellowtail, cursive; font-weight: 400; font-size: 1.7rem; }
+  .logo small { font-family: Anton, sans-serif; letter-spacing: .2em; color: var(--cinza); font-size: .72rem; }
+  .topo .esp { flex: 1; }
+  .conta { font-size: .78rem; color: var(--cinza); text-align: right; line-height: 1.2; }
+  main { max-width: 980px; margin: 0 auto; padding: 18px 16px 60px; }
+
+  .entrada { min-height: 70vh; display: grid; place-items: center; text-align: center; }
+  .entrada h1 { font-family: Anton, sans-serif; font-weight: 400; letter-spacing: .06em; font-size: 2rem; margin-bottom: 8px; }
+  .entrada p { color: var(--cinza); margin-bottom: 22px; max-width: 34ch; }
+  .google { background: #fff; color: #222; border-radius: 8px; padding: 12px 20px; font-weight: 600; display: inline-flex; gap: 10px; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,.4); }
+
+  .dias { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 10px; scroll-snap-type: x mandatory; }
+  .dia { flex: none; width: 66px; padding: 8px 0 7px; border-radius: 10px; background: var(--painel); border: 1px solid var(--linha); text-align: center; scroll-snap-align: start; position: relative; }
+  .dia small { display: block; font-size: .66rem; color: var(--cinza); text-transform: uppercase; letter-spacing: .08em; }
+  .dia strong { display: block; font-family: Anton, sans-serif; font-weight: 400; font-size: 1.45rem; line-height: 1.1; }
+  .dia .n { position: absolute; top: -6px; right: -4px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px; background: var(--amarelo); color: #111; font: 700 .7rem/20px "JetBrains Mono", monospace; }
+  .dia.fechado { opacity: .45; }
+  .dia[aria-pressed="true"] { background: var(--vermelho); border-color: var(--vermelho); }
+  .dia[aria-pressed="true"] small { color: #ffd8dc; }
+  .nav { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .nav h2 { font-family: Anton, sans-serif; font-weight: 400; letter-spacing: .04em; font-size: 1.5rem; flex: 1; }
+  .resumo { display: flex; gap: 10px; flex-wrap: wrap; margin: 6px 0 14px; }
+  .chip { background: var(--painel); border: 1px solid var(--linha); border-radius: 8px; padding: 8px 12px; font-size: .8rem; color: var(--cinza); }
+  .chip b { color: var(--texto); font-size: 1rem; margin-right: 4px; }
+  .acoes-dia { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+
+  .agenda { display: grid; gap: 6px; }
+  .linha { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 10px; background: var(--painel); border: 1px solid var(--linha); }
+  .linha .h { font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: .9rem; }
+  .linha.livre { background: transparent; border-style: dashed; }
+  .linha.livre .txt { color: #6d6d74; font-size: .85rem; }
+  .linha.bloq { background: repeating-linear-gradient(-45deg, #1a1a1d 0 10px, #141416 10px 20px); }
+  .linha.bloq .txt { color: var(--cinza); font-size: .85rem; }
+  .linha.cont { padding-block: 6px; opacity: .55; }
+  .linha.cont .txt { font-size: .8rem; color: var(--cinza); }
+  .linha.marc { border-color: #5a4a12; background: linear-gradient(90deg, rgba(241,211,74,.13), var(--painel) 40%); }
+  .linha.marc .nome { font-weight: 700; font-size: 1rem; }
+  .linha.marc .serv { color: #cfcfd4; font-size: .85rem; }
+  .linha.marc .det { color: var(--cinza); font-size: .8rem; display: flex; gap: 12px; flex-wrap: wrap; margin-top: 2px; }
+  .linha.marc .det a { color: var(--amarelo); font-weight: 600; text-decoration: none; }
+  .linha.nova { animation: piscar 1.2s 3; }
+  @keyframes piscar { 50% { box-shadow: 0 0 0 3px var(--amarelo); } }
+  .vazio { color: var(--cinza); padding: 30px 0; text-align: center; }
+  .mini { padding: 7px 10px; font-size: .7rem; }
+
+  .aviso { position: fixed; left: 50%; bottom: 18px; transform: translate(-50%, 200%); visibility: hidden; z-index: 20; background: var(--amarelo); color: #111; padding: 12px 16px; border-radius: 10px; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,.6); transition: transform .35s, visibility .35s; max-width: calc(100% - 32px); }
+  .aviso.on { transform: translate(-50%, 0); visibility: visible; }
+  .erro { background: #3a1014; border: 1px solid #6c1820; color: #ffd0d4; padding: 12px; border-radius: 10px; margin-bottom: 12px; font-size: .85rem; }
+  dialog { background: var(--painel); color: var(--texto); border: 1px solid var(--linha); border-radius: 14px; padding: 20px; max-width: 360px; width: calc(100% - 32px); }
+  dialog::backdrop { background: rgba(0,0,0,.6); }
+  dialog p { margin-bottom: 16px; }
+  dialog .bts { display: flex; gap: 8px; justify-content: flex-end; }
+  @media (max-width: 560px) {
+    .linha { grid-template-columns: 52px 1fr; }
+    .linha > :last-child { grid-column: 1 / -1; justify-self: end; }
+    .linha.livre > :last-child, .linha.bloq > :last-child, .linha.cont > :last-child { grid-column: auto; }
+    .linha.livre, .linha.bloq { grid-template-columns: 52px 1fr auto; }
+    .conta span, #avisos span { display: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="topo">
+    <a class="logo" href="./"><b>Camazo</b><small>GESTÃO</small></a>
+    <div class="esp"></div>
+    <div class="conta" id="conta" hidden><span id="email"></span></div>
+    <button class="btn btn-linha mini" id="avisos" hidden>🔔 <span>Ativar avisos</span></button>
+    <button class="btn btn-linha mini" id="sair" hidden>Sair</button>
+  </div>
+</header>
+<main id="app"><div class="entrada"><p>A carregar…</p></div></main>
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+<dialog id="confirmar"><p id="conf-txt"></p><div class="bts"><button class="btn btn-linha" value="nao" id="conf-nao">Voltar</button><button class="btn btn-vermelho" id="conf-sim">Sim</button></div></dialog>
+
+<script src="dados.js"></script>
+<script type="module">
+import "./reservas.js";
+const C = window.CMZ;
+const $ = (s) => document.querySelector(s);
+const app = $("#app");
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const DIAS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"], DIAS_L = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+const paraMin = (t) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+const hh = (m) => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+const diaId = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const deId = (s) => { const [a, m, d] = s.split("-").map(Number); return new Date(a, m - 1, d); };
+const hojeLisboa = () => { const p = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Lisbon" }).format(new Date()); return deId(p); };
+const euro = (n) => `${Number(n).toLocaleString("pt-PT")}€`;
+
+if (!C.ativo) {
+  app.innerHTML = `<div class="entrada"><div><h1>Ainda não está ligado</h1><p>Falta configurar o Firebase em firebase-config.js.</p></div></div>`;
+} else {
+  let pararDia = () => {}, pararOcup = () => {}, pararSemana = () => {}, pararNovas = () => {};
+  const est = { dia: diaId(hojeLisboa()), inicio: hojeLisboa(), marc: [], ocup: new Map(), contagem: {}, novas: new Set() };
+
+  C.aoMudarConta((u) => {
+    pararDia(); pararOcup(); pararSemana(); pararNovas();
+    $("#sair").hidden = $("#conta").hidden = !u; $("#avisos").hidden = true;
+    if (!u) return ecraEntrar();
+    $("#email").textContent = u.email;
+    if (!C.eAdmin(u)) {
+      app.innerHTML = `<div class="entrada"><div><h1>Sem acesso</h1><p>A conta ${esc(u.email)} não tem acesso à gestão do Camazo.</p><button class="btn btn-cromado" id="outra">Usar outra conta</button></div></div>`;
+      $("#outra").onclick = () => C.sair();
+      return;
+    }
+    $("#avisos").hidden = !("Notification" in window) || Notification.permission === "granted";
+    iniciar();
+  });
+  $("#sair").onclick = () => C.sair();
+  $("#avisos").onclick = async () => { const r = await Notification.requestPermission(); $("#avisos").hidden = r === "granted"; bip(); };
+
+  function ecraEntrar() {
+    app.innerHTML = `<div class="entrada"><div><h1>Gestão de marcações</h1><p>Entra com a conta Google da barbearia para veres e gerires as marcações.</p>
+      <button class="google" id="entrar"><svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.2-.1-2.4-.4-3.5z"/></svg>Entrar com Google</button></div></div>`;
+    $("#entrar").onclick = () => C.entrar().catch((e) => aviso("Não foi possível entrar: " + (e.code || e.message)));
+  }
+
+  function iniciar() {
+    app.innerHTML = `<div class="nav"><h2 id="titulo"></h2><button class="btn btn-linha mini" id="hoje">Hoje</button><button class="btn btn-linha mini" id="ant" aria-label="Semana anterior">‹</button><button class="btn btn-linha mini" id="seg" aria-label="Semana seguinte">›</button></div>
+      <div class="dias" id="dias"></div><div id="erro"></div><div class="resumo" id="resumo"></div><div class="acoes-dia" id="acoes"></div><div class="agenda" id="agenda"></div>`;
+    $("#hoje").onclick = () => { est.inicio = hojeLisboa(); mudarDia(diaId(est.inicio)); };
+    $("#ant").onclick = () => { est.inicio = new Date(est.inicio.getFullYear(), est.inicio.getMonth(), est.inicio.getDate() - 7); mudarDia(diaId(est.inicio)); };
+    $("#seg").onclick = () => { est.inicio = new Date(est.inicio.getFullYear(), est.inicio.getMonth(), est.inicio.getDate() + 7); mudarDia(diaId(est.inicio)); };
+    // aviso de nova marcação, com som e notificação
+    pararNovas = C.ouvirNovas(new Date(), (m) => {
+      est.novas.add(m.id);
+      const d = deId(m.dia), txt = `Nova marcação: ${m.nome} · ${m.servNome} · ${DIAS[d.getDay()]} ${d.getDate()} ${MESES[d.getMonth()]}, ${m.hora}`;
+      aviso(txt, 8000); bip();
+      if ("Notification" in window && Notification.permission === "granted") { try { new Notification("Camazo · nova marcação", { body: txt, tag: m.id }); } catch (e) {} }
+    });
+    mudarDia(est.dia);
+  }
+
+  function mudarDia(dia) {
+    est.dia = dia;
+    const d = deId(dia);
+    if (d < est.inicio || d >= new Date(est.inicio.getFullYear(), est.inicio.getMonth(), est.inicio.getDate() + 14)) est.inicio = d;
+    pararDia(); pararOcup(); pararSemana();
+    est.marc = []; est.ocup = new Map();
+    pararDia = C.ouvirMarcacoes(dia, (l) => { est.marc = l; desenhar(); }, (e) => { $("#erro").innerHTML = `<div class="erro">Não foi possível ler as marcações (${esc(e.code)}).</div>`; });
+    pararOcup = C.ouvirOcupados(dia, (m) => { est.ocup = m; desenhar(); });
+    const fim = new Date(est.inicio.getFullYear(), est.inicio.getMonth(), est.inicio.getDate() + 13);
+    pararSemana = C.ouvirIntervalo(diaId(est.inicio), diaId(fim), (l) => { est.contagem = {}; l.forEach((m) => (est.contagem[m.dia] = (est.contagem[m.dia] || 0) + 1)); desenharDias(); });
+    desenharDias(); desenhar();
+  }
+
+  function desenharDias() {
+    const out = [];
+    for (let i = 0; i < 14; i++) {
+      const d = new Date(est.inicio.getFullYear(), est.inicio.getMonth(), est.inicio.getDate() + i), id = diaId(d), n = est.contagem[id];
+      out.push(`<button class="dia${HORARIO[d.getDay()] ? "" : " fechado"}" data-d="${id}" aria-pressed="${id === est.dia}"><small>${diaId(hojeLisboa()) === id ? "Hoje" : DIAS[d.getDay()]}</small><strong>${d.getDate()}</strong><small>${MESES[d.getMonth()]}</small>${n ? `<span class="n">${n}</span>` : ""}</button>`);
+    }
+    const box = $("#dias"); box.innerHTML = out.join("");
+    box.onclick = (e) => { const b = e.target.closest(".dia"); if (b) mudarDia(b.dataset.d); };
+    const sel = box.querySelector('[aria-pressed="true"]');
+    if (sel && (sel.offsetLeft < box.scrollLeft || sel.offsetLeft + sel.offsetWidth > box.scrollLeft + box.clientWidth)) box.scrollLeft = sel.offsetLeft - 8;
+  }
+
+  function desenhar() {
+    const d = deId(est.dia), h = HORARIO[d.getDay()];
+    $("#titulo").textContent = `${DIAS_L[d.getDay()]}, ${d.getDate()} ${MESES[d.getMonth()]}`;
+    const total = est.marc.reduce((s, m) => s + (Number(m.preco) || 0), 0);
+    $("#resumo").innerHTML = `<span class="chip"><b>${est.marc.length}</b>marcaç${est.marc.length === 1 ? "ão" : "ões"}</span><span class="chip"><b>${euro(total)}</b>previsto</span>`;
+    const ag = $("#agenda"), ac = $("#acoes");
+    if (!h) { ac.innerHTML = ""; ag.innerHTML = `<p class="vazio">Fechado neste dia.</p>`; return; }
+    const ini = paraMin(h[0]), fim = paraMin(h[1]);
+    const id = (m) => `${est.dia}_${hh(m).replace(":", "")}`;
+    const porSlot = new Map(); est.marc.forEach((m) => (m.slots || []).forEach((s, i) => porSlot.set(s, { m, i })));
+    const livres = [], bloqueados = [];
+    const linhas = [];
+    // marcações fora do horário (raro) aparecem no topo
+    est.marc.filter((m) => paraMin(m.hora) < ini || paraMin(m.hora) >= fim).forEach((m) => linhas.push(linhaMarc(m)));
+    for (let m = ini; m < fim; m += 30) {
+      const s = id(m), pm = porSlot.get(s), oc = est.ocup.get(s);
+      if (pm) linhas.push(pm.i === 0 ? linhaMarc(pm.m) : `<div class="linha cont"><span class="h">${hh(m)}</span><span class="txt">↳ continua: ${esc(pm.m.nome)}</span><span></span></div>`);
+      else if (oc && oc.bloqueio) { bloqueados.push(m); linhas.push(`<div class="linha bloq"><span class="h">${hh(m)}</span><span class="txt">Bloqueado</span><button class="btn btn-linha mini" data-desbl="${m}">Desbloquear</button></div>`); }
+      else if (oc) linhas.push(`<div class="linha bloq"><span class="h">${hh(m)}</span><span class="txt">Ocupado</span><span></span></div>`);
+      else { livres.push(m); linhas.push(`<div class="linha livre"><span class="h">${hh(m)}</span><span class="txt">Livre</span><button class="btn btn-linha mini" data-bl="${m}">Bloquear</button></div>`); }
+    }
+    ac.innerHTML = `<button class="btn btn-linha mini" id="bl-dia" ${livres.length ? "" : "disabled"}>Bloquear o dia todo</button><button class="btn btn-linha mini" id="desbl-dia" ${bloqueados.length ? "" : "disabled"}>Desbloquear o dia</button>`;
+    ag.innerHTML = linhas.join("");
+    $("#bl-dia").onclick = () => confirmar(`Bloquear todas as horas livres de ${$("#titulo").textContent}? Ninguém vai conseguir marcar neste dia.`, () => C.bloquear(est.dia, livres));
+    $("#desbl-dia").onclick = () => C.desbloquear(est.dia, bloqueados).catch(falhou);
+    ag.onclick = (e) => {
+      const b = e.target.closest("button"); if (!b) return;
+      if (b.dataset.bl) C.bloquear(est.dia, [+b.dataset.bl]).catch(falhou);
+      if (b.dataset.desbl) C.desbloquear(est.dia, [+b.dataset.desbl]).catch(falhou);
+      if (b.dataset.cancelar) { const m = est.marc.find((x) => x.id === b.dataset.cancelar); confirmar(`Cancelar a marcação de ${m.nome} (${m.servNome}, ${m.hora})? A hora volta a ficar livre no site.`, () => C.cancelar(m)); }
+    };
+  }
+  function linhaMarc(m) {
+    const fim = hh(paraMin(m.hora) + (m.min || 30)), tel = String(m.tel || "").replace(/[^\d+]/g, "");
+    return `<div class="linha marc${est.novas.has(m.id) ? " nova" : ""}"><span class="h">${esc(m.hora)}</span>
+      <div><div class="nome">${esc(m.nome)}</div><div class="serv">${esc(m.servNome)}</div>
+      <div class="det"><span>${esc(m.hora)}–${fim}</span><span>${euro(m.preco)}</span><a href="tel:${esc(tel)}">📞 ${esc(m.tel)}</a></div></div>
+      <button class="btn btn-linha mini" data-cancelar="${esc(m.id)}">Cancelar</button></div>`;
+  }
+  const falhou = (e) => aviso("Não foi possível: " + (e.code || e.message));
+  function confirmar(txt, fazer) {
+    const dlg = $("#confirmar"); $("#conf-txt").textContent = txt;
+    $("#conf-sim").onclick = async () => { dlg.close(); try { await fazer(); } catch (e) { falhou(e); } };
+    $("#conf-nao").onclick = () => dlg.close();
+    dlg.showModal();
+  }
+}
+
+let tAviso;
+function aviso(txt, ms = 4000) { const a = $("#aviso"); a.textContent = txt; a.classList.add("on"); clearTimeout(tAviso); tAviso = setTimeout(() => a.classList.remove("on"), ms); }
+function bip() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [880, 1320].forEach((f, i) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = f; o.connect(g); g.connect(ctx.destination);
+      const t = ctx.currentTime + i * .18; g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.25, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + .16); o.start(t); o.stop(t + .17); });
+  } catch (e) {}
+}
+</script>
+</body>
+</html>

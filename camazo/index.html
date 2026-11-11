@@ -312,6 +312,16 @@
   .ordem .alt { font-size: .74rem; color: #666; margin-top: 12px; text-align: center; font-family: Inter, sans-serif; }
   .ok { display: none; margin-top: 12px; padding: 10px 12px; border-radius: 6px; background: #e1f6e7; color: #0f5b2a; font-size: .78rem; font-family: Inter, sans-serif; }
   .ok.on { display: block; }
+  .ok.erro { background: #fde4e4; color: #8a1018; }
+  .ok a { color: inherit; font-weight: 700; }
+  .ordem .nova { width: 100%; margin-top: 10px; justify-content: center; }
+  .hora:disabled { opacity: .3; text-decoration: line-through; cursor: not-allowed; border-style: dashed; }
+  .hora:disabled:hover { border-color: #333338; }
+  .passo.feito { opacity: .5; pointer-events: none; }
+  .ordem [hidden] { display: none !important; }
+  .consent { text-transform: none; letter-spacing: normal; font-weight: 500; display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; font-size: .78rem; color: #b9b9bf; line-height: 1.45; cursor: pointer; }
+  .consent input { width: 18px; height: 18px; margin-top: 1px; flex: none; accent-color: #f1d34a; }
+  .consent[hidden] { display: none; }
 
   /* horário na gaveta */
   .visita-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 20px; }
@@ -450,41 +460,10 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="dados.js"></script>
+<script type="module" src="reservas.js"></script>
 <script>
-/* ============================================================
-   DADOS: editar aqui preços, serviços, horário e fotos
-   ============================================================ */
-const TELEFONE = "351924711734";
-
-const SERVICOS = [
-  { id: "corte",        cat: "cortes", ic: "tesoura", nome: "Corte",                                        min: 30, preco: 15 },
-  { id: "barba",        cat: "cortes", ic: "navalha", nome: "Barba",                                        min: 15, preco: 10 },
-  { id: "crianca-deg",  cat: "cortes", ic: "maquina", nome: "Corte criança · degradê",                      min: 30, preco: 15 },
-  { id: "crianca-soc",  cat: "cortes", ic: "pente",   nome: "Corte criança · social",                       min: 30, preco: 13 },
-  { id: "blackmask",    cat: "cortes", ic: "mascara", nome: "Máscara Black · pontos negros",                   min: 20, preco: 12 },
-  { id: "sobrancelhas", cat: "cortes", ic: "pinca",   nome: "Sobrancelhas",                                 min: 10, preco: 5 },
-  { id: "cera",         cat: "cortes", ic: "cera",    nome: "Cera no nariz",                                min: 10, preco: 5 },
-
-  { id: "c-sob",        cat: "combos", ic: "tesoura", nome: "Corte + sobrancelhas",                         min: 30, preco: 17, avulso: 20 },
-  { id: "c-barba",      cat: "combos", ic: "navalha", nome: "Corte + barba",                                min: 60, preco: 20, avulso: 25 },
-  { id: "c-barba-sob",  cat: "combos", ic: "navalha", nome: "Corte + barba + sobrancelhas",                 min: 60, preco: 22, avulso: 30 },
-  { id: "c-full",       cat: "combos", ic: "chave",   nome: "Corte + barba + sobrancelhas + cera no nariz", min: 60, preco: 25, avulso: 35 },
-  { id: "c-bm",         cat: "combos", ic: "mascara", nome: "Corte + Máscara Black",                           min: 50, preco: 25, avulso: 27 },
-  { id: "c-barba-bm",   cat: "combos", ic: "mascara", nome: "Corte + barba + Máscara Black",                   min: 80, preco: 30, avulso: 37 },
-  { id: "c-top",        cat: "combos", ic: "chave",   nome: "CAMAZOPACK · corte + barba + cera no nariz + Máscara Black", min: 85, preco: 35, avulso: 42 },
-
-  { id: "pintar",       cat: "cor",    ic: "pincel",  nome: "Pintar cabelo",                                min: 30, preco: 55, ate: 70 },
-  { id: "madeixas",     cat: "cor",    ic: "pincel",  nome: "Madeixas",                                     min: 45, preco: 45, ate: 70 },
-];
-
-/* 0 = domingo … 6 = sábado  ·  null = fechado */
-const HORARIO = {
-  1: ["09:00", "20:00"], 2: ["09:00", "20:00"], 3: ["09:00", "20:00"],
-  4: ["09:00", "20:00"], 5: ["09:00", "20:00"], 6: ["09:00", "20:00"],
-  0: ["09:00", "15:00"],
-};
-const INTERVALO_MIN = 30;
-const DIAS_A_MOSTRAR = 14;
+/* Serviços, preços e horário estão em dados.js (partilhado com a página de gestão). */
 
 const GALERIA = [  // cortes feitos no Camazo (do Instagram @camazobarbershp)
   { src: "img/cortes/corte-1.jpg", txt: "Mid fade",          cls: "g2 l2", pos: "40% 40%" },
@@ -717,7 +696,7 @@ const GAVETAS = [
   { id: "combos",  etq: "Combos",         desc: "Pacotes completos, mais baratos" },
   { id: "cor",     etq: "Cor",            desc: "Pintar cabelo e madeixas" },
   { id: "galeria", etq: "Galeria",        desc: "Cortes feitos cá" },
-  { id: "marcar",  etq: "Marcar",         desc: "Escolhe dia e hora, segue por WhatsApp", alta: true },
+  { id: "marcar",  etq: "Marcar",         desc: "Escolhe dia e hora e fica marcado", alta: true },
   { id: "visita",  etq: "Horário & onde", desc: "Horas, telefone e mapa" },
 ];
 const seta = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>';
@@ -750,7 +729,9 @@ function conteudoMarcar() {
         <div class="campos">
           <div><label for="nome">Nome</label><input id="nome" autocomplete="name" placeholder="O teu nome"></div>
           <div><label for="tel">Telemóvel</label><input id="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="9xx xxx xxx"></div>
-        </div></div>
+        </div>
+        <label class="consent"><input type="checkbox" id="aceito"> <span>Aceito que o meu nome e telemóvel sejam guardados pela Camazo Barbershop só para gerir esta marcação.</span></label>
+      </div>
     </div>
     <aside class="ordem" aria-live="polite">
       <h3>Ordem de serviço</h3>
@@ -762,10 +743,11 @@ function conteudoMarcar() {
         <div class="total"><dt>Total</dt><dd id="r-preco">—</dd></div>
       </dl>
       <button class="btn btn-vermelho" id="enviar" disabled>
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg>
-        Pedir marcação
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        <span id="enviar-txt">Confirmar marcação</span>
       </button>
-      <div class="ok" id="ok">Abrimos o WhatsApp com o teu pedido. É só carregar em enviar. A marcação fica feita quando o Camazo responder ✂️</div>
+      <div class="ok" id="ok" role="status"></div>
+      <button class="btn btn-cromado nova" id="nova" hidden>Fazer outra marcação</button>
       <p class="alt">Preferes ligar? <a href="tel:+351924711734">924 711 734</a></p>
     </aside>
   </div>`;
@@ -1117,11 +1099,34 @@ function desenharDias() {
   $("#dias").onclick = (e) => { const b = e.target.closest(".dia"); if (!b) return; estado.dia = dias[+b.dataset.i]; estado.hora = null; desenharDias(); atualizar(); };
   desenharHoras();
 }
+/* horas já ocupadas (marcações e bloqueios do Camazo), em tempo real a partir do Firebase */
+const diaId = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+let ocupados = new Map(), pararOcupados = () => {}, diaOuvido = null, marcado = false;
+function ouvirDia() {
+  const cmz = window.CMZ;
+  if (!cmz?.ativo || !estado.dia) return;
+  const id = diaId(estado.dia.d);
+  if (id === diaOuvido) return;
+  pararOcupados(); diaOuvido = id; ocupados = new Map();
+  pararOcupados = cmz.ouvirOcupados(id, (mapa) => {
+    ocupados = mapa;
+    if (!marcado && estado.hora != null && !horaLivre(estado.hora)) { estado.hora = null; atualizar(); }
+    desenharHoras();
+  });
+}
+function horaLivre(m) {
+  const cmz = window.CMZ;
+  if (!cmz?.ativo || !estado.dia) return true;
+  return !cmz.slotsPara(diaId(estado.dia.d), m, estado.serv ? estado.serv.min : 30).some((id) => ocupados.has(id));
+}
 function desenharHoras() {
   const box = $("#horas");
   if (!estado.dia) { box.innerHTML = `<p class="vazio">Sem horários nos próximos dias. Liga-nos!</p>`; return; }
-  box.innerHTML = horasPara(estado.dia).map((m) => `<button class="hora" data-m="${m}" aria-pressed="${estado.hora === m}">${paraHora(m)}</button>`).join("");
-  box.onclick = (e) => { const b = e.target.closest(".hora"); if (!b) return; estado.hora = +b.dataset.m; desenharHoras(); atualizar(); };
+  ouvirDia();
+  const horas = horasPara(estado.dia);
+  box.innerHTML = horas.map((m) => { const livre = horaLivre(m); return `<button class="hora" data-m="${m}" aria-pressed="${estado.hora === m}"${livre ? "" : ` disabled aria-label="${paraHora(m)}, ocupado"`}>${paraHora(m)}</button>`; }).join("")
+    + (horas.length && !horas.some(horaLivre) ? `<p class="vazio">Este dia já está cheio. Escolhe outro dia.</p>` : "");
+  box.onclick = (e) => { const b = e.target.closest(".hora"); if (!b || b.disabled) return; estado.hora = +b.dataset.m; desenharHoras(); atualizar(); };
 }
 function quandoTxt() {
   if (!estado.dia || estado.hora == null) return null;
@@ -1140,10 +1145,41 @@ function atualizar() {
   }
   $("#p3").classList.toggle("inativo", !(s && estado.hora != null));
   const nome = $("#nome").value.trim(), tel = $("#tel").value.replace(/\D/g, "");
-  $("#enviar").disabled = !(s && estado.hora != null && nome.length > 1 && tel.length >= 9);
+  const online = !!window.CMZ?.ativo;
+  $(".consent").hidden = !online;
+  $("#enviar").disabled = enviando || !(s && estado.hora != null && nome.length > 1 && tel.length >= 9 && (!online || $("#aceito").checked));
 }
+let enviando = false;
 ["#nome", "#tel"].forEach((id) => $(id).addEventListener("input", atualizar));
-$("#enviar").addEventListener("click", () => {
+$("#aceito").addEventListener("change", atualizar);
+addEventListener("cmz-pronto", () => {
+  // sem Firebase configurado, fica o pedido por WhatsApp
+  if (!window.CMZ?.ativo) $("#enviar-txt").textContent = "Pedir marcação por WhatsApp";
+  desenharHoras(); atualizar();
+});
+const okMsg = (html, erro) => { const ok = $("#ok"); ok.innerHTML = html; ok.classList.toggle("erro", !!erro); ok.classList.add("on"); };
+$("#nova").addEventListener("click", () => {
+  $("#nova").hidden = true; $("#ok").classList.remove("on");
+  document.querySelectorAll("#p1, #p2, #p3").forEach((p) => p.classList.remove("feito"));
+  $("#enviar").hidden = false; marcado = false; estado.hora = null; desenharHoras(); atualizar();
+});
+$("#enviar").addEventListener("click", async () => {
+  const cmz = window.CMZ;
+  if (cmz?.ativo) {
+    const s = estado.serv, quando = quandoTxt();
+    enviando = true; marcado = true; atualizar(); $("#enviar-txt").textContent = "A marcar…";
+    try {
+      await cmz.marcar({ servId: s.id, servNome: s.nome, min: s.min, preco: s.preco, dia: diaId(estado.dia.d), inicio: estado.hora, nome: $("#nome").value, tel: $("#tel").value });
+      okMsg(`<b>Marcação feita ✂️</b><br>${esc(s.nome)}<br>${esc(quando)}<br>Até já! Se não puderes vir, liga para <a href="tel:+351924711734">924 711 734</a>.`);
+      marcado = true; $("#enviar").hidden = true; $("#nova").hidden = false;
+      document.querySelectorAll("#p1, #p2, #p3").forEach((p) => p.classList.add("feito"));
+    } catch (e) {
+      marcado = false;
+      if (e.code === "hora-ocupada") { okMsg("Essa hora acabou de ser ocupada por outra pessoa. Escolhe outra, por favor.", true); estado.hora = null; desenharHoras(); }
+      else okMsg(`Não foi possível marcar agora. Tenta outra vez ou liga para <a href="tel:+351924711734">924 711 734</a>.`, true);
+    } finally { enviando = false; $("#enviar-txt").textContent = "Confirmar marcação"; atualizar(); }
+    return;
+  }
   const s = estado.serv;
   const msg = [
     "Olá Camazo! Gostava de marcar:",
@@ -1155,7 +1191,7 @@ $("#enviar").addEventListener("click", () => {
     "Pode confirmar? Obrigado!",
   ].join("\n");
   window.open(`https://wa.me/${TELEFONE}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
-  $("#ok").classList.add("on");
+  okMsg("Abrimos o WhatsApp com o teu pedido. É só carregar em enviar. A marcação fica feita quando o Camazo responder ✂️");
 });
 desenharDias(); atualizar();
 
