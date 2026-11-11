@@ -34,14 +34,16 @@ export function lisboa(dia, min) {
 
 // a biblioteca do Firebase só é descarregada quando o projeto está configurado
 const V = "https://www.gstatic.com/firebasejs/10.14.1/";
+let falhou = false;
 const [
   { initializeApp },
   { getFirestore, connectFirestoreEmulator, collection, doc, writeBatch, query, where, onSnapshot, getDoc, Timestamp, serverTimestamp },
   { getAuth, connectAuthEmulator, GoogleAuthProvider, signInWithPopup, signInWithRedirect, signInWithCredential, onAuthStateChanged, signOut },
-] = config ? await Promise.all([import(V + "firebase-app.js"), import(V + "firebase-firestore.js"), import(V + "firebase-auth.js")]) : [{}, {}, {}];
+] = await (config ? Promise.all([import(V + "firebase-app.js"), import(V + "firebase-firestore.js"), import(V + "firebase-auth.js")]) : Promise.resolve([{}, {}, {}]))
+  .catch(() => { falhou = true; return [{}, {}, {}]; }); // sem internet ou bloqueado: o site avisa
 
 let db = null, auth = null;
-if (config) {
+if (config && !falhou) {
   const app = initializeApp(config);
   db = getFirestore(app);
   auth = getAuth(app);
@@ -53,6 +55,7 @@ if (config) {
 
 const api = {
   ativo: !!db,
+  falhou, // estava configurado mas a biblioteca não carregou
   slotsPara, lisboa, hhmm,
 
   /** Chama cb(Map slotId → dados) sempre que as horas ocupadas de `dia` mudam. Devolve a função para parar. */

@@ -1155,6 +1155,7 @@ $("#aceito").addEventListener("change", atualizar);
 addEventListener("cmz-pronto", () => {
   // sem Firebase configurado, fica o pedido por WhatsApp
   if (!window.CMZ?.ativo) $("#enviar-txt").textContent = "Pedir marcação por WhatsApp";
+  if (window.CMZ?.falhou) okMsg(`Não conseguimos ligar à agenda online (sem internet ou bloqueada pelo browser). Podes pedir por WhatsApp ou ligar para <a href="tel:+351924711734">924 711 734</a>.`, true);
   desenharHoras(); atualizar();
 });
 const okMsg = (html, erro) => { const ok = $("#ok"); ok.innerHTML = html; ok.classList.toggle("erro", !!erro); ok.classList.add("on"); };
