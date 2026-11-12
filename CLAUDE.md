@@ -42,3 +42,12 @@ diferente daquele que foi desenhado e aprovado.
   (iPhone) **antes** de mandar ao cliente. Nunca se assume que funciona.
 - Animações e efeitos testam-se fotograma a fotograma, com capturas, em cada motor, e
   não só "abre e fecha sem erros".
+
+## 4. Não ficar preso no visual (3D, objetos realistas, ilustrações)
+
+- Perdeu-se muito tempo a fazer a caixa vermelha em 3D à mão até se usar o ChatGPT.
+  Se um visual feito à mão não vai ficar ao nível profissional, diz-se logo no início.
+- Caminhos, por ordem: exemplos reais na internet (sites, CodePen, three.js, Sketchfab)
+  para replicar; código ou modelos gratuitos, com a licença confirmada e guardados no site;
+  ou um prompt completo, pronto a colar, para o Sérgio enviar ao ChatGPT ou a outra IA.
+- Ao fim de duas tentativas sem bom resultado, muda-se de caminho em vez de continuar a afinar.

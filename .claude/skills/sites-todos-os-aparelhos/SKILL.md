@@ -1,6 +1,6 @@
 ---
 name: sites-todos-os-aparelhos
-description: Regras obrigatórias do Sérgio para construir ou alterar qualquer site, página web, web app ou aplicação (HTML/CSS/JS, React, animações, efeitos 3D, marcações, landing pages). Usar SEMPRE antes de começar a construir, ao mudar o design ou as animações, e antes de dizer que algo está pronto ou de o publicar. Garante que o design aprovado existe na versão final e que tudo funciona igual em todos os aparelhos e browsers, incluindo iPhone/Safari.
+description: Regras obrigatórias do Sérgio para construir ou alterar qualquer site, página web, web app ou aplicação (HTML/CSS/JS, React, animações, efeitos 3D, marcações, landing pages). Usar SEMPRE antes de começar a construir, ao mudar o design ou as animações, e antes de dizer que algo está pronto ou de o publicar. Garante que o design aprovado existe na versão final, que tudo funciona igual em todos os aparelhos e browsers, incluindo iPhone/Safari, e que não se perde tempo preso em visuais 3D ou realistas (usar referências e código da internet ou prompts para outras IAs).
 ---
 
 # Sites e apps: o design aprovado, igual em todos os aparelhos
@@ -60,6 +60,32 @@ Isto não pode voltar a acontecer.
    **dizê-lo claramente ao Sérgio antes** de dar o trabalho como pronto, e pedir o teste num
    **iPhone real** antes de mandar ao cliente. Nunca assumir que funciona.
 
+## Regra 4: não ficar preso no visual (3D, objetos realistas, ilustrações)
+
+**De onde vem:** no site da Camazo perdeu-se muito tempo a tentar fazer a caixa vermelha
+em 3D à mão, com tentativas fracas, até se usar o ChatGPT. O Sérgio prefere receber um
+prompt pronto e ter o resultado logo, do que andar às voltas.
+
+- Antes de começar um elemento visual exigente (3D, objeto realista, ilustração, textura,
+  animação elaborada), avaliar **com honestidade** se o resultado feito à mão vai ficar ao
+  nível de um site profissional. Se não vai, dizê-lo logo no início e propor o caminho mais
+  rápido, sem esperar pelas reclamações.
+- Caminhos, por esta ordem de preferência:
+  1. **Exemplos reais na internet:** procurar sites, apps, CodePen, exemplos do three.js,
+     Awwwards, Dribbble ou Sketchfab que tenham um elemento parecido, mostrá-los ao Sérgio
+     e replicar. Nunca mostrar só exemplos inventados por mim quando há bons exemplos reais.
+  2. **Código ou recursos gratuitos:** se não der para replicar só de ver, ir buscar código
+     ou modelos grátis (CodePen, GitHub, bibliotecas, modelos 3D) e adaptá-los. Confirmar a
+     licença (MIT, CC0, CC-BY com crédito…) e guardar tudo no próprio site (`vendor/`, `img/`).
+  3. **Prompt para outra IA** (ChatGPT, gerador de imagens ou 3D): escrever um prompt
+     completo, pronto a copiar e colar, que o Sérgio envia. Incluir o que se quer, ângulo e
+     enquadramento, estilo e cores do site, fundo transparente, tamanho e formato (PNG ou
+     WebP), e as fotos de referência que se devem anexar.
+- **Limite de tentativas:** se ao fim de **duas** tentativas o visual ainda não está bom,
+  parar e mudar de caminho (exemplos, código ou prompt), em vez de continuar a afinar.
+- O que vier de fora continua a cumprir as regras 1 a 3: funciona em todos os aparelhos,
+  está guardado no próprio site e é testado nos três motores.
+
 ## Antes de entregar ao cliente
 
 - [ ] O design e as animações aprovadas estão todas na versão publicada.
@@ -68,3 +94,4 @@ Isto não pode voltar a acontecer.
 - [ ] Nenhum código deteta o aparelho para mudar o comportamento.
 - [ ] Bibliotecas servidas pelo próprio site.
 - [ ] Os casos de falha não deixam nada preso.
+- [ ] Recursos de fora (código, modelos, imagens) com licença confirmada e guardados no site.
