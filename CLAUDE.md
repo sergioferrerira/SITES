@@ -1,5 +1,10 @@
 # Regras de trabalho (obrigatórias)
 
+> **Antes de tudo, em cada conversa: ler o Livro de Regras**, `LIVRO-DE-REGRAS.md` (nesta pasta).
+> É o método completo do Sérgio ("Russo") para fazer sites: sentimento, método, cores, letras, línguas,
+> técnica e o ciclo de cada conversa (abrir lendo o livro e o BRIEFING; fechar atualizando o BRIEFING).
+> As regras abaixo vêm de erros reais e somam-se ao livro.
+
 Estas regras valem para este projeto e para qualquer site ou aplicação que façamos.
 Vêm de um erro real: a viagem da câmara para dentro da gaveta funcionava no Chrome do
 computador, mas no iPhone ficava presa e invertida. Para "resolver", foi desligada no
